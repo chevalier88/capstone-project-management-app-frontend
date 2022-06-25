@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 
 export default function ProjectDetail({ project, addToCart }) {
-  const [quantity, setQuantity] = useState(1);
+
+  const [jobs, setJobs] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/Jobs")
+      .then((res) => {
+        console.log("ALL JOBS:\n", res.data);
+        setJobs([...res.data]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   //Individual Project Details
   //This is like the Profile page, but for the Individual Project

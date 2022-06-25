@@ -1,4 +1,5 @@
 import React from 'react';
+import '../index.css';
 
 export default function ProjectsCards() {
   // Projects will be the Cards that we want to show
@@ -78,7 +79,7 @@ export default function ProjectsCards() {
         <figure><img src="https://api.lorem.space/image/shoes?w=400&h=225" alt="Shoes" /></figure>
         <div className="card-body">
           <h2 className="card-title">
-            Shoes!
+            Daisy UI Example : Shoes!
             <div className="badge badge-secondary">NEW</div>
           </h2>
           <p>If a dog chews shoes whose shoes does he choose?</p>
@@ -87,9 +88,7 @@ export default function ProjectsCards() {
             <div className="badge badge-outline">Products</div>
           </div>
         </div>
-        </div>
-      <h1>this will be the cards component to show various rows of project</h1>
-      <h3>we will be using props to parse in the various parameters to make this reuseable</h3>
+      </div>
     </>
   );
 }
