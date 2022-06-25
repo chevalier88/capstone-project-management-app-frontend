@@ -1,12 +1,14 @@
 import './App.css';
 
-import React, { useState } from 'react';
+import React from 'react';
+// import React, { useState } from 'react';
 import axios from 'axios';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
+console.log(`BACKEND_URL: ${BACKEND_URL}`);
 
 export default function App() {
   return (
