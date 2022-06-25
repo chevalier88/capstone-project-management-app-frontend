@@ -1,8 +1,9 @@
 import './App.css';
-
 import React from 'react';
 // import React, { useState } from 'react';
 import axios from 'axios';
+// Components
+import ProjectsCards from './components/ProjectsCards.jsx';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
@@ -12,11 +13,7 @@ console.log(`BACKEND_URL: ${BACKEND_URL}`);
 
 export default function App() {
   return (
-    <div className="container">
-      <div className="row">
-        <h1 className="page-title">Wow Shopping!</h1>
-        <h3> Empty Front End for Eric, Zack and Graham </h3>
-      </div>
-    </div>
+    <h1>hello</h1>,
+      <ProjectsCards />
   );
 }
