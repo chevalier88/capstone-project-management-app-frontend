@@ -38,7 +38,27 @@ flowchart LR
   E-->F-->G-->H-->I-->J
 ```
 
-##### Manage Project (Project Manager)
+##### View Job postings, Assign to SEW, and Manage Project (PM)
+
+```mermaid
+flowchart LR
+  A([Start])
+  B(Log in Page)
+  C{{Correct username & password?}}
+  D(Retry log in)
+  E(Home page)
+  F(Assign Jobs from Portal, posted by clients to SEW on Project Summary Page)
+  G(Comfortable - Post Contracts to Client in Negotiation)
+  H(Convert Project Summary to Kanban format with Contract Negotiation Success)
+  I(PM to Manage the Project Timelines and Milestones)
+  J([End])
+  A-->B
+  B-->C
+  C--F-->D
+  D-->C
+  C--T-->E
+  E-->F-->G-->H-->I-->J
+```
 
 ### Wireframes
 
