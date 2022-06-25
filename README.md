@@ -62,7 +62,7 @@ flowchart LR
 
 ### Wireframes
 
-[View Wireframes](link pending)
+[View Wireframes](https://drive.google.com/file/d/10WQjLcVHA93SrVd_gT7RY1Zu-12S7FtZ/view?usp=sharing)
 
 ### Database ERD
 
