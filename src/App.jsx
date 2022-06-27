@@ -5,7 +5,7 @@ import './index.css';
 import axios from 'axios';
 // Components
 import ProjectsCards from './components/ProjectsCards.jsx';
-import ProjectsCard from './components/ProjectsCard.jsx';
+import CardsCOMPONENT from './components/Cards.jsx';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
@@ -17,7 +17,7 @@ export default function App() {
   return (
     <>
       <ProjectsCards />
-      <ProjectsCard />
+      <CardsCOMPONENT />
     </>
   );
 }

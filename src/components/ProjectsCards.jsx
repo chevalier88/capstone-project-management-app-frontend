@@ -99,7 +99,7 @@ export default function ProjectsCards() {
           <div className="d-flex justify-content-center">
             {Projects.map((data) => (
               <CardGroup>
-                <Card style={styles.card}>
+                <Card style={styles.card} key={data.id}>
                   <Card.Img variant="top" src={data.image} style={styles.cardImage} />
                   <Card.Body>
                     <Card.Title>{data.name}</Card.Title>
