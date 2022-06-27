@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Card, Button, CardGroup } from 'react-bootstrap';
 
-export default function ProjectsCards() {
+export default function Dashboard() {
   // Projects will be the Cards that we want to show
 
   // Used in Dashboard to show:

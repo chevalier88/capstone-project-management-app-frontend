@@ -5,6 +5,7 @@ import './index.css';
 import axios from 'axios';
 // Components
 import ProjectsCards from './components/ProjectsCards.jsx';
+import ProjectsCard from './components/ProjectsCard.jsx';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
@@ -14,7 +15,9 @@ console.log(`BACKEND_URL: ${BACKEND_URL}`);
 
 export default function App() {
   return (
-    <h1>hello</h1>,
+    <>
       <ProjectsCards />
+      <ProjectsCard />
+    </>
   );
 }

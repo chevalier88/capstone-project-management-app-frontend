@@ -4,35 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Card, Button, CardGroup } from 'react-bootstrap';
 
-export default function ProjectsCards() {
-  // Projects will be the Cards that we want to show
-
-  // Used in Dashboard to show:
-  // Current Projects
-  // Available Open Projects
-  // Completed Projects
-
-  // Used in Search
-  // Used in User Profile
-
-  // applicationDeadline
-  // projectedProductionDate
-  // Remuneration
-  // Skillset
-  // Slots Available
-  // description
-  // image
-
-  // const [jobs, setJobs] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/allJobs")
-  //     .then((res) => {
-  //       console.log("ALL JOBS:\n", res.data);
-  //       setJobs([...res.data]);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+export default function ProjectsCard({name,description,Skillset,slotsAvailable}) {
+  
 
   const Projects = [
     {
@@ -93,24 +66,22 @@ export default function ProjectsCards() {
 
   return (
     <>
-      <h1> this is ProjectsCards Component</h1>
+      <h1> this is ProjectsCard1 Component</h1>
       <div>
         <div className="container">
           <div className="d-flex justify-content-center">
-            {Projects.map((data) => (
               <CardGroup>
                 <Card style={styles.card}>
                   <Card.Img variant="top" src={data.image} style={styles.cardImage} />
                   <Card.Body>
-                    <Card.Title>{data.name}</Card.Title>
-                    <Card.Text>{data.description}</Card.Text>
-                    <Card.Text>{data.Skillset}</Card.Text>
-                    <Card.Text>{data.slotsAvailable}</Card.Text>
+                    <Card.Title>{name}</Card.Title>
+                    <Card.Text>{description}</Card.Text>
+                    <Card.Text>{Skillset}</Card.Text>
+                    <Card.Text>{slotsAvailable}</Card.Text>
                     <Button variant="primary">to route to the individual projects page</Button>
                   </Card.Body>
                 </Card>
               </CardGroup>
-            ))}
           </div>
         </div>
       </div>

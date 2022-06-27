@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import axios from 'axios';
 
-export default function ProjectDetail({ project, addToCart }) {
-
-  const [jobs, setJobs] = useState([]);
+export default function ProjectDetail() {
+  const [project, setProjects] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/Jobs")
+      .get("/api/Projects")
       .then((res) => {
-        console.log("ALL JOBS:\n", res.data);
+        console.log("ALL Projects:\n", res.data);
         setJobs([...res.data]);
       })
       .catch((err) => console.log(err));
@@ -22,10 +22,6 @@ export default function ProjectDetail({ project, addToCart }) {
 
   const handleSelectChange = (event) => {
     setQuantity(event.target.value);
-  };
-
-  const detailAddCart = () => {
-    addToCart(project, quantity);
   };
 
   return (
