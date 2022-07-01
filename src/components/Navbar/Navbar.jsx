@@ -27,6 +27,15 @@ export default function Navbar() {
         <NavLink to="/search" activeStyle>
           Search
         </NavLink>
+        <NavLink to="/dashboard" activeStyle>
+          Dashboard
+        </NavLink>
+        <NavLink to="/profile" activeStyle>
+          Profile Page
+        </NavLink>
+        <NavLink to="/oneProject" activeStyle>
+          OneProject
+        </NavLink>
       </NavMenu>
       <NavBtn>
         <div>
