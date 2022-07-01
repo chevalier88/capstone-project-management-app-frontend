@@ -10,8 +10,8 @@ import Login from './Pages/Login.jsx';
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
-export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
-console.log(`BACKEND_URL: ${BACKEND_URL}`);
+// export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
+// console.log(`BACKEND_URL: ${BACKEND_URL}`);
 
 export default function App() {
   return (

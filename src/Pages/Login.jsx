@@ -1,7 +1,6 @@
-/* eslint-disable import/no-cycle */
 import { React, useState } from 'react';
 import axios from 'axios';
-import { BACKEND_URL } from '../App.jsx';
+import BACKEND_URL from '../supportFunctions.js';
 
 export default function Login() {
   //             STATES
