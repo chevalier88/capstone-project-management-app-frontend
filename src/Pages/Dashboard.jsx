@@ -16,15 +16,30 @@ import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
 
-const cardsTop = [1, 2, 3];
-
 const theme = createTheme();
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
 
+  const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
+
+  async function getCurrentProjects() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/projects/current/${user.id}`);
+      const { data } = results;
+      console.log('currentProjects data:');
+      console.log(data);
+      console.log(Object.keys(data[0]));
+      const newArray = [];
+      data.forEach((project) => newArray.push(project));
+
+      setCurrentProjects(newArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function getOpenProjects() {
     try {
@@ -57,6 +72,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
+    getCurrentProjects();
     getOpenProjects();
     getUserCompletedProjects();
   }, []);
@@ -93,7 +109,7 @@ export default function Dashboard() {
           {/* End hero unit */}
           <h3> Current Projects </h3>
           <Grid container spacing={4}>
-            {cardsTop.map((card) => (
+            {currentProjects.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -109,11 +125,10 @@ export default function Dashboard() {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Blah
+                      {card.project.name}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      {card.project.summary}
                     </Typography>
                   </CardContent>
                   <CardActions>
