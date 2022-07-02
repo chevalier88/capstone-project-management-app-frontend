@@ -19,7 +19,7 @@ const cardsBottom = [7, 8, 9];
 
 const theme = createTheme();
 
-export default function Dashboard({ loggedIn, userData }) {
+export default function Dashboard() {
   const [openProjects, setOpenProjects] = useState([]);
 
   async function getAllOpenProjects() {
@@ -28,9 +28,11 @@ export default function Dashboard({ loggedIn, userData }) {
       const { data } = results;
       console.log(data);
       const newArray = [];
-      for (let i = 0; i < data.length; i++) {
-        newArray.push(data[i]);
-      }
+      // for (let i = 0; i < data.length; i++) {
+      //   newArray.push(data[i]);
+      // }
+      data.forEach((project) => newArray.push(project));
+
       setOpenProjects(newArray);
     } catch (error) {
       console.log(error);
