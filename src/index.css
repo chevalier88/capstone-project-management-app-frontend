@@ -5,5 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: pink;
+  background-color: rgb(232, 232, 233);
+}
+
+#page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+
+#dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
 }
