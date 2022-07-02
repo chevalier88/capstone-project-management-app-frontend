@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
@@ -8,14 +8,16 @@ import Search from './Pages/Search.jsx';
 import Login from './Pages/Login.jsx';
 import Dashboard from './Pages/Dashboard.jsx';
 import Profile from './Pages/Profile.jsx';
-import UserProvider from './UserContext.jsx';
+import { UserContext } from './components/UserContext.jsx';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
 export default function App() {
+  const [user, setUser] = useState([]);
+
   return (
-    <UserProvider>
+    <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -26,6 +28,6 @@ export default function App() {
           <Route path="login" element={<Login />} />
         </Routes>
       </BrowserRouter>
-    </UserProvider>
+    </UserContext.Provider>
   );
 }
