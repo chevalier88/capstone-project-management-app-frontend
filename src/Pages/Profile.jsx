@@ -1,9 +1,9 @@
-import React from 'react';
-import { userData } from '../UserContext.jsx';
+import React, { useContext } from 'react';
+import { UserContext } from '../components/UserContext.jsx';
 
 export default function Profile() {
   // getting user data from useContext in UserContext
-  const user = userData();
+  const { user } = useContext(UserContext);
   return (
     <div id="page-container">
       <h1>Profile of USER (PM/SWE)</h1>
