@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
 
@@ -23,12 +24,17 @@ export default function Login() {
     setPassword(newPassword);
   };
 
+  const navigate = useNavigate();
+
   // AJAX call to attempt login. if sucessful, return all relevant account info
   const attemptLogin = () => {
     axios
       .post(`${BACKEND_URL}/attemptLogin`, { username, password })
       .then((response) => {
         console.log('response', response.data);
+        if (response.data.status) {
+          navigate('../dashboard', { replace: true });
+        }
       })
       .catch((error) => { console.log(error); });
   };
