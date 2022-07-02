@@ -1,5 +1,5 @@
 // import * as React from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,17 +12,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import axios from 'axios';
+
 const cardsTop = [1, 2, 3];
-const cardsMiddle = [4, 5, 6];
 const cardsBottom = [7, 8, 9];
 
 const theme = createTheme();
 
-// useEffect();
-
-export default function Dashboard() {
+export default function Dashboard({ loggedIn, userData }) {
   const [openProjects, setOpenProjects] = useState([]);
-  console.log(openProjects, setOpenProjects);
+
+  async function getAllOpenProjects() {
+    try {
+      const results = await axios.get('/projects/open');
+      const { data } = results;
+      console.log(data);
+      const newArray = [];
+      for (let i = 0; i < data.length; i++) {
+        newArray.push(data[i]);
+      }
+      setOpenProjects(newArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getAllOpenProjects();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -92,7 +109,7 @@ export default function Dashboard() {
         <Container sx={{ py: 8 }} maxWidth="md">
           <h3> Available Open Projects </h3>
           <Grid container spacing={4}>
-            {cardsMiddle.map((card) => (
+            {openProjects.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
