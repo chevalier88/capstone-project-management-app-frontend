@@ -13,6 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import axios from 'axios';
+import BACKEND_URL from '../supportFunctions.js';
 
 const cardsTop = [1, 2, 3];
 const cardsBottom = [7, 8, 9];
@@ -22,15 +23,13 @@ const theme = createTheme();
 export default function Dashboard() {
   const [openProjects, setOpenProjects] = useState([]);
 
-  async function getAllOpenProjects() {
+  async function getOpenProjects() {
     try {
-      const results = await axios.get('/projects/open');
+      const results = await axios.get(`${BACKEND_URL}/projects/open`);
       const { data } = results;
       console.log(data);
+      console.log(Object.keys(data[0]));
       const newArray = [];
-      // for (let i = 0; i < data.length; i++) {
-      //   newArray.push(data[i]);
-      // }
       data.forEach((project) => newArray.push(project));
 
       setOpenProjects(newArray);
@@ -40,7 +39,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    getAllOpenProjects();
+    getOpenProjects();
   }, []);
 
   return (
@@ -91,7 +90,7 @@ export default function Dashboard() {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      Blah
                     </Typography>
                     <Typography>
                       This is a media card. You can use this section to describe the
@@ -127,11 +126,12 @@ export default function Dashboard() {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {card.name}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      Enrolment Deadline:
+                      {' '}
+                      {card.enrolmentDeadline}
                     </Typography>
                   </CardContent>
                   <CardActions>
