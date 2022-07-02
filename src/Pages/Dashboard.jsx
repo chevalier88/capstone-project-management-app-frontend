@@ -114,22 +114,41 @@ export default function Dashboard() {
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
+                  <Typography gutterBottom variant="h4" component="h2">
+                    {card.project.name}
+                  </Typography>
+                  <Typography variant="h5">
+                    {card.project.user_projects.length}
+                    /
+                    {card.project.noEngineersRequired}
+                    {' '}
+                    Engineers Enrolled
+                  </Typography>
+                  <Typography>
+                    Stage:
+                    {' '}
+                    {card.project.stage}
+                    <br />
+                    Delivery Deadline:
+                    {' '}
+                    {card.project.deliveryDeadline}
+                  </Typography>
                   <CardMedia
                     component="img"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      pt: '10.25%',
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.project.name}
-                    </Typography>
+
                     <Typography>
+                      <br />
                       {card.project.summary}
                     </Typography>
+
                   </CardContent>
                   <CardActions>
                     <Button size="small">View</Button>
@@ -149,23 +168,41 @@ export default function Dashboard() {
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
+                  {' '}
+                  <Typography gutterBottom variant="h4" component="h2">
+                    {card.name}
+                  </Typography>
+                  <Typography variant="h5">
+                    {card.user_projects.length}
+                    /
+                    {card.noEngineersRequired}
+                    {' '}
+                    Engineers Enrolled
+                  </Typography>
+                  <Typography>
+                    Stage:
+                    {' '}
+                    {card.stage}
+                    <br />
+                    Enrolment Deadline:
+                    {' '}
+                    {card.enrolmentDeadline}
+                  </Typography>
                   <CardMedia
                     component="img"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      pt: '10.25%',
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.name}
-                    </Typography>
+
                     <Typography>
-                      Enrolment Deadline:
                       {' '}
-                      {card.enrolmentDeadline}
+                      <br />
+                      {card.summary}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -190,7 +227,7 @@ export default function Dashboard() {
                     component="img"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      pt: '10.25%',
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
@@ -200,15 +237,18 @@ export default function Dashboard() {
                       {card.project.name}
                     </Typography>
                     <Typography>
+                      <br />
                       Completion Deadline:
                       {' '}
                       {card.project.deliveryDeadline}
                     </Typography>
                     <Typography>
                       {' '}
+                      <br />
                       {card.project.summary}
                     </Typography>
                     <Typography>
+                      <br />
                       Industry:
                       {' '}
                       {card.project.industry.name}
