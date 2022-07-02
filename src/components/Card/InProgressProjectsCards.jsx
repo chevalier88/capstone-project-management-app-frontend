@@ -2,35 +2,6 @@ import React from 'react';
 import { Card, Button, CardGroup } from 'react-bootstrap';
 
 export default function InProgressProjectsCards() {
-  // Projects will be the Cards that we want to show
-
-  // Used in Dashboard to show:
-  // Current Projects
-  // Available Open Projects
-  // Completed Projects
-
-  // Used in Search
-  // Used in User Profile
-
-  // applicationDeadline
-  // projectedProductionDate
-  // Remuneration
-  // Skillset
-  // Slots Available
-  // description
-  // image
-
-  // const [jobs, setJobs] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/allJobs")
-  //     .then((res) => {
-  //       console.log("ALL JOBS:\n", res.data);
-  //       setJobs([...res.data]);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   const Projects = [
     {
       id: '01',
@@ -117,24 +88,3 @@ export default function InProgressProjectsCards() {
     </>
   );
 }
-//  <ul>
-//         {Projects.map((data) => (
-//           <li key={data.id}>
-//             <p>{data.name}</p>
-//             <p>{data.email}</p>
-//             <p>{data.phone}</p>
-//             <p>{data.id}</p>
-//             <p>{data.name}</p>
-//             <p>{data.email}</p>
-//             <p>{data.phone}</p>
-//             <p>{data.status}</p>
-//             <p>{data.applicationDeadline}</p>
-//             <p>{data.projectedProductionDate}</p>
-//             <p>{data.Remuneration}</p>
-//             <p>{data.Skillset}</p>
-//             <p>{data.slotsAvailable}</p>
-//             <p>{data.description}</p>
-//             <p>{data.image}</p>
-//           </li>
-//         ))}
-//       </ul>
