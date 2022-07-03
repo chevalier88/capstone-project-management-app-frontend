@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
-import DashboardGridRow from '../components/DashboardRow.jsx';
+import DashboardGridRow from '../components/DashboardGridRow.jsx';
 
 const theme = createTheme();
 

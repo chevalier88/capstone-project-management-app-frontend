@@ -7,6 +7,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 
+function handleKanbanOpen(e) {
+  e.preventDefault();
+  console.log('placeholder kanban response...');
+}
+
 export default function SingleProjectModal({ rowContent }) {
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
@@ -21,6 +26,7 @@ export default function SingleProjectModal({ rowContent }) {
   };
 
   const descriptionElementRef = useRef(null);
+
   useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -29,13 +35,6 @@ export default function SingleProjectModal({ rowContent }) {
       }
     }
   }, [open]);
-
-  if (rowContent.stage === 'in-progress') {
-    // setInProgress(true);
-    console.log('in progress, kanban board enabled!');
-  } else {
-    console.log('not in progress, no kanban board.');
-  }
 
   return (
     <div>
@@ -75,7 +74,7 @@ export default function SingleProjectModal({ rowContent }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          {rowContent.stage === 'in-progress' && <Button onClick={handleClose}>Open Kanban</Button>}
+          {rowContent.stage === 'in-progress' && <Button onClick={handleKanbanOpen}>Open Kanban</Button>}
         </DialogActions>
       </Dialog>
     </div>
