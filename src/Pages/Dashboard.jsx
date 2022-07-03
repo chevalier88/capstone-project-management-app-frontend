@@ -1,10 +1,6 @@
 // import * as React from 'react';
-import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+import React, { useState, useEffect, useContext } from 'react';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,21 +10,37 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
-
-const cardsTop = [1, 2, 3];
-const cardsBottom = [7, 8, 9];
+import { UserContext } from '../components/UserContext.jsx';
+import DashboardGridRow from '../components/DashboardGridRow.jsx';
 
 const theme = createTheme();
 
 export default function Dashboard() {
+  const { user } = useContext(UserContext);
+
+  const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
+  const [completedProjects, setCompletedProjects] = useState([]);
+
+  async function getCurrentProjects() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/projects/current/${user.id}`);
+      const { data } = results;
+      console.log(data);
+      const newArray = [];
+      data.forEach((project) => newArray.push(project));
+
+      setCurrentProjects(newArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function getOpenProjects() {
     try {
       const results = await axios.get(`${BACKEND_URL}/projects/open`);
       const { data } = results;
       console.log(data);
-      console.log(Object.keys(data[0]));
       const newArray = [];
       data.forEach((project) => newArray.push(project));
 
@@ -37,9 +49,25 @@ export default function Dashboard() {
       console.log(error);
     }
   }
+  async function getUserCompletedProjects() {
+    try {
+      console.log(`user.id : ${user.id}`);
+      const results = await axios.get(`${BACKEND_URL}/projects/completed/${user.id}`);
+      const { data } = results;
+      console.log(data);
+      const newArray = [];
+      data.forEach((project) => newArray.push(project));
+
+      setCompletedProjects(newArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
+    getCurrentProjects();
     getOpenProjects();
+    getUserCompletedProjects();
   }, []);
 
   return (
@@ -71,114 +99,32 @@ export default function Dashboard() {
         </Box>
 
         <Container sx={{ py: 8 }} maxWidth="md">
-          {/* End hero unit */}
-          <h3> Current Projects </h3>
+          <h3> Current </h3>
           <Grid container spacing={4}>
-            {cardsTop.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Blah
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+            {currentProjects.map((row) => (
+              <DashboardGridRow row={row.project} />
             ))}
           </Grid>
         </Container>
 
         <Container sx={{ py: 8 }} maxWidth="md">
-          <h3> Available Open Projects </h3>
+          <h3> Available </h3>
           <Grid container spacing={4}>
-            {openProjects.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.name}
-                    </Typography>
-                    <Typography>
-                      Enrolment Deadline:
-                      {' '}
-                      {card.enrolmentDeadline}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+            {openProjects.map((row) => (
+              <DashboardGridRow row={row} />
             ))}
           </Grid>
         </Container>
 
         <Container sx={{ py: 8 }} maxWidth="md">
-          <h3> Completed Projects </h3>
+          <h3> Completed </h3>
           <Grid container spacing={4}>
-            {cardsBottom.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+            {completedProjects.map((row) => (
+              <DashboardGridRow row={row.project} />
             ))}
           </Grid>
         </Container>
+
       </main>
     </ThemeProvider>
 
