@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,14 +8,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
+import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   const [open, setOpen] = useState(false);
-  const [scroll, setScroll] = useState('paper');
+  const [scroll] = useState('paper');
+  // const [inProgress, setInProgress] = useState(false);
 
-  const handleClickOpen = (scrollType) => () => {
+  // function handleKanbanOpen(e) {
+  //   e.preventDefault();
+  //   console.log('placeholder kanban response...');
+  //   setOpen(false);
+  // }
+
+  const handleClickOpen = () => () => {
     setOpen(true);
-    setScroll(scrollType);
   };
 
   const handleClose = () => {
@@ -21,6 +30,7 @@ export default function SingleProjectModal({ rowContent }) {
   };
 
   const descriptionElementRef = useRef(null);
+
   useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -32,7 +42,7 @@ export default function SingleProjectModal({ rowContent }) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen('paper')}>View</Button>
+      <Button onClick={handleClickOpen()}>View</Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -68,6 +78,8 @@ export default function SingleProjectModal({ rowContent }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
+          {/* {rowContent.stage === 'in-progress' && <Button onClick={(e) => handleKanbanOpen(e)}>Open Kanban</Button>} */}
+          {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
         </DialogActions>
       </Dialog>
     </div>
