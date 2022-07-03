@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 
+import Board from 'react-trello';
+
 const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 export default function SingleProjectKanbanModal({ row }) {
@@ -55,7 +57,8 @@ export default function SingleProjectKanbanModal({ row }) {
 
           </Toolbar>
           <Divider />
-          {JSON.stringify(row.kanbanData)}
+          {/* {JSON.stringify(row.kanbanData)} */}
+          <Board data={row.kanbanData} />
         </AppBar>
 
       </Dialog>
