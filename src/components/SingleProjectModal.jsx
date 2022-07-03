@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '@mui/material/Button';
