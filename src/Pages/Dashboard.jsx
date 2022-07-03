@@ -1,5 +1,5 @@
 // import * as React from 'react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -14,14 +14,32 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
-
-const cardsTop = [1, 2, 3];
-const cardsBottom = [7, 8, 9];
+import { UserContext } from '../components/UserContext.jsx';
 
 const theme = createTheme();
 
 export default function Dashboard() {
+  const { user } = useContext(UserContext);
+
+  const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
+  const [completedProjects, setCompletedProjects] = useState([]);
+
+  async function getCurrentProjects() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/projects/current/${user.id}`);
+      const { data } = results;
+      console.log('currentProjects data:');
+      console.log(data);
+      console.log(Object.keys(data[0]));
+      const newArray = [];
+      data.forEach((project) => newArray.push(project));
+
+      setCurrentProjects(newArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function getOpenProjects() {
     try {
@@ -37,9 +55,26 @@ export default function Dashboard() {
       console.log(error);
     }
   }
+  async function getUserCompletedProjects() {
+    try {
+      console.log(`user.id : ${user.id}`);
+      const results = await axios.get(`${BACKEND_URL}/projects/completed/${user.id}`);
+      const { data } = results;
+      console.log(data);
+      console.log(Object.keys(data[0]));
+      const newArray = [];
+      data.forEach((project) => newArray.push(project));
+
+      setCompletedProjects(newArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
+    getCurrentProjects();
     getOpenProjects();
+    getUserCompletedProjects();
   }, []);
 
   return (
@@ -74,28 +109,46 @@ export default function Dashboard() {
           {/* End hero unit */}
           <h3> Current Projects </h3>
           <Grid container spacing={4}>
-            {cardsTop.map((card) => (
+            {currentProjects.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
+                  <Typography gutterBottom variant="h4" component="h2">
+                    {card.project.name}
+                  </Typography>
+                  <Typography variant="h5">
+                    {card.project.user_projects.length}
+                    /
+                    {card.project.noEngineersRequired}
+                    {' '}
+                    Engineers Enrolled
+                  </Typography>
+                  <Typography>
+                    Stage:
+                    {' '}
+                    {card.project.stage}
+                    <br />
+                    Delivery Deadline:
+                    {' '}
+                    {card.project.deliveryDeadline}
+                  </Typography>
                   <CardMedia
                     component="img"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      pt: '10.25%',
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Blah
-                    </Typography>
+
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      <br />
+                      {card.project.summary}
                     </Typography>
+
                   </CardContent>
                   <CardActions>
                     <Button size="small">View</Button>
@@ -111,27 +164,45 @@ export default function Dashboard() {
           <h3> Available Open Projects </h3>
           <Grid container spacing={4}>
             {openProjects.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item key={card.id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
+                  {' '}
+                  <Typography gutterBottom variant="h4" component="h2">
+                    {card.name}
+                  </Typography>
+                  <Typography variant="h5">
+                    {card.user_projects.length}
+                    /
+                    {card.noEngineersRequired}
+                    {' '}
+                    Engineers Enrolled
+                  </Typography>
+                  <Typography>
+                    Stage:
+                    {' '}
+                    {card.stage}
+                    <br />
+                    Enrolment Deadline:
+                    {' '}
+                    {card.enrolmentDeadline}
+                  </Typography>
                   <CardMedia
                     component="img"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      pt: '10.25%',
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.name}
-                    </Typography>
+
                     <Typography>
-                      Enrolment Deadline:
                       {' '}
-                      {card.enrolmentDeadline}
+                      <br />
+                      {card.summary}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -147,8 +218,8 @@ export default function Dashboard() {
         <Container sx={{ py: 8 }} maxWidth="md">
           <h3> Completed Projects </h3>
           <Grid container spacing={4}>
-            {cardsBottom.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {completedProjects.map((card) => (
+              <Grid item key={card.id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -156,23 +227,35 @@ export default function Dashboard() {
                     component="img"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      pt: '10.25%',
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {card.project.name}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      <br />
+                      Completion Deadline:
+                      {' '}
+                      {card.project.deliveryDeadline}
+                    </Typography>
+                    <Typography>
+                      {' '}
+                      <br />
+                      {card.project.summary}
+                    </Typography>
+                    <Typography>
+                      <br />
+                      Industry:
+                      {' '}
+                      {card.project.industry.name}
                     </Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
                   </CardActions>
                 </Card>
               </Grid>
