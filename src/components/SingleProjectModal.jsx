@@ -9,11 +9,11 @@ import Divider from '@mui/material/Divider';
 
 export default function SingleProjectModal({ rowContent }) {
   const [open, setOpen] = useState(false);
-  const [scroll, setScroll] = useState('paper');
+  const [scroll] = useState('paper');
+  // const [inProgress, setInProgress] = useState(false);
 
-  const handleClickOpen = (scrollType) => () => {
+  const handleClickOpen = () => () => {
     setOpen(true);
-    setScroll(scrollType);
   };
 
   const handleClose = () => {
@@ -30,9 +30,16 @@ export default function SingleProjectModal({ rowContent }) {
     }
   }, [open]);
 
+  if (rowContent.stage === 'in-progress') {
+    // setInProgress(true);
+    console.log('in progress, kanban board enabled!');
+  } else {
+    console.log('not in progress, no kanban board.');
+  }
+
   return (
     <div>
-      <Button onClick={handleClickOpen('paper')}>View</Button>
+      <Button onClick={handleClickOpen()}>View</Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -68,6 +75,7 @@ export default function SingleProjectModal({ rowContent }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
+          {rowContent.stage === 'in-progress' && <Button onClick={handleClose}>Open Kanban</Button>}
         </DialogActions>
       </Dialog>
     </div>
