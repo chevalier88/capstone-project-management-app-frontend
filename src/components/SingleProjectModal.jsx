@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,16 +7,18 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
-
-function handleKanbanOpen(e) {
-  e.preventDefault();
-  console.log('placeholder kanban response...');
-}
+import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
   // const [inProgress, setInProgress] = useState(false);
+
+  // function handleKanbanOpen(e) {
+  //   e.preventDefault();
+  //   console.log('placeholder kanban response...');
+  //   setOpen(false);
+  // }
 
   const handleClickOpen = () => () => {
     setOpen(true);
@@ -74,7 +77,8 @@ export default function SingleProjectModal({ rowContent }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          {rowContent.stage === 'in-progress' && <Button onClick={handleKanbanOpen}>Open Kanban</Button>}
+          {/* {rowContent.stage === 'in-progress' && <Button onClick={(e) => handleKanbanOpen(e)}>Open Kanban</Button>} */}
+          {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
         </DialogActions>
       </Dialog>
     </div>
