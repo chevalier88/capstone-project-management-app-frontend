@@ -8,6 +8,7 @@ import Search from './Pages/Search.jsx';
 import Login from './Pages/Login.jsx';
 import Dashboard from './Pages/Dashboard.jsx';
 import Profile from './Pages/Profile.jsx';
+import ProfileEdit from './Pages/ProfileEdit.jsx';
 import { UserContext } from './components/UserContext.jsx';
 
 // make sure that axios always sends the cookies to the backend server
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="profile" exact element={<Profile />} />
           <Route path="search" element={<Search />} />
           <Route path="login" element={<Login />} />
+          <Route path="profile/edit" element={<ProfileEdit />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
