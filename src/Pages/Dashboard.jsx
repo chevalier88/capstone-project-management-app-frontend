@@ -28,10 +28,10 @@ export default function Dashboard() {
       const results = await axios.get(`${BACKEND_URL}/projects/current/${user.id}`);
       const { data } = results;
       console.log(data);
-      const newArray = [];
-      data.forEach((project) => newArray.push(project));
+      const currentArray = [];
+      data.forEach((project) => currentArray.push(project));
 
-      setCurrentProjects(newArray);
+      setCurrentProjects(currentArray);
     } catch (error) {
       console.log(error);
     }
@@ -42,10 +42,26 @@ export default function Dashboard() {
       const results = await axios.get(`${BACKEND_URL}/projects/open`);
       const { data } = results;
       console.log(data);
-      const newArray = [];
-      data.forEach((project) => newArray.push(project));
+      const openArray = [];
 
-      setOpenProjects(newArray);
+      /*
+      Available projects that the user has already enrolled in but have less than
+      the required number of engineers will be in a "Current" project for the user
+      that is also "Available". To avoid duplicate project cards,
+      we filter out projects that contain the logged in user's involvement from
+      the "Available" projects row. We use the .some method to achieve this.
+      https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
+       */
+
+      data.forEach((project) => {
+        if (project.user_projects.some((userInProject) => userInProject.userId === user.id)) {
+          console.log('we have a repeat project already enrolled');
+        } else {
+          openArray.push(project);
+        }
+      });
+
+      setOpenProjects(openArray);
     } catch (error) {
       console.log(error);
     }
@@ -56,10 +72,10 @@ export default function Dashboard() {
       const results = await axios.get(`${BACKEND_URL}/projects/completed/${user.id}`);
       const { data } = results;
       console.log(data);
-      const newArray = [];
-      data.forEach((project) => newArray.push(project));
+      const completedArray = [];
+      data.forEach((project) => completedArray.push(project));
 
-      setCompletedProjects(newArray);
+      setCompletedProjects(completedArray);
     } catch (error) {
       console.log(error);
     }
