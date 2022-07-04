@@ -8,11 +8,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import axios from 'axios';
+
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
 import DashboardGridRow from '../components/DashboardGridRow.jsx';
+import FloatingSubmitProjectFormButton from '../components/FloatingSubmitProjectFormButton.jsx';
 
 const theme = createTheme();
 
@@ -27,7 +28,6 @@ export default function Dashboard() {
     try {
       const results = await axios.get(`${BACKEND_URL}/projects/current/${user.id}`);
       const { data } = results;
-      console.log(data);
       const currentArray = [];
       data.forEach((project) => currentArray.push(project));
 
@@ -41,7 +41,6 @@ export default function Dashboard() {
     try {
       const results = await axios.get(`${BACKEND_URL}/projects/open`);
       const { data } = results;
-      console.log(data);
       const openArray = [];
 
       /*
@@ -55,7 +54,7 @@ export default function Dashboard() {
 
       data.forEach((project) => {
         if (project.user_projects.some((userInProject) => userInProject.userId === user.id)) {
-          console.log('we have a repeat project already enrolled');
+          console.log('we have a repeat project already enrolled. skipping push of this project to openArray...');
         } else {
           openArray.push(project);
         }
@@ -68,10 +67,8 @@ export default function Dashboard() {
   }
   async function getUserCompletedProjects() {
     try {
-      console.log(`user.id : ${user.id}`);
       const results = await axios.get(`${BACKEND_URL}/projects/completed/${user.id}`);
       const { data } = results;
-      console.log(data);
       const completedArray = [];
       data.forEach((project) => completedArray.push(project));
 
@@ -85,7 +82,6 @@ export default function Dashboard() {
     try {
       const results = await axios.get(`${BACKEND_URL}/projects`);
       const { data } = results;
-      console.log(data);
 
       const currentArray = [];
       const openArray = [];
@@ -111,7 +107,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user.accountType === 'manager') {
-      console.log(`user.account_type: ${user.accountType}`);
       getAllProjects();
     } else {
       getCurrentProjects();
@@ -124,7 +119,7 @@ export default function Dashboard() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        {/* Hero unit */}
+        {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />}
         <Box
           sx={{
             bgcolor: 'background.paper',

@@ -13,13 +13,6 @@ import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
 export default function SingleProjectModal({ rowContent }) {
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
-  // const [inProgress, setInProgress] = useState(false);
-
-  // function handleKanbanOpen(e) {
-  //   e.preventDefault();
-  //   console.log('placeholder kanban response...');
-  //   setOpen(false);
-  // }
 
   const handleClickOpen = () => () => {
     setOpen(true);
