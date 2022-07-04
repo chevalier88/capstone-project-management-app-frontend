@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import axios from 'axios';
@@ -69,19 +70,30 @@ export default function Dashboard() {
       const results = await axios.get(`${BACKEND_URL}/projects`);
       const { data } = results;
       console.log(data);
-      const newArray = [];
-      data.forEach((project) => newArray.push(project));
 
-      setOpenProjects(newArray);
+      const currentArray = [];
+      const openArray = [];
+      const completedArray = [];
+
+      data.forEach((project) => {
+        if (project.stage === 'in-progress' || project.stage === 'client-review') {
+          currentArray.push(project);
+        } else if (project.stage === 'payment-pending' || project.stage === 'completed') {
+          completedArray.push(project);
+        } else {
+          openArray.push(project);
+        }
+      });
+
+      setCurrentProjects(currentArray);
+      setOpenProjects(openArray);
+      setCompletedProjects(completedArray);
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    console.log('printing user data...');
-    console.log(user);
-
     if (user.accountType === 'manager') {
       console.log(`user.account_type: ${user.accountType}`);
       getAllProjects();
@@ -121,16 +133,27 @@ export default function Dashboard() {
         </Box>
 
         <Container sx={{ py: 8 }} maxWidth="md">
-          <h3> Current </h3>
+          <Typography variant="h3">
+            Current
+          </Typography>
+          <Divider />
+          <br />
           <Grid container spacing={4}>
-            {currentProjects.map((row) => (
+            {user.accountType === 'engineer' && currentProjects.map((row) => (
               <DashboardGridRow row={row.project} />
+            ))}
+            {user.accountType === 'manager' && currentProjects.map((row) => (
+              <DashboardGridRow row={row} />
             ))}
           </Grid>
         </Container>
 
         <Container sx={{ py: 8 }} maxWidth="md">
-          <h3> Available </h3>
+          <Typography variant="h3">
+            Available
+          </Typography>
+          <Divider />
+
           <Grid container spacing={4}>
             {openProjects.map((row) => (
               <DashboardGridRow row={row} />
@@ -139,10 +162,17 @@ export default function Dashboard() {
         </Container>
 
         <Container sx={{ py: 8 }} maxWidth="md">
-          <h3> Completed </h3>
+          <Typography variant="h3">
+            Completed
+          </Typography>
+          <Divider />
+          <br />
           <Grid container spacing={4}>
-            {completedProjects.map((row) => (
+            {user.accountType === 'engineer' && completedProjects.map((row) => (
               <DashboardGridRow row={row.project} />
+            ))}
+            {user.accountType === 'manager' && completedProjects.map((row) => (
+              <DashboardGridRow row={row} />
             ))}
           </Grid>
         </Container>
