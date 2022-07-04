@@ -9,13 +9,12 @@ import Typography from '@mui/material/Typography';
 import SingleProjectModal from './SingleProjectModal.jsx';
 
 export default function DashboardGridRow({ row }) {
-  // if (nested === true) {
   return (
     <Grid item key={row.id} xs={12} sm={6} md={4}>
       <Card
         sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       >
-        <Typography gutterBottom variant="h4" component="h2">
+        <Typography gutterBottom variant="h5" component="h2">
           {row.name}
         </Typography>
 
@@ -30,7 +29,7 @@ export default function DashboardGridRow({ row }) {
         />
         <CardContent sx={{ flexGrow: 1 }}>
 
-          <Typography variant="h5">
+          <Typography variant="h6">
             {row.user_projects.length}
             /
             {row.noEngineersRequired}
