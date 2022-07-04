@@ -114,82 +114,92 @@ export default function Dashboard() {
       getUserCompletedProjects();
     }
   }, []);
+  if (user.length === 0) {
+    return (
+      <div id="page-container">
+        <h1>
+          Please login first.
+        </h1>
+      </div>
+    );
+  }
+  if (user.length !== 0) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <main>
+          {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />}
+          <Box
+            sx={{
+              bgcolor: 'background.paper',
+              pt: 8,
+              pb: 6,
+            }}
+          >
+            <Container maxWidth="sm">
+              <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="text.primary"
+                gutterBottom
+              >
+                Dashboard
+              </Typography>
+              <Typography variant="h5" align="center" color="text.secondary" paragraph>
+                View all Current, Available and Completed Projects
+              </Typography>
+            </Container>
+          </Box>
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <main>
-        {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Dashboard
+          <Container sx={{ py: 8 }} maxWidth="md">
+            <Typography variant="h3">
+              Current
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              View all Current, Available and Completed Projects
-            </Typography>
+            <Divider />
+            <br />
+            <Grid container spacing={4}>
+              {user.accountType === 'engineer' && currentProjects.map((row) => (
+                <DashboardGridRow row={row.project} />
+              ))}
+              {user.accountType === 'manager' && currentProjects.map((row) => (
+                <DashboardGridRow row={row} />
+              ))}
+            </Grid>
           </Container>
-        </Box>
 
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Typography variant="h3">
-            Current
-          </Typography>
-          <Divider />
-          <br />
-          <Grid container spacing={4}>
-            {user.accountType === 'engineer' && currentProjects.map((row) => (
-              <DashboardGridRow row={row.project} />
-            ))}
-            {user.accountType === 'manager' && currentProjects.map((row) => (
-              <DashboardGridRow row={row} />
-            ))}
-          </Grid>
-        </Container>
+          <Container sx={{ py: 8 }} maxWidth="md">
+            <Typography variant="h3">
+              Available
+            </Typography>
+            <Divider />
 
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Typography variant="h3">
-            Available
-          </Typography>
-          <Divider />
+            <Grid container spacing={4}>
+              {openProjects.map((row) => (
+                <DashboardGridRow row={row} />
+              ))}
+            </Grid>
+          </Container>
 
-          <Grid container spacing={4}>
-            {openProjects.map((row) => (
-              <DashboardGridRow row={row} />
-            ))}
-          </Grid>
-        </Container>
+          <Container sx={{ py: 8 }} maxWidth="md">
+            <Typography variant="h3">
+              Completed
+            </Typography>
+            <Divider />
+            <br />
+            <Grid container spacing={4}>
+              {user.accountType === 'engineer' && completedProjects.map((row) => (
+                <DashboardGridRow row={row.project} />
+              ))}
+              {user.accountType === 'manager' && completedProjects.map((row) => (
+                <DashboardGridRow row={row} />
+              ))}
+            </Grid>
+          </Container>
 
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Typography variant="h3">
-            Completed
-          </Typography>
-          <Divider />
-          <br />
-          <Grid container spacing={4}>
-            {user.accountType === 'engineer' && completedProjects.map((row) => (
-              <DashboardGridRow row={row.project} />
-            ))}
-            {user.accountType === 'manager' && completedProjects.map((row) => (
-              <DashboardGridRow row={row} />
-            ))}
-          </Grid>
-        </Container>
+        </main>
+      </ThemeProvider>
 
-      </main>
-    </ThemeProvider>
-
-  );
+    );
+  }
 }
