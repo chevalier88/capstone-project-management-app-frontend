@@ -16,6 +16,12 @@ const theme = createTheme({
 });
 
 export default function Navbar() {
+  const [value, setValue] = React.useState(1);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box component="nav" sx={{ flexGrow: 1 }}>
@@ -39,6 +45,8 @@ export default function Navbar() {
                   aria-label="Navigation Tabs"
                   indicatorColor="secondary"
                   textColor="inherit"
+                  value={value}
+                  onChange={handleChange}
                 >
                   <Tab
                     label="Home"
