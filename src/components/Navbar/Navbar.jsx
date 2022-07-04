@@ -1,47 +1,81 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
-  Nav,
-  NavLink,
-  Bars,
-  NavMenu,
-  NavBtn,
-  NavBtnLink,
-} from './NavbarElements.jsx';
+  Tabs, Tab, Toolbar, AppBar, Box, Typography,
+} from '@mui/material';
+import { blueGrey } from '@mui/material/colors';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    secondary: {
+      // This is green.A700 as hex.
+      main: blueGrey[900],
+    },
+  },
+});
 
 export default function Navbar() {
   return (
-    <Nav>
-      <NavLink to="/">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/184/184671.png"
-          height="40"
-          width="40"
-          alt="logo"
-        />
-      </NavLink>
-      <Bars />
-      <NavMenu>
-        <NavLink to="/" activeStyle>
-          Home
-        </NavLink>
-        <NavLink to="/search" activeStyle>
-          Search
-        </NavLink>
-        <NavLink to="/dashboard" activeStyle>
-          Dashboard
-        </NavLink>
-        <NavLink to="/profile" activeStyle>
-          Profile Page
-        </NavLink>
-        <NavLink to="/oneProject" activeStyle>
-          OneProject
-        </NavLink>
-      </NavMenu>
-      <NavBtn>
-        <div>
-          <NavBtnLink to="/login">Log In</NavBtnLink>
-        </div>
-      </NavBtn>
-    </Nav>
+    <ThemeProvider theme={theme}>
+      <Box component="nav" sx={{ flexGrow: 1 }}>
+        <AppBar position="static" color="secondary">
+          <Toolbar variant="dense">
+            <Box flex={1} display="flex" justifyContent="space-between">
+              <Box display="flex" alignItems="center">
+                <Box
+                  component="img"
+                  sx={{ marginRight: '1em', height: 40 }}
+                  src="https://img.freepik.com/free-vector/face-cute-otter-logo-design-vector-graphic-symbol-icon-sign-illustration-creative-idea_15473-10082.jpg?w=2000"
+                  alt="Bosch Logo"
+                  to="/"
+                />
+                <Typography component="span" variant="h5">
+                  Full-Stack Otter
+                </Typography>
+              </Box>
+              <Box>
+                <Tabs
+                  aria-label="Navigation Tabs"
+                  indicatorColor="secondary"
+                  textColor="inherit"
+                >
+                  <Tab
+                    label="Home"
+                    component={Link}
+                    to="/"
+                  />
+                  <Tab
+                    label="Dashboard"
+                    component={Link}
+                    to="/dashboard"
+                  />
+                  <Tab
+                    label="Search"
+                    component={Link}
+                    to="/search"
+                  />
+                  <Tab
+                    label="Profile Page"
+                    component={Link}
+                    to="/profile"
+                  />
+                  <Tab
+                    label="One Project"
+                    component={Link}
+                    to="/deals"
+                  />
+                  <Tab
+                    label="Log In"
+                    component={Link}
+                    to="/login"
+                  />
+                </Tabs>
+              </Box>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </ThemeProvider>
   );
 }
