@@ -68,11 +68,7 @@ export default function Navbar() {
                     component={Link}
                     to="/profile"
                   />
-                  <Tab
-                    label="One Project"
-                    component={Link}
-                    to="/deals"
-                  />
+
                   <Tab
                     label="Log In"
                     component={Link}
