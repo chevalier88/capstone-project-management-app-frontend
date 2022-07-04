@@ -64,10 +64,32 @@ export default function Dashboard() {
     }
   }
 
+  async function getAllProjects() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/projects`);
+      const { data } = results;
+      console.log(data);
+      const newArray = [];
+      data.forEach((project) => newArray.push(project));
+
+      setOpenProjects(newArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
-    getCurrentProjects();
-    getOpenProjects();
-    getUserCompletedProjects();
+    console.log('printing user data...');
+    console.log(user);
+
+    if (user.accountType === 'manager') {
+      console.log(`user.account_type: ${user.accountType}`);
+      getAllProjects();
+    } else {
+      getCurrentProjects();
+      getOpenProjects();
+      getUserCompletedProjects();
+    }
   }, []);
 
   return (
