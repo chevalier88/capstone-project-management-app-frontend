@@ -31,19 +31,26 @@ const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-const skillOptions = [
-  { value: 1, label: 'JavaScript' },
-  { value: 2, label: 'React.js' },
-  { value: 3, label: 'Python' },
-];
-
 export default function ReactHookForm() {
   const { control, handleSubmit } = useForm({
     reValidateMode: 'onBlur',
   });
 
+  const [skills, setSkills] = useState([]);
   const [users, setUsers] = useState([]);
 
+  async function getAllSkills() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/skills`);
+      const { data } = results;
+      const skillsArray = [];
+      data.forEach((skill) => skillsArray.push(skill));
+      console.log(skillsArray);
+      setSkills(skillsArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async function getAllUsers() {
     try {
       const results = await axios.get(`${BACKEND_URL}/users`);
@@ -63,6 +70,7 @@ export default function ReactHookForm() {
 
   useEffect(() => {
     getAllUsers();
+    getAllSkills();
   }, []);
 
   const handleOnSubmit = (event) => {
@@ -129,7 +137,6 @@ export default function ReactHookForm() {
           <Controller
             control={control}
             name="projectSkills"
-            defaultValue={[skillOptions[0]]}
             render={({ field: { ref, onChange, ...field } }) => (
               <>
                 <Typography>
@@ -137,9 +144,8 @@ export default function ReactHookForm() {
                 </Typography>
                 <Autocomplete
                   multiple
-                  options={skillOptions}
-                  defaultValue={[skillOptions[0]]}
-                  getOptionLabel={(option) => option.label}
+                  options={skills}
+                  getOptionLabel={(option) => option.name}
                   onChange={(_, data) => onChange(data)}
                   renderInput={(params) => (
                     <TextField
