@@ -13,9 +13,16 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+
 import MuiInput from '@mui/material/Input';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CodeIcon from '@mui/icons-material/Code';
 import { styled } from '@mui/material/styles';
+
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const Input = styled(MuiInput)`
   width: 42px;
@@ -33,25 +40,36 @@ export default function MUIReactHookForm() {
     reValidateMode: 'onBlur',
   });
 
-  const handleOnSubmit = (evt) => {
-    console.log(evt);
+  const handleOnSubmit = (event) => {
+    console.log(event);
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
+
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Typography>
+            Create a new project with important features like deadlines, salary, engineer headcount and skillset required.
+          </Typography>
+        </Grid>
         <Grid item xs={12}>
           <Controller
             control={control}
             name="name"
             defaultValue=""
             render={({ field }) => (
-              <TextField
-                {...field}
-                variant="standard"
-                fullWidth
-                label="What is the project's name?"
-              />
+              <>
+                <Typography>
+                  Project Name:
+                </Typography>
+                <TextField
+                  {...field}
+                  variant="standard"
+                  fullWidth
+                  label="What is the project's name?"
+                />
+              </>
             )}
           />
         </Grid>
@@ -80,6 +98,83 @@ export default function MUIReactHookForm() {
             )}
           />
         </Grid>
+        <Grid item xs={6}>
+          <Controller
+            control={control}
+            name="projectSkills"
+            defaultValue={[skillOptions[0]]}
+            render={({ field: { ref, onChange, ...field } }) => (
+              <>
+                <Typography>
+                  Skills Required:
+                </Typography>
+                <Autocomplete
+                  multiple
+                  options={skillOptions}
+                  defaultValue={[skillOptions[0]]}
+                  getOptionLabel={(option) => option.label}
+                  onChange={(_, data) => onChange(data)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...field}
+                      {...params}
+                      fullWidth
+                      inputRef={ref}
+                      variant="standard"
+                    />
+                  )}
+                />
+              </>
+
+            )}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Controller
+            control={control}
+            name="deliveryDeadline"
+            defaultValue=""
+            render={({ field: { value, ...field } }) => (
+              <>
+                <Typography>
+                  Delivery Deadline (Date):
+                </Typography>
+                <br />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    {...field}
+                    inputFormat="MM/dd/yyyy"
+                    value={value}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+
+                </LocalizationProvider>
+              </>
+            )}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Controller
+            control={control}
+            name="enrolmentDeadline"
+            defaultValue=""
+            render={({ field: { value, ...field } }) => (
+              <>
+                <Typography>
+                  Enrolment Deadline (Date and Time):
+                </Typography>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+
+                  <DateTimePicker
+                    {...field}
+                    value={value}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </>
+            )}
+          />
+        </Grid>
         <Grid item xs={12}>
           <Controller
             control={control}
@@ -98,7 +193,6 @@ export default function MUIReactHookForm() {
           />
         </Grid>
         <Grid item xs={12}>
-
           <Controller
             control={control}
             name="numberEngineers"
@@ -108,23 +202,27 @@ export default function MUIReactHookForm() {
                 <Typography>
                   Number of Engineers required:
                 </Typography>
-                <Slider
-                  {...field}
-                  marks
-                  max={10}
-                  min={1}
-                  step={1}
-                  value={value}
-                  valueLabelDisplay="auto"
-                />
-
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item>
+                    <CodeIcon />
+                  </Grid>
+                  <Grid item xs>
+                    <Slider
+                      {...field}
+                      marks
+                      max={10}
+                      min={0}
+                      step={1}
+                      value={value}
+                      valueLabelDisplay="auto"
+                    />
+                  </Grid>
+                </Grid>
               </>
-
             )}
           />
         </Grid>
         <Grid item xs={12}>
-
           <Controller
             control={control}
             name="minimumSalary"
@@ -135,67 +233,92 @@ export default function MUIReactHookForm() {
                   Minimum Salary Paid per Hour:
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
-                  <Grid item>
+                  {/* <Grid item>
                     <AttachMoneyIcon />
+                  </Grid> */}
+                  <Grid item>
+                    <Typography
+                      {...field}
+                      variant="h4"
+                    >
+                      $
+                      {' '}
+                      {value}
+                    </Typography>
                   </Grid>
                   <Grid item xs>
                     <Slider
                       {...field}
+                      min={0}
+                      max={200}
+                      step={1}
                       value={typeof value === 'number' ? value : 0}
-                      // onChange={handleSliderChange}
                       aria-labelledby="input-slider"
                     />
                   </Grid>
-                  <Grid item>
-                    <Input
-                      {...field}
-                      value={value}
-                      size="small"
-                      // onChange={handleInputChange}
-                      // onBlur={handleBlur}
-                      inputProps={{
-                        step: 10,
-                        min: 0,
-                        max: 100,
-                        type: 'number',
-                        'aria-labelledby': 'input-slider',
-                      }}
-                    />
-                  </Grid>
+
                 </Grid>
-
               </>
-
             )}
           />
         </Grid>
         <Grid item xs={6}>
           <Controller
             control={control}
-            name="projectSkills"
-            defaultValue={[skillOptions[0]]}
-            render={({ field: { ref, onChange, ...field } }) => (
-              <Autocomplete
-                multiple
-                options={skillOptions}
-                defaultValue={[skillOptions[0]]}
-                getOptionLabel={(option) => option.label}
-                onChange={(_, data) => onChange(data)}
-                renderInput={(params) => (
-                  <TextField
-                    {...field}
-                    {...params}
-                    fullWidth
-                    inputRef={ref}
-                    variant="standard"
-                    label="Skills Required:"
-                  />
-                )}
-              />
+            name="stage"
+            defaultValue=""
+            render={({ field }) => (
+              <>
+                <Typography>
+                  Current Project Stage:
+                </Typography>
+                <br />
+                <Select
+                  {...field}
+                  fullWidth
+                >
+                  <MenuItem value="contracting">Contracting</MenuItem>
+                  <MenuItem value="sourcing">Sourcing</MenuItem>
+                  <MenuItem value="in-progress">In Progress</MenuItem>
+                  <MenuItem value="client-review">Client Review</MenuItem>
+                  <MenuItem value="payment-pending">Payment Pending</MenuItem>
+                  <MenuItem value="completed">Completed</MenuItem>
+                </Select>
+              </>
             )}
           />
         </Grid>
+        <Grid item xs={6}>
+          <Controller
+            control={control}
+            name="projectedHours"
+            defaultValue="100"
+            render={({ field: { value, ...field } }) => (
+              <>
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item>
+                    <Typography>
+                      Projected Total Hours to Completion:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs>
+                    <Input
+                      {...field}
+                      value={value}
+                      size="medium"
+                      inputProps={{
+                        step: 5,
+                        min: 0,
+                        type: 'number',
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </>
+            )}
+          />
 
+        </Grid>
         <Grid item xs={12}>
           <Button type="submit">Submit</Button>
         </Grid>
