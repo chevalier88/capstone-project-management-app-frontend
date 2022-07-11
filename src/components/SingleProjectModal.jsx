@@ -9,6 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
+import RandomLoremIpsum from './RandomLoremIpsum.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   const [open, setOpen] = useState(false);
@@ -34,7 +35,7 @@ export default function SingleProjectModal({ rowContent }) {
   }, [open]);
 
   return (
-    <div>
+    <>
       <Button onClick={handleClickOpen()}>View</Button>
       <Dialog
         open={open}
@@ -49,8 +50,9 @@ export default function SingleProjectModal({ rowContent }) {
           {rowContent.name}
         </DialogTitle>
 
-        <DialogContent dividers={scroll === 'paper'}>
+        <DialogContent component="div" dividers={scroll === 'paper'}>
           <DialogContentText
+            component="div"
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
@@ -58,14 +60,12 @@ export default function SingleProjectModal({ rowContent }) {
             Project ID:
             {' '}
             {rowContent.id}
-            <Divider />
+            <Divider component="div" />
             {rowContent.summary}
-            <Divider />
-            <ul>
-              {Object.keys(rowContent).map((key) => (
-                <li>{key}</li>
-              ))}
-            </ul>
+            <Divider component="div" />
+            {JSON.stringify(rowContent)}
+            <Divider component="div" />
+            <RandomLoremIpsum />
 
           </DialogContentText>
         </DialogContent>
@@ -75,6 +75,6 @@ export default function SingleProjectModal({ rowContent }) {
           {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }

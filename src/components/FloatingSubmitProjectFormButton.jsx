@@ -1,13 +1,27 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Form from 'react-bootstrap/Form';
+
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  TextField,
+  Slider,
+  Select,
+  MenuItem,
+} from '@mui/material';
 
 import {
   Fab,
@@ -16,9 +30,8 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function FloatingSubmitProjectFormButton() {
+export default function AltSubmitProjectFormButton() {
   const [open, setOpen] = useState(false);
-  const [projectName, setProjectName] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,29 +41,28 @@ export default function FloatingSubmitProjectFormButton() {
     setOpen(false);
   };
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    console.log('submitting form...');
+  const { control, handleSubmit } = useForm({
+    reValidateMode: 'onBlur',
+  });
+  const {
+    fields: members,
+    append: appendMemberRow,
+    remove: removeMemberRow,
+  } = useFieldArray({
+    control,
+    name: 'members',
+  });
 
-    const submittedProject = {
-      name: projectName,
-    };
-    console.log('printing currently submitted project...');
-    console.log(submittedProject);
+  console.count('app rerender');
 
-    // const response = await axios.post(`${BACKEND_URL}/trip`, submittedProject);
+  const handleOnSubmit = (evt) => {
+    console.log(evt);
+  };
 
-    // console.log(response.data);
-  }
-
+  const addNewMember = () => appendMemberRow({ email: '', role: 'user' });
   return (
     <div>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Add new Project
-      </Button> */}
-      {/* <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
-        <AddIcon />
-      </Fab> */}
+
       <Tooltip title="Start A New Project">
         <Fab
           component="div"
@@ -76,25 +88,88 @@ export default function FloatingSubmitProjectFormButton() {
         </Fab>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Submit New Trip</DialogTitle>
+        <DialogTitle>Submit New Project</DialogTitle>
         <Form onSubmit={(e) => handleSubmit(e)}>
           <DialogContent>
-            <DialogContentText>
-              What is the name of your project?
-            </DialogContentText>
-            <Form.Group controlId="projectName">
-              <TextField
+            <Form.Group size="sm-3" controlId="projectName">
+              <br />
+              <Form.Label>What is the name of this project?</Form.Label>
+              <Form.Control
                 autoFocus
-                margin="dense"
-                id="name"
-                label="Trip Name"
-                type="name"
+                type="projectName"
                 value={projectName}
-                fullWidth
-                variant="standard"
                 onChange={(e) => setProjectName(e.target.value)}
               />
             </Form.Group>
+            <Form.Group controlId="summary">
+              <br />
+              <Form.Label>
+                Please summarize the scope below:
+              </Form.Label>
+              <Form.Control
+                autoFocus
+                as="textarea"
+                rows={3}
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="industryId">
+              <br />
+              <Form.Label>What industry is the client from?</Form.Label>
+              <Form.Control
+                as="select"
+                value={industry}
+                placeholder="select one"
+                onChange={(e) => {
+                  console.log('e.target.value', e.target.value);
+                  setIndustry(e.target.value);
+                }}
+              >
+                <option value="1">Airline</option>
+                <option value="2">Finance</option>
+                <option value="3">Market Research</option>
+                <option value="4">Human Resources</option>
+                <option value="5">Technology</option>
+              </Form.Control>
+            </Form.Group>
+            {/* <Form.Group controlId="engineerNumbers">
+              <br />
+              <Form.Label>How many engineers are required?</Form.Label>
+              <Form.Control
+                type="engineerNumbers"
+                value={engineerNumbers}
+                onChange={(e) => setEngineerNumbers(e.target.value)}
+                as={(
+                  <Slider
+                    aria-label="engineerNumbers"
+                    defaultValue={1}
+                    valueLabelDisplay="on"
+                    step={1}
+                    marks
+                    min={1}
+                    max={10}
+                  />
+)}
+              />
+            </Form.Group> */}
+            {/* <Form.Group controlId="entitiesStatus">
+              <br />
+              <Form.Label>Region Requested?</Form.Label>
+              <Form.Control
+                as="select"
+                value={entitiesStatus}
+                onChange={(e) => {
+                  console.log('e.target.value', e.target.value);
+                  setEntitiesStatus(e.target.value);
+                }}
+              >
+                <option value="All">Yes</option>
+                <option value="Some">In some locations only, but not all</option>
+                <option value="None">No</option>
+              </Form.Control>
+            </Form.Group> */}
+
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
