@@ -3,6 +3,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,10 +20,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { UserContext } from '../components/UserContext.jsx';
 import BACKEND_URL from '../supportFunctions.js';
 
+const cookies = new Cookies();
+
 export default function Login() {
   //             STATES
   // ================================
   const { setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -40,11 +44,21 @@ export default function Login() {
         if (response.data.status) {
           // if login status = true then update the global UserContext data
           setUser(response.data.user);
+          // update access token in cookies
+          const { token } = response.data;
+          cookies.set('token', `${token}`, { path: '/' });
+
           // redirect to dashboard
           navigate('../profile', { replace: true });
         }
       })
       .catch((error) => { console.log(error); });
+  };
+
+  // logout, clear cookies and reset User context
+  const logout = () => {
+    cookies.remove('token', {});
+    setUser([]);
   };
 
   function Copyright(props) {
@@ -65,92 +79,121 @@ export default function Login() {
 
   //       RENDERING OF COMPONENT
   // ================================
-  return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://img.freepik.com/free-vector/face-cute-otter-logo-design-vector-graphic-symbol-icon-sign-illustration-creative-idea_15473-10082.jpg?w=2000)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+
+  // return message when user is already logged in
+  if (user.length !== 0) {
+    return (
+      <div id="page-container">
+        <Box>
+          <h1>
+            Hi,
+            {user.username}
+          </h1>
+        </Box>
+        <Box>
+          <Button
+            type="submit"
+            variant="contained"
+            color="warning"
+            onClick={logout}
+            sx={{ mt: 3, mb: 2 }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                onClick={attemptLogin}
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+            Logout
+          </Button>
+        </Box>
+      </div>
+    );
+  }
+
+  // return log in component if user is not logged in
+  if (user.length === 0) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Grid container component="main" sx={{ height: '100vh' }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
+            sx={{
+              backgroundImage: 'url(https://img.freepik.com/free-vector/face-cute-otter-logo-design-vector-graphic-symbol-icon-sign-illustration-creative-idea_15473-10082.jpg?w=2000)',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <Box sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  onClick={attemptLogin}
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      Do not have an account? Sign Up
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    Do not have an account? Sign Up
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </ThemeProvider>
-  );
+      </ThemeProvider>
+    );
+  }
 }

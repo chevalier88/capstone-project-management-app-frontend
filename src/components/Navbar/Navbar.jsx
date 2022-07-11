@@ -6,6 +6,7 @@ import {
 import { blueGrey } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+// create theme for styling
 const theme = createTheme({
   palette: {
     secondary: {
@@ -16,6 +17,7 @@ const theme = createTheme({
 });
 
 export default function Navbar() {
+  // .............STATES...............
   const [value, setValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {

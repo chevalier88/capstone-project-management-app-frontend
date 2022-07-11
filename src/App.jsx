@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
@@ -10,12 +10,27 @@ import Dashboard from './Pages/Dashboard.jsx';
 import Profile from './Pages/Profile.jsx';
 import ProfileEdit from './Pages/ProfileEdit.jsx';
 import { UserContext } from './components/UserContext.jsx';
+import BACKEND_URL from './supportFunctions.js';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
 export default function App() {
+  // .............STATES...............
   const [user, setUser] = useState([]);
+
+  // .......... HELPER FUNCTIONS .................
+  async function getUserData() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/userData`);
+      const { data } = results;
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  // get user data
+  useEffect(() => { getUserData(); }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
