@@ -10,7 +10,7 @@ import SingleProjectModal from './SingleProjectModal.jsx';
 
 export default function DashboardGridRow({ row }) {
   return (
-    <Grid item key={row.id} xs={12} sm={6} md={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       >
@@ -29,14 +29,14 @@ export default function DashboardGridRow({ row }) {
         />
         <CardContent sx={{ flexGrow: 1 }}>
 
-          <Typography variant="h6">
+          <Typography component="div" variant="h6">
             {row.user_projects.length}
             /
             {row.noEngineersRequired}
             {' '}
             Engineers Enrolled
           </Typography>
-          <Typography>
+          <Typography component="div">
             Stage:
             {' '}
             {row.stage}
@@ -48,7 +48,7 @@ export default function DashboardGridRow({ row }) {
 
         </CardContent>
         <CardActions>
-          <SingleProjectModal rowContent={row} />
+          <SingleProjectModal key={row.name} rowContent={row} />
         </CardActions>
       </Card>
     </Grid>

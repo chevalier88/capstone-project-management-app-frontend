@@ -161,10 +161,10 @@ export default function Dashboard() {
             <br />
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && currentProjects.map((row) => (
-                <DashboardGridRow row={row.project} />
+                <DashboardGridRow key={row.project.id} row={row.project} />
               ))}
               {user.accountType === 'manager' && currentProjects.map((row) => (
-                <DashboardGridRow row={row} />
+                <DashboardGridRow key={row.id} row={row} />
               ))}
             </Grid>
           </Container>
@@ -177,7 +177,7 @@ export default function Dashboard() {
 
             <Grid container spacing={4}>
               {openProjects.map((row) => (
-                <DashboardGridRow row={row} />
+                <DashboardGridRow key={row.id} row={row} />
               ))}
             </Grid>
           </Container>
@@ -190,10 +190,10 @@ export default function Dashboard() {
             <br />
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && completedProjects.map((row) => (
-                <DashboardGridRow row={row.project} />
+                <DashboardGridRow key={row.project.id} row={row.project} />
               ))}
               {user.accountType === 'manager' && completedProjects.map((row) => (
-                <DashboardGridRow row={row} />
+                <DashboardGridRow key={row.id} row={row} />
               ))}
             </Grid>
           </Container>

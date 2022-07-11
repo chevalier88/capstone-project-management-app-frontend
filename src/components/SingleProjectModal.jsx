@@ -34,7 +34,7 @@ export default function SingleProjectModal({ rowContent }) {
   }, [open]);
 
   return (
-    <div>
+    <>
       <Button onClick={handleClickOpen()}>View</Button>
       <Dialog
         open={open}
@@ -58,14 +58,11 @@ export default function SingleProjectModal({ rowContent }) {
             Project ID:
             {' '}
             {rowContent.id}
-            <Divider />
+            <Divider component="span" />
             {rowContent.summary}
-            <Divider />
-            <ul>
-              {Object.keys(rowContent).map((key) => (
-                <li>{key}</li>
-              ))}
-            </ul>
+            <Divider component="span" />
+
+            {JSON.stringify(rowContent)}
 
           </DialogContentText>
         </DialogContent>
@@ -75,6 +72,6 @@ export default function SingleProjectModal({ rowContent }) {
           {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
