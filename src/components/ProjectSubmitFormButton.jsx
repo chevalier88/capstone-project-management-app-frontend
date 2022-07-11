@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-import MUIReactHookForm from './MUIReactHookForm.jsx';
+import ReactHookForm from './ReactHookForm.jsx';
 
-export default function AltProjectSubmitFormButton() {
+export default function ProjectSubmitFormButton() {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -57,7 +57,7 @@ export default function AltProjectSubmitFormButton() {
         <DialogTitle>Submit New Project</DialogTitle>
         <Divider />
         <DialogContent>
-          <MUIReactHookForm />
+          <ReactHookForm />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

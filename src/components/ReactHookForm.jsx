@@ -1,6 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Autocomplete,
@@ -23,30 +25,55 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import BACKEND_URL from '../supportFunctions.js';
 
 const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-// const options = ['Finance', 'Human Resources', 'Market Research', 'Industry'];
 const skillOptions = [
   { value: 1, label: 'JavaScript' },
   { value: 2, label: 'React.js' },
   { value: 3, label: 'Python' },
 ];
 
-export default function MUIReactHookForm() {
+export default function ReactHookForm() {
   const { control, handleSubmit } = useForm({
     reValidateMode: 'onBlur',
   });
 
+  const [users, setUsers] = useState([]);
+
+  async function getAllUsers() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/users`);
+      const { data } = results;
+      const currentArray = [];
+      data.forEach((user) => {
+        if (user.accountType === 'engineer') {
+          currentArray.push(user);
+        }
+      });
+      console.log(currentArray);
+      setUsers(currentArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   const handleOnSubmit = (event) => {
+    console.log('printing form control... ');
     console.log(event);
+    // console.log(control._formValues);
+    // setFormData(...event);
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
-
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography>
@@ -317,7 +344,38 @@ export default function MUIReactHookForm() {
               </>
             )}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <Controller
+            control={control}
+            name="userProjects"
+            defaultValue={[users[0]]}
+            render={({ field: { ref, onChange, ...field } }) => (
+              <>
+                <Typography>
+                  Pre-select Users for this project:
+                </Typography>
+                <Autocomplete
+                  multiple
+                  options={users}
+                  defaultValue={[users[0]]}
+                  // getOptionLabel={(option) => option.name}
+                  getOptionLabel={(option) => (Object.keys(option))}
+                  onChange={(_, data) => onChange(data)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...field}
+                      {...params}
+                      fullWidth
+                      inputRef={ref}
+                      variant="standard"
+                    />
+                  )}
+                />
+              </>
 
+            )}
+          />
         </Grid>
         <Grid item xs={12}>
           <Button type="submit">Submit</Button>
