@@ -9,6 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
+import RandomLoremIpsum from './RandomLoremIpsum.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   const [open, setOpen] = useState(false);
@@ -49,8 +50,9 @@ export default function SingleProjectModal({ rowContent }) {
           {rowContent.name}
         </DialogTitle>
 
-        <DialogContent dividers={scroll === 'paper'}>
+        <DialogContent component="div" dividers={scroll === 'paper'}>
           <DialogContentText
+            component="div"
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
@@ -58,11 +60,12 @@ export default function SingleProjectModal({ rowContent }) {
             Project ID:
             {' '}
             {rowContent.id}
-            <Divider component="span" />
+            <Divider component="div" />
             {rowContent.summary}
-            <Divider component="span" />
-
+            <Divider component="div" />
             {JSON.stringify(rowContent)}
+            <Divider component="div" />
+            <RandomLoremIpsum />
 
           </DialogContentText>
         </DialogContent>
