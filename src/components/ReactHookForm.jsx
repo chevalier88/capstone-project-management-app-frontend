@@ -349,7 +349,6 @@ export default function ReactHookForm() {
           <Controller
             control={control}
             name="userProjects"
-            defaultValue={[users[0]]}
             render={({ field: { ref, onChange, ...field } }) => (
               <>
                 <Typography>
@@ -358,9 +357,8 @@ export default function ReactHookForm() {
                 <Autocomplete
                   multiple
                   options={users}
-                  defaultValue={[users[0]]}
-                  // getOptionLabel={(option) => option.name}
-                  getOptionLabel={(option) => (Object.keys(option))}
+                  getOptionLabel={(option) => String(option.name)}
+                  // groupBy={(option) => option.}
                   onChange={(_, data) => onChange(data)}
                   renderInput={(params) => (
                     <TextField
