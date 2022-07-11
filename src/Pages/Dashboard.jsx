@@ -13,7 +13,7 @@ import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
 import DashboardGridRow from '../components/DashboardGridRow.jsx';
-import AltProjectSubmitFormButton from '../components/AltProjectSubmitFormButton.jsx';
+import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 
 const theme = createTheme();
 
@@ -114,6 +114,7 @@ export default function Dashboard() {
       getUserCompletedProjects();
     }
   }, []);
+
   if (user.length === 0) {
     return (
       <div id="page-container">
@@ -129,7 +130,7 @@ export default function Dashboard() {
         <CssBaseline />
         <main>
           {/* {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />} */}
-          {user.accountType === 'manager' && <AltProjectSubmitFormButton />}
+          {user.accountType === 'manager' && <ProjectSubmitFormButton />}
           <Box
             sx={{
               bgcolor: 'background.paper',
