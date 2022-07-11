@@ -201,6 +201,7 @@ export default function ReactHookForm() {
                 <Typography>
                   Enrolment Deadline (Date and Time):
                 </Typography>
+                <br />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
 
                   <DateTimePicker

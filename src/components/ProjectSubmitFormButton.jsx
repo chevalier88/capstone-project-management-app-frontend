@@ -53,7 +53,12 @@ export default function ProjectSubmitFormButton() {
           {/* </AnimateButton> */}
         </Fab>
       </Tooltip>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="md"
+      >
         <DialogTitle>Submit New Project</DialogTitle>
         <Divider />
         <DialogContent>
