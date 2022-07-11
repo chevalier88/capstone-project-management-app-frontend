@@ -73,12 +73,17 @@ export default function ReactHookForm() {
     getAllSkills();
   }, []);
 
-  const handleOnSubmit = (event) => {
+  async function handleOnSubmit(event) {
     console.log('printing form control... ');
     console.log(event);
-    // console.log(control._formValues);
-    // setFormData(...event);
-  };
+    console.log(typeof (event));
+    try {
+      const postedProject = await axios.post(`${BACKEND_URL}/project`, event);
+      console.log(postedProject);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
