@@ -13,7 +13,7 @@ import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
 import DashboardGridRow from '../components/DashboardGridRow.jsx';
-import FloatingSubmitProjectFormButton from '../components/FloatingSubmitProjectFormButton.jsx';
+import AltProjectSubmitFormButton from '../components/AltProjectSubmitFormButton.jsx';
 
 const theme = createTheme();
 
@@ -128,7 +128,8 @@ export default function Dashboard() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <main>
-          {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />}
+          {/* {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />} */}
+          {user.accountType === 'manager' && <AltProjectSubmitFormButton />}
           <Box
             sx={{
               bgcolor: 'background.paper',

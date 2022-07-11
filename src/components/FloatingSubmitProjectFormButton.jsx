@@ -7,6 +7,22 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Form from 'react-bootstrap/Form';
 
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  TextField,
+  Slider,
+  Select,
+  MenuItem,
+} from '@mui/material';
+
 import {
   Fab,
   IconButton,
@@ -14,13 +30,9 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function FloatingSubmitProjectFormButton() {
+export default function AltSubmitProjectFormButton() {
   const [open, setOpen] = useState(false);
 
-  const [projectName, setProjectName] = useState('');
-  const [summary, setSummary] = useState([]);
-  const [industry, setIndustry] = useState('');
-  // const [engineerNumbers, setEngineerNumbers] = useState(0);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -29,24 +41,25 @@ export default function FloatingSubmitProjectFormButton() {
     setOpen(false);
   };
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    console.log('submitting form...');
+  const { control, handleSubmit } = useForm({
+    reValidateMode: 'onBlur',
+  });
+  const {
+    fields: members,
+    append: appendMemberRow,
+    remove: removeMemberRow,
+  } = useFieldArray({
+    control,
+    name: 'members',
+  });
 
-    const submittedProject = {
-      name: projectName,
-      summary,
-      industryId: industry,
+  console.count('app rerender');
 
-    };
-    console.log('printing currently submitted project...');
-    console.log(submittedProject);
+  const handleOnSubmit = (evt) => {
+    console.log(evt);
+  };
 
-    // const response = await axios.post(`${BACKEND_URL}/trip`, submittedProject);
-
-    // console.log(response.data);
-  }
-
+  const addNewMember = () => appendMemberRow({ email: '', role: 'user' });
   return (
     <div>
 
@@ -117,7 +130,7 @@ export default function FloatingSubmitProjectFormButton() {
                 <option value="2">Finance</option>
                 <option value="3">Market Research</option>
                 <option value="4">Human Resources</option>
-                <option value="5">Human Resources</option>
+                <option value="5">Technology</option>
               </Form.Control>
             </Form.Group>
             {/* <Form.Group controlId="engineerNumbers">
