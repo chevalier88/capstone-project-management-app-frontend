@@ -58,7 +58,7 @@ export default function SingleProjectKanbanModal({ row }) {
           </Toolbar>
           <Divider />
           {/* {JSON.stringify(row.kanbanData)} */}
-          <Board data={row.kanbanData} />
+          <Board data={row.kanbanData} editable />
         </AppBar>
 
       </Dialog>
