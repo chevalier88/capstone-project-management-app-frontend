@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import SearchBar from '../components/SearchBar.jsx';
-
-const data = [
-  'Paris',
-  'London',
-  'New York',
-  'Tokyo',
-  'Berlin',
-  'Buenos Aires',
-  'Cairo',
-  'Canberra',
-  'Rio de Janeiro',
-  'Dublin',
-];
+import BACKEND_URL from '../supportFunctions.js';
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [users, setUsers] = useState([]);
+
+  async function getAllUsers() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/users`);
+      const { data } = results;
+      const currentArray = [];
+      data.forEach((user) => {
+        if (user.accountType === 'engineer') {
+          currentArray.push(user.name);
+        }
+      });
+      console.log(currentArray);
+      setUsers(currentArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   const filterData = (query, data) => {
     if (!query) {
@@ -24,7 +35,7 @@ export default function Search() {
     return data.filter((d) => d.toLowerCase().includes(query));
   };
 
-  const dataFiltered = filterData(searchQuery, data);
+  const dataFiltered = filterData(searchQuery, users);
 
   return (
     <div
@@ -51,7 +62,7 @@ export default function Search() {
               BorderColor: 'green',
               borderWidth: '10px',
             }}
-            key={d.id}
+            key={d}
           >
             {d}
           </div>

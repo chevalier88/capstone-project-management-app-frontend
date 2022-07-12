@@ -12,7 +12,7 @@ export default function SearchBar({ setSearchQuery }) {
         onInput={(e) => {
           setSearchQuery(e.target.value);
         }}
-        label="Enter a city name"
+        label="Enter a user name"
         variant="outlined"
         placeholder="Search..."
         size="small"
