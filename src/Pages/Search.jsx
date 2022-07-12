@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Container } from '@mui/material';
 import SearchBar from '../components/SearchBar.jsx';
 import BACKEND_URL from '../supportFunctions.js';
 import ProfileModalForSearch from '../components/ProfileModalForSearch.jsx';
@@ -33,11 +33,9 @@ export default function Search() {
 
   const filterData = (query, data) => {
     // if (!query) {
-    //   return data;
+    //   return null;
     // }
     const searchResults = data.filter((user) => user.skills.find((skill) => skill.name.toLowerCase().includes(query)) || user.name.toLowerCase().includes(query));
-
-    // const searchResults = data.filter((user) => user.name.toLowerCase().includes(query));
 
     return searchResults;
   };
@@ -46,17 +44,19 @@ export default function Search() {
 
   return (
     <Box>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          {' '}
-          <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        </Grid>
-        {dataFiltered.map((user) => (
-          <Grid key={user.id} item xs={12}>
-            <ProfileModalForSearch key={user.id} user={user} />
+      <Container>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            {' '}
+            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           </Grid>
-        ))}
-      </Grid>
+          {dataFiltered.map((user) => (
+            <Grid key={user.id} item xs={12}>
+              <ProfileModalForSearch key={user.id} user={user} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </Box>
   );
 }

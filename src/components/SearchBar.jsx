@@ -12,12 +12,12 @@ export default function SearchBar({ setSearchQuery }) {
         onInput={(e) => {
           setSearchQuery(e.target.value);
         }}
-        label="Enter a user name"
+        label="Type a name or skill..."
         variant="outlined"
         placeholder="Search..."
         size="small"
       />
-      <IconButton type="submit" aria-label="search">
+      <IconButton disabled aria-label="search">
         <SearchIcon style={{ fill: 'blue' }} />
       </IconButton>
     </form>
