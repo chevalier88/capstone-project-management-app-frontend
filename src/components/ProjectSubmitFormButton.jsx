@@ -62,10 +62,10 @@ export default function ProjectSubmitFormButton() {
         <DialogTitle>Submit New Project</DialogTitle>
         <Divider />
         <DialogContent>
-          <ReactHookForm />
+          <ReactHookForm setOpen={setOpen} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Close & Cancel</Button>
         </DialogActions>
       </Dialog>
     </div>

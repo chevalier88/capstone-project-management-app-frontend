@@ -31,7 +31,7 @@ const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-export default function ReactHookForm() {
+export default function ReactHookForm({ setOpen }) {
   const { control, handleSubmit } = useForm({
     reValidateMode: 'onBlur',
   });
@@ -80,6 +80,7 @@ export default function ReactHookForm() {
     try {
       const postedProject = await axios.post(`${BACKEND_URL}/project`, event);
       console.log(postedProject);
+      setOpen(false);
     } catch (error) {
       console.log(error);
     }
@@ -177,6 +178,9 @@ export default function ReactHookForm() {
                 <Typography>
                   Delivery Deadline (Date):
                 </Typography>
+                <Typography variant="caption">
+                  When must the project be delivered?
+                </Typography>
                 <br />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopDatePicker
@@ -201,9 +205,13 @@ export default function ReactHookForm() {
                 <Typography>
                   Enrolment Deadline (Date and Time):
                 </Typography>
-                <br />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-
+                <Typography variant="caption">
+                  What is the cut-off time for engineers to apply?
+                </Typography>
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  fullWidth
+                >
                   <DateTimePicker
                     {...field}
                     value={value}
@@ -272,9 +280,6 @@ export default function ReactHookForm() {
                   Minimum Salary Paid per Hour:
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
-                  {/* <Grid item>
-                    <AttachMoneyIcon />
-                  </Grid> */}
                   <Grid item>
                     <Typography
                       {...field}
@@ -295,13 +300,12 @@ export default function ReactHookForm() {
                       aria-labelledby="input-slider"
                     />
                   </Grid>
-
                 </Grid>
               </>
             )}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Controller
             control={control}
             name="stage"
@@ -334,13 +338,9 @@ export default function ReactHookForm() {
             defaultValue="100"
             render={({ field: { value, ...field } }) => (
               <>
-                {/* <Grid container spacing={2} alignItems="center"> */}
-                {/* <Grid item> */}
                 <Typography>
                   Projected Total Hours to Completion:
                 </Typography>
-                {/* </Grid> */}
-                {/* <Grid item xs> */}
                 <Input
                   {...field}
                   value={value}
@@ -353,8 +353,6 @@ export default function ReactHookForm() {
                     type: 'number',
                   }}
                 />
-                {/* </Grid> */}
-                {/* </Grid> */}
               </>
             )}
           />
@@ -389,10 +387,9 @@ export default function ReactHookForm() {
             )}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Button type="submit">Submit</Button>
-        </Grid>
       </Grid>
+      <br />
+      <Button variant="outlined" type="submit">Submit</Button>
     </Box>
   );
 }
