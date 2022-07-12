@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Box } from '@mui/material';
@@ -34,7 +35,10 @@ export default function Search() {
     // if (!query) {
     //   return data;
     // }
-    const searchResults = data.filter((user) => user.name.toLowerCase().includes(query));
+    const searchResults = data.filter((user) => user.skills.find((skill) => skill.name.toLowerCase().includes(query)) || user.name.toLowerCase().includes(query));
+
+    // const searchResults = data.filter((user) => user.name.toLowerCase().includes(query));
+
     return searchResults;
   };
 
@@ -48,7 +52,7 @@ export default function Search() {
           <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         </Grid>
         {dataFiltered.map((user) => (
-          <Grid item xs={12}>
+          <Grid key={user.id} item xs={12}>
             <ProfileModalForSearch key={user.id} user={user} />
           </Grid>
         ))}
