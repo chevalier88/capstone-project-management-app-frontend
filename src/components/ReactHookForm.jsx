@@ -301,7 +301,7 @@ export default function ReactHookForm() {
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Controller
             control={control}
             name="stage"
@@ -327,32 +327,34 @@ export default function ReactHookForm() {
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Controller
             control={control}
             name="projectedHours"
             defaultValue="100"
             render={({ field: { value, ...field } }) => (
               <>
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item>
-                    <Typography>
-                      Projected Total Hours to Completion:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs>
-                    <Input
-                      {...field}
-                      value={value}
-                      size="medium"
-                      inputProps={{
-                        step: 5,
-                        min: 0,
-                        type: 'number',
-                      }}
-                    />
-                  </Grid>
-                </Grid>
+                {/* <Grid container spacing={2} alignItems="center"> */}
+                {/* <Grid item> */}
+                <Typography>
+                  Projected Total Hours to Completion:
+                </Typography>
+                {/* </Grid> */}
+                {/* <Grid item xs> */}
+                <Input
+                  {...field}
+                  value={value}
+                  size="medium"
+                  fullWidth
+                  color="secondary"
+                  inputProps={{
+                    step: 5,
+                    min: 0,
+                    type: 'number',
+                  }}
+                />
+                {/* </Grid> */}
+                {/* </Grid> */}
               </>
             )}
           />
