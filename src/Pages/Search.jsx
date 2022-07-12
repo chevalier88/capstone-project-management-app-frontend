@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Grid, Box } from '@mui/material';
 import SearchBar from '../components/SearchBar.jsx';
 import BACKEND_URL from '../supportFunctions.js';
 import ProfileModalForSearch from '../components/ProfileModalForSearch.jsx';
@@ -40,21 +41,18 @@ export default function Search() {
   const dataFiltered = filterData(searchQuery, users);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        padding: 20,
-      }}
-    >
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <div style={{ padding: 3 }}>
+    <Box>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          {' '}
+          <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        </Grid>
         {dataFiltered.map((user) => (
-          <ProfileModalForSearch key={user.id} user={user} />
+          <Grid item xs={12}>
+            <ProfileModalForSearch key={user.id} user={user} />
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   );
 }
