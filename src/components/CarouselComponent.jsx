@@ -24,12 +24,17 @@ export default function CarouselComponent() {
 
   // const { items } = data;
 
+  //  <Carousel itemsToShow={1}>
+  //       {data.photoPath.map((image) => {
+  //           return <item><img src={require(`assets/img/${image}`)} alt="phone" /></item>}
+  //       </Carousel>
+
   const imgURL = 'https://miro.medium.com/max/5000/1*tqlsrfxiy0owv8VEDmPK8A.jpeg';
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>react-elastic-cou</h1>
       <div className="App">
-        <Carousel breakPoints={breakPoints}>
+        <Carousel breakPoints={breakPoints} itemsToShow={1}>
           <Item><img src={imgURL} alt="alt" /></Item>
           <Item>Two</Item>
           <Item>Three</Item>
