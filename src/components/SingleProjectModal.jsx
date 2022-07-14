@@ -34,6 +34,10 @@ export default function SingleProjectModal({ rowContent }) {
     }
   }, [open]);
 
+  const projectId = rowContent.id;
+  console.log(projectId);
+  const api = `${/projects/}${projectId}`;
+
   return (
     <>
       <Button onClick={handleClickOpen()}>View</Button>
@@ -64,12 +68,18 @@ export default function SingleProjectModal({ rowContent }) {
             {rowContent.summary}
             <Divider component="div" />
             {JSON.stringify(rowContent)}
+            {rowContent.id}
             <Divider component="div" />
             <RandomLoremIpsum />
 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          <a href={api}>
+            {' '}
+            <Button>Open Project</Button>
+            {' '}
+          </a>
           <Button onClick={handleClose}>Close</Button>
           {/* {rowContent.stage === 'in-progress' && <Button onClick={(e) => handleKanbanOpen(e)}>Open Kanban</Button>} */}
           {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}

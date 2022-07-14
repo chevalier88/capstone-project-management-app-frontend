@@ -56,6 +56,11 @@ export default function Navbar() {
                     to="/"
                   />
                   <Tab
+                    label="OneProject"
+                    component={Link}
+                    to="/projects"
+                  />
+                  <Tab
                     label="Dashboard"
                     component={Link}
                     to="/dashboard"
