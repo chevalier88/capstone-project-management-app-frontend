@@ -19,7 +19,7 @@
     "date-fns": "^2.28.0",
     "firebase": "^8.2.3",
     "fs-extra": "^9.0.0",
-    "gestalt": "^1.58.1",
+    "gestalt": "^62.0.5",
     "mathjs": "^10.6.4",
     "react": "^17.0.1",
     "react-bootstrap": "^2.4.0",

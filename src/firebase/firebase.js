@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-import { mergeAnnotations } from '../components/FakeDocusign/MergeAnnotations/MergeAnnotations';
+import mergeAnnotations from '../components/FakeDocusign/MergeAnnotations/MergeAnnotations.js';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -47,7 +47,7 @@ export const generateUserDocument = async (user, additionalData) => {
   return getUserDocument(user.uid);
 };
 
-const getUserDocument = async uid => {
+const getUserDocument = async (uid) => {
   if (!uid) return null;
   try {
     const userDocument = await firestore.doc(`users/${uid}`).get();
@@ -80,10 +80,10 @@ export const addDocumentToSign = async (uid, email, docRef, emails) => {
       requestedTime,
       signedTime,
     })
-    .then(function (docRef) {
+    .then((docRef) => {
       console.log('Document written with ID: ', docRef.id);
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.error('Error adding document: ', error);
     });
 };
@@ -92,9 +92,11 @@ export const updateDocumentToSign = async (docId, email, xfdfSigned) => {
   const documentRef = firestore.collection('documentsToSign').doc(docId);
   documentRef
     .get()
-    .then(async doc => {
+    .then(async (doc) => {
       if (doc.exists) {
-        const { signedBy, emails, xfdf, docRef } = doc.data();
+        const {
+          signedBy, emails, xfdf, docRef,
+        } = doc.data();
         if (!signedBy.includes(email)) {
           const signedByArray = [...signedBy, email];
           const xfdfArray = [...xfdf, xfdfSigned];
@@ -117,12 +119,12 @@ export const updateDocumentToSign = async (docId, email, xfdfSigned) => {
         console.log('No such document!');
       }
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log('Error getting document:', error);
     });
 };
 
-export const searchForDocumentToSign = async email => {
+export const searchForDocumentToSign = async (email) => {
   const documentsRef = firestore.collection('documentsToSign');
   const query = documentsRef
     .where('emails', 'array-contains', email)
@@ -136,52 +138,56 @@ export const searchForDocumentToSign = async email => {
 
   await querySigned
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
         const docId = doc.id;
         docIdSigned.push(docId);
       });
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log('Error getting documents: ', error);
     });
 
   await query
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
         const { docRef, email, requestedTime } = doc.data();
         const docId = doc.id;
         if (!docIdSigned.includes(docId)) {
-          docIds.push({ docRef, email, requestedTime, docId });
+          docIds.push({
+            docRef, email, requestedTime, docId,
+          });
         }
       });
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log('Error getting documents: ', error);
     });
   return docIds;
 };
 
-export const searchForDocumentsSigned = async email => {
+export const searchForDocumentsSigned = async (email) => {
   const documentsRef = firestore.collection('documentsToSign');
 
   const docIds = [];
 
-  let query = documentsRef
+  const query = documentsRef
     .where('email', '==', email)
     .where('signed', '==', true);
 
   await query
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
         const { docRef, emails, signedTime } = doc.data();
         const docId = doc.id;
-        docIds.push({ docRef, emails, signedTime, docId });
+        docIds.push({
+          docRef, emails, signedTime, docId,
+        });
       });
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log('Error getting documents: ', error);
     });
 
