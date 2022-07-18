@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box, Column, Heading, Row, Stack, Button,
+  Box, Column, Heading, Button,
 } from 'gestalt';
 import WebViewer from '@pdftron/webviewer';
 import { selectDocToView } from './ViewDocumentSlice.js';
@@ -60,26 +60,26 @@ const ViewDocument = () => {
             <Heading size="md">View Document</Heading>
           </Box>
           <Box padding={3}>
-            <Row gap={1}>
-              <Stack>
-                <Box padding={2}>
-                  <Button
-                    onClick={download}
-                    accessibilityLabel="download signed document"
-                    text="Download"
-                    iconEnd="download"
-                  />
-                </Box>
-                <Box padding={2}>
-                  <Button
-                    onClick={doneViewing}
-                    accessibilityLabel="complete signing"
-                    text="Done viewing"
-                    iconEnd="check"
-                  />
-                </Box>
-              </Stack>
-            </Row>
+            {/* <Row gap={1}> */}
+            {/* <Stack> */}
+            <Box padding={2}>
+              <Button
+                onClick={download}
+                accessibilityLabel="download signed document"
+                text="Download"
+                iconEnd="download"
+              />
+            </Box>
+            <Box padding={2}>
+              <Button
+                onClick={doneViewing}
+                accessibilityLabel="complete signing"
+                text="Done viewing"
+                iconEnd="check"
+              />
+            </Box>
+            {/* </Stack> */}
+            {/* </Row> */}
           </Box>
         </Column>
         <Column span={10}>

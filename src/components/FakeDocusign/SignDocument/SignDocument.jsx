@@ -6,7 +6,7 @@ import React, {
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box, Column, Heading, Row, Stack, Button,
+  Box, Column, Heading, Button,
 } from 'gestalt';
 import WebViewer from '@pdftron/webviewer';
 import { selectDocToSign } from './SignDocumentSlice.js';
@@ -121,35 +121,36 @@ const SignDocument = () => {
           <Box padding={3}>
             <Heading size="md">Sign Document</Heading>
           </Box>
+
           <Box padding={3}>
-            <Row gap={1}>
-              <Stack>
-                <Box padding={2}>
-                  <Button
-                    onClick={nextField}
-                    accessibilityLabel="next field"
-                    text="Next field"
-                    iconEnd="arrow-forward"
-                  />
-                </Box>
-                <Box padding={2}>
-                  <Button
-                    onClick={prevField}
-                    accessibilityLabel="Previous field"
-                    text="Previous field"
-                    iconEnd="arrow-back"
-                  />
-                </Box>
-                <Box padding={2}>
-                  <Button
-                    onClick={completeSigning}
-                    accessibilityLabel="complete signing"
-                    text="Complete signing"
-                    iconEnd="compose"
-                  />
-                </Box>
-              </Stack>
-            </Row>
+            {/* <Row gap={1}> */}
+            {/* <Stack> */}
+            <Box padding={2}>
+              <Button
+                onClick={nextField}
+                accessibilityLabel="next field"
+                text="Next field"
+                iconEnd="arrow-forward"
+              />
+            </Box>
+            <Box padding={2}>
+              <Button
+                onClick={prevField}
+                accessibilityLabel="Previous field"
+                text="Previous field"
+                iconEnd="arrow-back"
+              />
+            </Box>
+            <Box padding={2}>
+              <Button
+                onClick={completeSigning}
+                accessibilityLabel="complete signing"
+                text="Complete signing"
+                iconEnd="compose"
+              />
+            </Box>
+            {/* </Stack> */}
+            {/* </Row> */}
           </Box>
         </Column>
         <Column span={10}>

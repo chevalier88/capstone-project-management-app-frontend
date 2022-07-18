@@ -34,7 +34,7 @@ const ProfilePage = () => {
         </Box>
         <Box padding={2}>
           <Button
-            onClick={(event) => {
+            onClick={() => {
               navigate('/assignUsers');
             }}
             text="Prepare Document for Signing"

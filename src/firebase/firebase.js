@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/no-cycle */
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -28,6 +29,18 @@ export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
 };
 
+const getUserDocument = async (uid) => {
+  if (!uid) return null;
+  try {
+    const userDocument = await firestore.doc(`users/${uid}`).get();
+    return {
+      uid,
+      ...userDocument.data(),
+    };
+  } catch (error) {
+    console.error('Error fetching user', error);
+  }
+};
 export const generateUserDocument = async (user, additionalData) => {
   if (!user) return;
   const userRef = firestore.doc(`users/${user.uid}`);
@@ -47,20 +60,6 @@ export const generateUserDocument = async (user, additionalData) => {
   }
   return getUserDocument(user.uid);
 };
-
-const getUserDocument = async (uid) => {
-  if (!uid) return null;
-  try {
-    const userDocument = await firestore.doc(`users/${uid}`).get();
-    return {
-      uid,
-      ...userDocument.data(),
-    };
-  } catch (error) {
-    console.error('Error fetching user', error);
-  }
-};
-
 export const addDocumentToSign = async (uid, email, docRef, emails) => {
   if (!uid) return;
   const signed = false;
