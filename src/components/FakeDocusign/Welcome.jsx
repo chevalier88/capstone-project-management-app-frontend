@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import {
-  Grid,
-  Button, Container, Typography,
-} from '@mui/material';
+  Box, Button, Container, Heading,
+} from 'gestalt';
+
+// import {
+//   Grid,
+//   Button, Container, Typography,
+// } from '@mui/material';
 import SignList from './Lists/SignList.jsx';
 import SignedList from './Lists/SignedList.jsx';
 import { resetDocToView } from './ViewDocument/ViewDocumentSlice.js';
@@ -20,36 +24,66 @@ function Welcome() {
   useEffect(() => {
     dispatch(resetDocToView());
     dispatch(resetDocToSign());
+    console.log('does dispatch run?');
   }, [dispatch]);
 
   return (
-    <Container>
-      <Grid item xs={12}>
-        <Typography size="md">Sign Documents</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <SignList />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography size="md">Prepare Document</Typography>
-      </Grid>
-      <Grid item xs={12} padding={2}>
-        <Button
-          onClick={() => {
-            navigate('/assignUsers');
-          }}
-          text="Prepare Document for Signing"
-          color="blue"
-          inline
-        />
-      </Grid>
-      <Grid item xs={12} padding={3}>
-        <Typography size="md">Review Signed Documents</Typography>
-      </Grid>
-      <Grid item xs={12} padding={3}>
-        <SignedList />
-      </Grid>
-    </Container>
+  // <Container>
+  //   <Grid item xs={12}>
+  //     <Typography size="md">Sign Documents</Typography>
+  //   </Grid>
+  //   <Grid item xs={12}>
+  //     <SignList />
+  //   </Grid>
+  //   <Grid item xs={12}>
+  //     <Typography size="md">Prepare Document</Typography>
+  //   </Grid>
+  //   <Grid item xs={12} padding={2}>
+  //     <Button
+  //       onClick={() => {
+  //         navigate('/assignUsers');
+  //       }}
+  //     >
+  //       Prepare Document for Signing
+
+  //     </Button>
+  //   </Grid>
+  //   <Grid item xs={12} padding={3}>
+  //     <Typography size="md">Review Signed Documents</Typography>
+  //   </Grid>
+  //   <Grid item xs={12} padding={3}>
+  //     <SignedList />
+  //   </Grid>
+  // </Container>
+    <div>
+      <Container>
+        <Box padding={3}>
+          <Heading size="md">Sign Documents</Heading>
+        </Box>
+        <Box padding={3}>
+          <SignList />
+        </Box>
+        <Box padding={3}>
+          <Heading size="md">Prepare Document</Heading>
+        </Box>
+        <Box padding={2}>
+          <Button
+            onClick={() => {
+              navigate('/assignUsers');
+            }}
+            text="Prepare Document for Signing"
+            color="blue"
+            inline
+          />
+        </Box>
+        <Box padding={3}>
+          <Heading size="md">Review Signed Documents</Heading>
+        </Box>
+        <Box padding={3}>
+          <SignedList />
+        </Box>
+      </Container>
+    </div>
   );
 }
 export default Welcome;

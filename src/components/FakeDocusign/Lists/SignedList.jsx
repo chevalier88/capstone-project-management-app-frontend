@@ -14,6 +14,8 @@ const SignedList = () => {
   const [show, setShow] = useState(true);
   const { user } = useContext(UserContext);
   const { email } = user;
+  console.log(user);
+  console.log(email);
 
   const dispatch = useDispatch();
 
