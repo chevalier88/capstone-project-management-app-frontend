@@ -127,7 +127,7 @@ export const updateDocumentToSign = async (docId, email, xfdfSigned) => {
 
 export const searchForDocumentToSign = async (email) => {
   const documentsRef = firestore.collection('documentsToSign');
-  console.log(email);
+  console.log(documentsRef);
   const query = documentsRef
     .where('emails', 'array-contains', email)
     .where('signed', '==', false);
@@ -173,6 +173,7 @@ export const searchForDocumentsSigned = async (email) => {
   console.log(email);
 
   const documentsRef = firestore.collection('documentsToSign');
+  console.log(documentsRef);
 
   const docIds = [];
 
