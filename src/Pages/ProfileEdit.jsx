@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import {
@@ -27,6 +28,9 @@ export default function ProfileEdit() {
 
   // .......... HELPER FUNCTIONS .................
 
+  const navigate = useNavigate();
+
+  // get all skills to populate dropdown
   async function getSkills() {
     try {
       const results = await axios.get(`${BACKEND_URL}/skills`);
@@ -41,13 +45,16 @@ export default function ProfileEdit() {
     reValidateMode: 'onBlur',
   });
 
+  // function to run when submitting form
   async function handleOnSubmit(event) {
     console.log('updating user data');
     console.log(event);
-    console.log(typeof (event));
     try {
       const updateUserData = await axios.post(`${BACKEND_URL}/users/edit/${user.id}`, event);
       console.log(updateUserData);
+      // redirect to profile page
+      navigate('../profile', { replace: true });
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
