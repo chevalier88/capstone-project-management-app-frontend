@@ -9,14 +9,14 @@ export const ViewDocumentSlice = createSlice({
     setDocToView: (state, action) => {
       state.docToView = action.payload;
     },
-    resetDocToView: (state, action) => {
+    resetDocToView: (state) => {
       state.docToView = null;
-    }
+    },
   },
 });
 
 export const { setDocToView, resetDocToView } = ViewDocumentSlice.actions;
 
-export const selectDocToView = state => state.viewDoc.docToView;
+export const selectDocToView = (state) => state.viewDoc.docToView;
 
 export default ViewDocumentSlice.reducer;

@@ -50,8 +50,8 @@ const SignedList = () => {
                 {docs.map((doc) => (
                   <Table.Row key={doc.docRef}>
                     <Table.Cell>
-                      {doc.emails.map((email) => (
-                        <Text key={email}>{email}</Text>
+                      {doc.emails.map((emailkey) => (
+                        <Text key={emailkey}>{emailkey}</Text>
                       ))}
                     </Table.Cell>
                     <Table.Cell>
@@ -59,7 +59,7 @@ const SignedList = () => {
                     </Table.Cell>
                     <Table.Cell>
                       <Button
-                        onClick={(event) => {
+                        onClick={() => {
                           const { docRef, docId } = doc;
                           dispatch(setDocToView({ docRef, docId }));
                           navigate('/viewDocument');

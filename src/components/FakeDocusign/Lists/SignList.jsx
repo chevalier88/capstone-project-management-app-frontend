@@ -1,15 +1,17 @@
-import React, { useEffect, useState,  useContext } from 'react';
-import { Button, Table, Text, Spinner } from 'gestalt';
+import React, { useEffect, useState, useContext } from 'react';
+import {
+  Button, Table, Text, Spinner,
+} from 'gestalt';
 import 'gestalt/dist/gestalt.css';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { searchForDocumentToSign } from '../../../firebase/firebase.js';
 import { setDocToSign } from '../SignDocument/SignDocumentSlice.js';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../UserContext.jsx';
 
 const SignList = () => {
   const { user } = useContext(UserContext);
-  const { email } = user; 
+  const { email } = user;
 
   const [docs, setDocs] = useState([]);
   const [show, setShow] = useState(true);
@@ -46,20 +48,20 @@ const SignList = () => {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {docs.map(doc => (
+                {docs.map((doc) => (
                   <Table.Row key={doc.docRef}>
                     <Table.Cell>
                       <Text>{doc.email}</Text>
                     </Table.Cell>
                     <Table.Cell>
-                      <Text>{doc.requestedTime ? new Date(doc.requestedTime.seconds*1000).toDateString() : ''}</Text>
+                      <Text>{doc.requestedTime ? new Date(doc.requestedTime.seconds * 1000).toDateString() : ''}</Text>
                     </Table.Cell>
                     <Table.Cell>
                       <Button
-                        onClick={event => {
+                        onClick={() => {
                           const { docRef, docId } = doc;
                           dispatch(setDocToSign({ docRef, docId }));
-                          navigate(`/signDocument`);
+                          navigate('/signDocument');
                         }}
                         text="Sign"
                         color="blue"

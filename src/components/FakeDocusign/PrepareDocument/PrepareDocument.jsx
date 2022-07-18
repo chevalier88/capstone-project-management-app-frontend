@@ -1,4 +1,13 @@
-import React, { useContext, useRef, useEffect, useState } from 'react';
+/* eslint-disable consistent-return */
+/* eslint-disable func-names */
+/* eslint-disable no-shadow */
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+/* eslint-disable no-use-before-define */
+import React, {
+  useContext, useRef, useEffect, useState,
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -11,9 +20,9 @@ import {
   Button,
   SelectList,
 } from 'gestalt';
-import { selectAssignees, resetSignee } from '../Assign/AssignSlice.js';
-import { storage, addDocumentToSign } from '../../../firebase/firebase';
 import WebViewer from '@pdftron/webviewer';
+import { selectAssignees, resetSignee } from '../Assign/AssignSlice.js';
+import { storage, addDocumentToSign } from '../../../firebase/firebase.js';
 import 'gestalt/dist/gestalt.css';
 import './PrepareDocument.css';
 import { UserContext } from '../../UserContext.jsx';
@@ -27,11 +36,9 @@ const PrepareDocument = () => {
   const navigate = useNavigate();
 
   const assignees = useSelector(selectAssignees);
-  const assigneesValues = assignees.map(user => {
-    return { value: user.email, label: user.name };
-  });
-  let initialAssignee =
-    assigneesValues.length > 0 ? assigneesValues[0].value : '';
+  // eslint-disable-next-line max-len
+  const assigneesValues = assignees.map((userkey) => ({ value: userkey.email, label: userkey.name }));
+  const initialAssignee = assigneesValues.length > 0 ? assigneesValues[0].value : '';
   const [assignee, setAssignee] = useState(initialAssignee);
 
   const { id, email } = user;
@@ -52,24 +59,24 @@ const PrepareDocument = () => {
         ],
       },
       viewer.current,
-    ).then(instance => {
-      const { iframeWindow } = instance;
+    ).then((anotherInstance) => {
+      const { iframeWindow } = anotherInstance;
 
       // select only the view group
-      instance.setToolbarGroup('toolbarGroup-View');
+      anotherInstance.setToolbarGroup('toolbarGroup-View');
 
-      setInstance(instance);
+      setInstance(anotherInstance);
 
       const iframeDoc = iframeWindow.document.body;
       iframeDoc.addEventListener('dragover', dragOver);
-      iframeDoc.addEventListener('drop', e => {
-        drop(e, instance);
+      iframeDoc.addEventListener('drop', (e) => {
+        drop(e, anotherInstance);
       });
 
-      filePicker.current.onchange = e => {
+      filePicker.current.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
-          instance.loadDocument(file);
+          anotherInstance.loadDocument(file);
         }
       };
     });
@@ -148,7 +155,7 @@ const PrepareDocument = () => {
                 },
               },
             );
-  
+
             inputAnnot = new Annotations.DatePickerWidgetAnnotation(field);
           } else {
             // exit early for other annotations
@@ -208,15 +215,14 @@ const PrepareDocument = () => {
     const displayMode = docViewer.getDisplayModeManager().getDisplayMode();
     const page = displayMode.getSelectedPages(point, point);
     if (!!point.x && page.first == null) {
-      return; //don't add field to an invalid page location
+      return; // don't add field to an invalid page location
     }
-    const page_idx =
-      page.first !== null ? page.first : docViewer.getCurrentPage();
+    const page_idx = page.first !== null ? page.first : docViewer.getCurrentPage();
     const page_info = doc.getPageInfo(page_idx);
     const page_point = displayMode.windowToPage(point, page_idx);
     const zoom = docViewer.getZoom();
 
-    var textAnnot = new Annotations.FreeTextAnnotation();
+    const textAnnot = new Annotations.FreeTextAnnotation();
     textAnnot.PageNumber = page_idx;
     const rotation = docViewer.getCompleteRotation(page_idx) * 90;
     textAnnot.Rotation = rotation;
@@ -240,7 +246,7 @@ const PrepareDocument = () => {
 
     // set the type of annot
     textAnnot.setContents(textAnnot.custom.name);
-    textAnnot.FontSize = '' + 20.0 / zoom + 'px';
+    textAnnot.FontSize = `${20.0 / zoom}px`;
     textAnnot.FillColor = new Annotations.Color(211, 211, 211, 0.5);
     textAnnot.TextColor = new Annotations.Color(0, 165, 228);
     textAnnot.StrokeThickness = 1;
@@ -266,20 +272,18 @@ const PrepareDocument = () => {
     const data = await doc.getFileData({ xfdfString });
     const arr = new Uint8Array(data);
     const blob = new Blob([arr], { type: 'application/pdf' });
-    docRef.put(blob).then(function (snapshot) {
+    docRef.put(blob).then((snapshot) => {
       console.log('Uploaded the blob');
     });
 
     // create an entry in the database
-    const emails = assignees.map(assignee => {
-      return assignee.email;
-    });
+    const emails = assignees.map((assigneeElement) => assigneeElement.email);
     await addDocumentToSign(id, email, referenceString, emails);
     dispatch(resetSignee());
     navigate('/fakeDocusign');
   };
 
-  const dragOver = e => {
+  const dragOver = (e) => {
     e.preventDefault();
     return false;
   };
@@ -294,7 +298,7 @@ const PrepareDocument = () => {
     return false;
   };
 
-  const dragStart = e => {
+  const dragStart = (e) => {
     e.target.style.opacity = 0.5;
     const copy = e.target.cloneNode(true);
     copy.id = 'form-build-drag-image-copy';
@@ -314,7 +318,7 @@ const PrepareDocument = () => {
   };
 
   return (
-    <div className={'prepareDocument'}>
+    <div className="prepareDocument">
       <Box display="flex" direction="row" flex="grow">
         <Column span={2}>
           <Box padding={3}>
@@ -324,7 +328,7 @@ const PrepareDocument = () => {
             <Row gap={1}>
               <Stack>
                 <Box padding={2}>
-                  <Text>{'Step 1'}</Text>
+                  <Text>Step 1</Text>
                 </Box>
                 <Box padding={2}>
                   <Button
@@ -343,7 +347,7 @@ const PrepareDocument = () => {
             <Row>
               <Stack>
                 <Box padding={2}>
-                  <Text>{'Step 2'}</Text>
+                  <Text>Step 2</Text>
                 </Box>
                 <Box padding={2}>
                   <SelectList
@@ -359,8 +363,8 @@ const PrepareDocument = () => {
                 <Box padding={2}>
                   <div
                     draggable
-                    onDragStart={e => dragStart(e)}
-                    onDragEnd={e => dragEnd(e, 'SIGNATURE')}
+                    onDragStart={(e) => dragStart(e)}
+                    onDragEnd={(e) => dragEnd(e, 'SIGNATURE')}
                   >
                     <Button
                       onClick={() => addField('SIGNATURE')}
@@ -373,8 +377,8 @@ const PrepareDocument = () => {
                 <Box padding={2}>
                   <div
                     draggable
-                    onDragStart={e => dragStart(e)}
-                    onDragEnd={e => dragEnd(e, 'TEXT')}
+                    onDragStart={(e) => dragStart(e)}
+                    onDragEnd={(e) => dragEnd(e, 'TEXT')}
                   >
                     <Button
                       onClick={() => addField('TEXT')}
@@ -387,8 +391,8 @@ const PrepareDocument = () => {
                 <Box padding={2}>
                   <div
                     draggable
-                    onDragStart={e => dragStart(e)}
-                    onDragEnd={e => dragEnd(e, 'DATE')}
+                    onDragStart={(e) => dragStart(e)}
+                    onDragEnd={(e) => dragEnd(e, 'DATE')}
                   >
                     <Button
                       onClick={() => addField('DATE')}
@@ -403,7 +407,7 @@ const PrepareDocument = () => {
             <Row gap={1}>
               <Stack>
                 <Box padding={2}>
-                  <Text>{'Step 3'}</Text>
+                  <Text>Step 3</Text>
                 </Box>
                 <Box padding={2}>
                   <Button
@@ -418,7 +422,7 @@ const PrepareDocument = () => {
           </Box>
         </Column>
         <Column span={10}>
-          <div className="webviewer" ref={viewer}></div>
+          <div className="webviewer" ref={viewer} />
         </Column>
       </Box>
       <input type="file" ref={filePicker} style={{ display: 'none' }} />

@@ -1,10 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Column, Heading, Row, Stack, Button } from 'gestalt';
-import { selectDocToView } from './ViewDocumentSlice';
-import { storage } from '../../../firebase/firebase';
+import {
+  Box, Column, Heading, Row, Stack, Button,
+} from 'gestalt';
 import WebViewer from '@pdftron/webviewer';
+import { selectDocToView } from './ViewDocumentSlice.js';
+import { storage } from '../../../firebase/firebase.js';
 import 'gestalt/dist/gestalt.css';
 import './ViewDocument.css';
 
@@ -28,11 +30,11 @@ const ViewDocument = () => {
         ],
       },
       viewer.current,
-    ).then(async instance => {
+    ).then(async (newInstance) => {
       // select only the view group
-      instance.setToolbarGroup('toolbarGroup-View');
+      newInstance.setToolbarGroup('toolbarGroup-View');
 
-      setInstance(instance);
+      setInstance(newInstance);
 
       // load document
       const storageRef = storage.ref();
@@ -48,10 +50,10 @@ const ViewDocument = () => {
 
   const doneViewing = async () => {
     navigate('/fakeDocusign');
-  }
+  };
 
   return (
-    <div className={'prepareDocument'}>
+    <div className="prepareDocument">
       <Box display="flex" direction="row" flex="grow">
         <Column span={2}>
           <Box padding={3}>
@@ -81,7 +83,7 @@ const ViewDocument = () => {
           </Box>
         </Column>
         <Column span={10}>
-          <div className="webviewer" ref={viewer}></div>
+          <div className="webviewer" ref={viewer} />
         </Column>
       </Box>
     </div>

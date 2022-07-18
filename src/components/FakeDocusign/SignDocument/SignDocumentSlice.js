@@ -9,14 +9,14 @@ export const SignDocumentSlice = createSlice({
     setDocToSign: (state, action) => {
       state.docToSign = action.payload;
     },
-    resetDocToSign: (state, action) => {
+    resetDocToSign: (state) => {
       state.docToSign = null;
-    }
+    },
   },
 });
 
 export const { setDocToSign, resetDocToSign } = SignDocumentSlice.actions;
 
-export const selectDocToSign = state => state.signDoc.docToSign;
+export const selectDocToSign = (state) => state.signDoc.docToSign;
 
 export default SignDocumentSlice.reducer;

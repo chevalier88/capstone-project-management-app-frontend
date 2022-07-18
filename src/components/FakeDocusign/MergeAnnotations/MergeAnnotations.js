@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable import/no-cycle */
 import { storage } from '../../../firebase/firebase.js';
@@ -31,7 +32,7 @@ const mergeAnnotations = async (docRef, xfdf) => {
 
     const documentRef = storageRef.child(docRef);
 
-    documentRef.put(blob).then((snapshot) => {
+    documentRef.put(blob).then(() => {
       console.log('Uploaded the blob');
     });
   };
