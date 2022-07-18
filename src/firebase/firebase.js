@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
+// import { UserContext } from '../components/UserContext.jsx';
 
 import mergeAnnotations from '../components/FakeDocusign/MergeAnnotations/MergeAnnotations.js';
 
@@ -126,6 +127,7 @@ export const updateDocumentToSign = async (docId, email, xfdfSigned) => {
 
 export const searchForDocumentToSign = async (email) => {
   const documentsRef = firestore.collection('documentsToSign');
+  console.log(email);
   const query = documentsRef
     .where('emails', 'array-contains', email)
     .where('signed', '==', false);
@@ -168,6 +170,8 @@ export const searchForDocumentToSign = async (email) => {
 };
 
 export const searchForDocumentsSigned = async (email) => {
+  console.log(email);
+
   const documentsRef = firestore.collection('documentsToSign');
 
   const docIds = [];

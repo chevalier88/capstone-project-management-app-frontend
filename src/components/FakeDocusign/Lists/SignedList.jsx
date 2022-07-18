@@ -10,25 +10,31 @@ import { setDocToView } from '../ViewDocument/ViewDocumentSlice.js';
 import { UserContext } from '../../UserContext.jsx';
 
 const SignedList = () => {
-  const [docs, setDocs] = useState([]);
-  const [show, setShow] = useState(true);
-  const { user } = useContext(UserContext);
-  const { email } = user;
-  console.log(user);
-  console.log(email);
-
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+  const [docs, setDocs] = useState([]);
+  const [show, setShow] = useState(true);
+  const { user } = useContext(UserContext);
+  console.log('signedList email:');
+  console.log(user.email);
 
-  useEffect(() => {
-    async function getDocs() {
-      const docsToView = await searchForDocumentsSigned(email);
+  async function getDocs() {
+    try {
+      const docsToView = await searchForDocumentsSigned(user.email);
       setDocs(docsToView);
       setShow(false);
+    } catch (error) {
+      console.log(error);
     }
-    setTimeout(getDocs, 1000);
-  }, [email]);
+  }
+
+  useEffect(() => {
+    if (user.email !== null) {
+      setTimeout(getDocs, 3000);
+    }
+  }, [user]);
+  // }, [user]);
 
   return (
     <div>
