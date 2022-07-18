@@ -30,17 +30,17 @@ const ViewDocument = () => {
         ],
       },
       viewer.current,
-    ).then(async (newInstance) => {
+    ).then(async (anotherInstance) => {
       // select only the view group
-      newInstance.setToolbarGroup('toolbarGroup-View');
+      anotherInstance.setToolbarGroup('toolbarGroup-View');
 
-      setInstance(newInstance);
+      setInstance(anotherInstance);
 
       // load document
       const storageRef = storage.ref();
       const URL = await storageRef.child(docRef).getDownloadURL();
       console.log(URL);
-      instance.docViewer.loadDocument(URL);
+      anotherInstance.docViewer.loadDocument(URL);
     });
   }, [docRef]);
 

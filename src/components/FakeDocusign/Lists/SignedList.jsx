@@ -31,7 +31,7 @@ const SignedList = () => {
 
   useEffect(() => {
     if (user.email !== null) {
-      setTimeout(getDocs, 3000);
+      setTimeout(getDocs, 1000);
     }
   }, [user]);
   // }, [user]);
