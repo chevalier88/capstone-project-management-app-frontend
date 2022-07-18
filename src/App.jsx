@@ -45,24 +45,23 @@ export default function App() {
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ user, setUser }}>
-        <Navbar />
-        <Routes>
-          <Route path="/" exact element={<Home />} />
-          <Route path="Dashboard" exact element={<Dashboard />} />
-          <Route path="projects/:id" exact element={<OneProject />} />
-          <Route path="profile" exact element={<Profile />} />
-          <Route path="search" element={<Search />} />
-          <Route path="login" element={<Login />} />
-          <Route path="profile/edit" element={<ProfileEdit />} />
-          <Provider store={store}>
+        <Provider store={store}>
+          <Navbar />
+          <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/fakeDocusign" exact element={<Welcome />} />
-            <Route path="/assignUsers" exact element={<AssignUsers />} />
-            <Route path="/prepareDocument" exact element={<Preparation />} />
-            <Route path="/signDocument" exact element={<Sign />} />
-            <Route path="/viewDocument" exact element={<View />} />
-          </Provider>
-        </Routes>
+            <Route path="Dashboard" exact element={<Dashboard />} />
+            <Route path="projects/:id" exact element={<OneProject />} />
+            <Route path="profile" exact element={<Profile />} />
+            <Route path="search" element={<Search />} />
+            <Route path="login" element={<Login />} />
+            <Route path="profile/edit" element={<ProfileEdit />} />
+            <Route path="fakeDocusign" exact element={<Welcome />} />
+            <Route path="assignUsers" exact element={<AssignUsers />} />
+            <Route path="prepareDocument" exact element={<Preparation />} />
+            <Route path="signDocument" exact element={<Sign />} />
+            <Route path="viewDocument" exact element={<View />} />
+          </Routes>
+        </Provider>
       </UserContext.Provider>
     </BrowserRouter>
 
