@@ -9,6 +9,7 @@ import {
   Box, Column, Heading, Button,
 } from 'gestalt';
 import WebViewer from '@pdftron/webviewer';
+import { typeOf } from 'mathjs';
 import { selectDocToSign } from './SignDocumentSlice.js';
 import { storage, updateDocumentToSign } from '../../../firebase/firebase.js';
 import 'gestalt/dist/gestalt.css';
@@ -17,13 +18,15 @@ import { UserContext } from '../../UserContext.jsx';
 
 const SignDocument = () => {
   const { user } = useContext(UserContext);
-  const [annotManager, setAnnotatManager] = useState(null);
+  const [annotationManager, setAnnotatManager] = useState([]);
   const [annotPosition, setAnnotPosition] = useState(0);
 
   const doc = useSelector(selectDocToSign);
 
   const { docRef, docId } = doc;
   const { email } = user;
+
+  console.log(email, docRef, docId);
 
   const viewer = useRef(null);
   const navigate = useNavigate();
@@ -48,12 +51,14 @@ const SignDocument = () => {
       },
       viewer.current,
     ).then(async (instance) => {
-      const { docViewer, anotherAnnotManager, Annotations } = instance;
-      console.log('printing annotAnnotManager...');
-      console.log(anotherAnnotManager);
-      setAnnotatManager(anotherAnnotManager);
-      console.log('printing annotManager...');
+      console.log(instance);
+      const { docViewer, annotManager, Annotations } = instance;
+
       console.log(annotManager);
+      console.log(typeOf(annotManager));
+
+      setAnnotatManager(...annotationManager, annotManager);
+
       // select only the insert group
       instance.setToolbarGroup('toolbarGroup-Insert');
 
@@ -75,6 +80,9 @@ const SignDocument = () => {
         }
       };
 
+      console.log('annotationManager:');
+      console.log(annotManager);
+
       annotManager.on('annotationChanged', (annotations, action, { imported }) => {
         if (imported && action === 'add') {
           annotations.forEach((annot) => {
@@ -89,12 +97,13 @@ const SignDocument = () => {
         }
       });
     });
-  }, [docRef, email]);
+  }, []);
+  // }, [docRef, email]);
 
   const nextField = () => {
-    const annots = annotManager.getAnnotationsList();
+    const annots = annotationManager.getAnnotationsList();
     if (annots[annotPosition]) {
-      annotManager.jumpToAnnotation(annots[annotPosition]);
+      annotationManager.jumpToAnnotation(annots[annotPosition]);
       if (annots[annotPosition + 1]) {
         setAnnotPosition(annotPosition + 1);
       }
@@ -102,9 +111,9 @@ const SignDocument = () => {
   };
 
   const prevField = () => {
-    const annots = annotManager.getAnnotationsList();
+    const annots = annotationManager.getAnnotationsList();
     if (annots[annotPosition]) {
-      annotManager.jumpToAnnotation(annots[annotPosition]);
+      annotationManager.jumpToAnnotation(annots[annotPosition]);
       if (annots[annotPosition - 1]) {
         setAnnotPosition(annotPosition - 1);
       }
@@ -112,7 +121,7 @@ const SignDocument = () => {
   };
 
   const completeSigning = async () => {
-    const xfdf = await annotManager.exportAnnotations({ widgets: false, links: false });
+    const xfdf = await annotationManager.exportAnnotations({ widgets: false, links: false });
     console.log(xfdf);
     await updateDocumentToSign(docId, email, xfdf);
     navigate('/fakeDocusign');
