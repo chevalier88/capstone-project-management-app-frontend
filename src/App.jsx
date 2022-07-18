@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Home from './Pages/Home.jsx';
 import Search from './Pages/Search.jsx';
@@ -12,6 +13,8 @@ import ProfileEdit from './Pages/ProfileEdit.jsx';
 import OneProject from './Pages/OneProject.jsx';
 import { UserContext } from './components/UserContext.jsx';
 import BACKEND_URL from './supportFunctions.js';
+
+import store from './app/store';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
