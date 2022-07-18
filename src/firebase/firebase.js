@@ -112,7 +112,7 @@ export const updateDocumentToSign = async (docId, email, xfdfSigned) => {
               signed: true,
               signedTime: time,
             });
-
+            console.log(docRef, xfdfArray);
             mergeAnnotations(docRef, xfdfArray);
           }
         }

@@ -33,8 +33,8 @@ const SignedList = () => {
     if (user.email !== null) {
       setTimeout(getDocs, 1000);
     }
+  // }, []);
   }, [user]);
-  // }, [user]);
 
   return (
     <div>

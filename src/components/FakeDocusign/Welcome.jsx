@@ -24,7 +24,6 @@ function Welcome() {
   useEffect(() => {
     dispatch(resetDocToView());
     dispatch(resetDocToSign());
-    console.log('does dispatch run?');
   }, [dispatch]);
 
   return (

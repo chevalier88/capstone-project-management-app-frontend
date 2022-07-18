@@ -6,6 +6,8 @@ import { storage } from '../../../firebase/firebase.js';
 const mergeAnnotations = async (docRef, xfdf) => {
   const { PDFNet } = window;
   const { CoreControls } = window;
+  console.log('printing CoreControls:');
+  console.log(CoreControls);
   CoreControls.setWorkerPath('webviewer/core');
 
   const storageRef = storage.ref();

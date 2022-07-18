@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-/* eslint-disable no-shadow */
+
 import React, {
   useRef, useEffect, useState, useContext,
 } from 'react';
@@ -48,9 +48,12 @@ const SignDocument = () => {
       },
       viewer.current,
     ).then(async (instance) => {
-      const { docViewer, annotManager, Annotations } = instance;
-      setAnnotatManager(annotManager);
-
+      const { docViewer, anotherAnnotManager, Annotations } = instance;
+      console.log('printing annotAnnotManager...');
+      console.log(anotherAnnotManager);
+      setAnnotatManager(anotherAnnotManager);
+      console.log('printing annotManager...');
+      console.log(annotManager);
       // select only the insert group
       instance.setToolbarGroup('toolbarGroup-Insert');
 
@@ -110,6 +113,7 @@ const SignDocument = () => {
 
   const completeSigning = async () => {
     const xfdf = await annotManager.exportAnnotations({ widgets: false, links: false });
+    console.log(xfdf);
     await updateDocumentToSign(docId, email, xfdf);
     navigate('/fakeDocusign');
   };
