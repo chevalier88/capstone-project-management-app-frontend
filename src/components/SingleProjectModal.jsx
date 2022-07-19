@@ -70,7 +70,6 @@ export default function SingleProjectModal({ rowContent }) {
 
   const projectId = rowContent.id;
   console.log(projectId);
-  const openSingleProject = `${/projects/}${projectId}`;
 
   return (
     <>
@@ -128,20 +127,13 @@ export default function SingleProjectModal({ rowContent }) {
             <br />
             {' '}
             <br />
-            {/* {JSON.stringify(rowContent)} */}
             <Divider component="div" />
             <RandomLoremIpsum />
 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {' '}
-          <a href={openSingleProject}>
-            {' '}
-            <Button>Open Project</Button>
-            {' '}
-          </a>
-          {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
+          {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
           {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
