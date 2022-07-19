@@ -49,7 +49,7 @@ export default function App() {
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="Dashboard" exact element={<Dashboard />} />
+            <Route path="dashboard" exact element={<Dashboard />} />
             <Route path="profile" exact element={<Profile />} />
             <Route path="search" element={<Search />} />
             <Route path="login" element={<Login />} />

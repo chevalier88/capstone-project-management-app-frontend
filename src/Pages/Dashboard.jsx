@@ -15,10 +15,14 @@ import { UserContext } from '../components/UserContext.jsx';
 import DashboardGridRow from '../components/DashboardGridRow.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 
+// import CircularIndeterminate from '../components/CircularIndeterminate.jsx';
+import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
+
 const theme = createTheme();
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
+  const [showLoading, setShowLoading] = useState(true);
 
   const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
@@ -30,11 +34,9 @@ export default function Dashboard() {
       const { data } = results;
       const currentArray = [];
       data.forEach((project) => currentArray.push(project));
-      // ([...data])
-      //
-      //
 
       setCurrentProjects(currentArray);
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +66,7 @@ export default function Dashboard() {
       });
 
       setOpenProjects(openArray);
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -76,6 +79,7 @@ export default function Dashboard() {
       data.forEach((project) => completedArray.push(project));
 
       setCompletedProjects(completedArray);
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -92,8 +96,6 @@ export default function Dashboard() {
       const completedArray = [];
 
       data.forEach((project) => {
-        // curentstage [in progress, cient review]
-        //  currentstage.includes
         if (project.stage === 'in-progress' || project.stage === 'client-review') {
           currentArray.push(project);
         } else if (project.stage === 'payment-pending' || project.stage === 'completed') {
@@ -106,6 +108,8 @@ export default function Dashboard() {
       setCurrentProjects(currentArray);
       setOpenProjects(openArray);
       setCompletedProjects(completedArray);
+
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -113,11 +117,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user.accountType === 'manager') {
-      getAllProjects();
+      console.log(user);
+      setTimeout(getAllProjects,
+        1500);
     } else {
-      getCurrentProjects();
-      getOpenProjects();
-      getUserCompletedProjects();
+      setTimeout(getCurrentProjects,
+        1500);
+      setTimeout(getOpenProjects,
+        1500);
+      setTimeout(getUserCompletedProjects,
+        1500);
     }
   }, []);
 
@@ -135,7 +144,6 @@ export default function Dashboard() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        {/* {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />} */}
         {user.accountType === 'manager' && <ProjectSubmitFormButton />}
         <Box
           sx={{
@@ -165,15 +173,19 @@ export default function Dashboard() {
             Current
           </Typography>
           <Divider />
-          <br />
-          <Grid container spacing={4}>
-            {user.accountType === 'engineer' && currentProjects.map((row) => (
-              <DashboardGridRow key={row.project.id} row={row.project} />
-            ))}
-            {user.accountType === 'manager' && currentProjects.map((row) => (
-              <DashboardGridRow key={row.id} row={row} />
-            ))}
-          </Grid>
+          {showLoading ? (
+            <LinearIndeterminate showLoading={showLoading} />
+          ) : (
+            <Grid container spacing={4}>
+              {user.accountType === 'engineer' && currentProjects.map((row) => (
+                <DashboardGridRow key={row.project.id} row={row.project} />
+              ))}
+              {user.accountType === 'manager' && currentProjects.map((row) => (
+                <DashboardGridRow key={row.id} row={row} />
+              ))}
+            </Grid>
+          )}
+
         </Container>
 
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -181,12 +193,15 @@ export default function Dashboard() {
             Available
           </Typography>
           <Divider />
-
-          <Grid container spacing={4}>
-            {openProjects.map((row) => (
-              <DashboardGridRow key={row.id} row={row} />
-            ))}
-          </Grid>
+          {showLoading ? (
+            <LinearIndeterminate showLoading={showLoading} />
+          ) : (
+            <Grid container spacing={4}>
+              {openProjects.map((row) => (
+                <DashboardGridRow key={row.id} row={row} />
+              ))}
+            </Grid>
+          )}
         </Container>
 
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -194,15 +209,18 @@ export default function Dashboard() {
             Completed
           </Typography>
           <Divider />
-          <br />
-          <Grid container spacing={4}>
-            {user.accountType === 'engineer' && completedProjects.map((row) => (
-              <DashboardGridRow key={row.project.id} row={row.project} />
-            ))}
-            {user.accountType === 'manager' && completedProjects.map((row) => (
-              <DashboardGridRow key={row.id} row={row} />
-            ))}
-          </Grid>
+          {showLoading ? (
+            <LinearIndeterminate showLoading={showLoading} />
+          ) : (
+            <Grid container spacing={4}>
+              {user.accountType === 'engineer' && completedProjects.map((row) => (
+                <DashboardGridRow key={row.project.id} row={row.project} />
+              ))}
+              {user.accountType === 'manager' && completedProjects.map((row) => (
+                <DashboardGridRow key={row.id} row={row} />
+              ))}
+            </Grid>
+          )}
         </Container>
 
       </main>

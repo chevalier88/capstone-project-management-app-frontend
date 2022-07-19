@@ -27,33 +27,7 @@ function Welcome() {
   }, [dispatch]);
 
   return (
-  // <Container>
-  //   <Grid item xs={12}>
-  //     <Typography size="md">Sign Documents</Typography>
-  //   </Grid>
-  //   <Grid item xs={12}>
-  //     <SignList />
-  //   </Grid>
-  //   <Grid item xs={12}>
-  //     <Typography size="md">Prepare Document</Typography>
-  //   </Grid>
-  //   <Grid item xs={12} padding={2}>
-  //     <Button
-  //       onClick={() => {
-  //         navigate('/assignUsers');
-  //       }}
-  //     >
-  //       Prepare Document for Signing
 
-  //     </Button>
-  //   </Grid>
-  //   <Grid item xs={12} padding={3}>
-  //     <Typography size="md">Review Signed Documents</Typography>
-  //   </Grid>
-  //   <Grid item xs={12} padding={3}>
-  //     <SignedList />
-  //   </Grid>
-  // </Container>
     <div>
       <Container>
         <Box padding={3}>
