@@ -12,7 +12,6 @@ import Login from './Pages/Login.jsx';
 import Dashboard from './Pages/Dashboard.jsx';
 import Profile from './Pages/Profile.jsx';
 import ProfileEdit from './Pages/ProfileEdit.jsx';
-import OneProject from './Pages/OneProject.jsx';
 import { UserContext } from './components/UserContext.jsx';
 import BACKEND_URL from './supportFunctions.js';
 
@@ -50,7 +49,6 @@ export default function App() {
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="Dashboard" exact element={<Dashboard />} />
-            <Route path="projects/:id" exact element={<OneProject />} />
             <Route path="profile" exact element={<Profile />} />
             <Route path="search" element={<Search />} />
             <Route path="login" element={<Login />} />
