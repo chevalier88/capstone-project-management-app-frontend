@@ -35,6 +35,7 @@ export default function App() {
       const { data } = results;
       setUser(data);
     } catch (error) {
+      console.log('not logged in. Try again.');
       console.log(error);
     }
   }
