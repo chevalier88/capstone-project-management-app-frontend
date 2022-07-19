@@ -30,6 +30,9 @@ export default function Dashboard() {
       const { data } = results;
       const currentArray = [];
       data.forEach((project) => currentArray.push(project));
+      // ([...data])
+      //
+      //
 
       setCurrentProjects(currentArray);
     } catch (error) {
@@ -79,6 +82,7 @@ export default function Dashboard() {
   }
 
   async function getAllProjects() {
+    // consider filtering from backend and returning 3 arrays instead
     try {
       const results = await axios.get(`${BACKEND_URL}/projects`);
       const { data } = results;
@@ -88,6 +92,8 @@ export default function Dashboard() {
       const completedArray = [];
 
       data.forEach((project) => {
+        // curentstage [in progress, cient review]
+        //  currentstage.includes
         if (project.stage === 'in-progress' || project.stage === 'client-review') {
           currentArray.push(project);
         } else if (project.stage === 'payment-pending' || project.stage === 'completed') {
@@ -124,84 +130,83 @@ export default function Dashboard() {
       </div>
     );
   }
-  if (user.length !== 0) {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <main>
-          {/* {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />} */}
-          {user.accountType === 'manager' && <ProjectSubmitFormButton />}
-          <Box
-            sx={{
-              bgcolor: 'background.paper',
-              pt: 8,
-              pb: 6,
-            }}
-          >
-            <Container maxWidth="sm">
-              <Typography
-                component="h1"
-                variant="h2"
-                align="center"
-                color="text.primary"
-                gutterBottom
-              >
-                Dashboard
-              </Typography>
-              <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                View all Current, Available and Completed Projects
-              </Typography>
-            </Container>
-          </Box>
 
-          <Container sx={{ py: 8 }} maxWidth="md">
-            <Typography variant="h3">
-              Current
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <main>
+        {/* {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />} */}
+        {user.accountType === 'manager' && <ProjectSubmitFormButton />}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography
+              component="h1"
+              variant="h2"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              Dashboard
             </Typography>
-            <Divider />
-            <br />
-            <Grid container spacing={4}>
-              {user.accountType === 'engineer' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} />
-              ))}
-              {user.accountType === 'manager' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
-              ))}
-            </Grid>
-          </Container>
-
-          <Container sx={{ py: 8 }} maxWidth="md">
-            <Typography variant="h3">
-              Available
+            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+              View all Current, Available and Completed Projects
             </Typography>
-            <Divider />
-
-            <Grid container spacing={4}>
-              {openProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
-              ))}
-            </Grid>
           </Container>
+        </Box>
 
-          <Container sx={{ py: 8 }} maxWidth="md">
-            <Typography variant="h3">
-              Completed
-            </Typography>
-            <Divider />
-            <br />
-            <Grid container spacing={4}>
-              {user.accountType === 'engineer' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} />
-              ))}
-              {user.accountType === 'manager' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
-              ))}
-            </Grid>
-          </Container>
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography variant="h3">
+            Current
+          </Typography>
+          <Divider />
+          <br />
+          <Grid container spacing={4}>
+            {user.accountType === 'engineer' && currentProjects.map((row) => (
+              <DashboardGridRow key={row.project.id} row={row.project} />
+            ))}
+            {user.accountType === 'manager' && currentProjects.map((row) => (
+              <DashboardGridRow key={row.id} row={row} />
+            ))}
+          </Grid>
+        </Container>
 
-        </main>
-      </ThemeProvider>
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography variant="h3">
+            Available
+          </Typography>
+          <Divider />
 
-    );
-  }
+          <Grid container spacing={4}>
+            {openProjects.map((row) => (
+              <DashboardGridRow key={row.id} row={row} />
+            ))}
+          </Grid>
+        </Container>
+
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography variant="h3">
+            Completed
+          </Typography>
+          <Divider />
+          <br />
+          <Grid container spacing={4}>
+            {user.accountType === 'engineer' && completedProjects.map((row) => (
+              <DashboardGridRow key={row.project.id} row={row.project} />
+            ))}
+            {user.accountType === 'manager' && completedProjects.map((row) => (
+              <DashboardGridRow key={row.id} row={row} />
+            ))}
+          </Grid>
+        </Container>
+
+      </main>
+    </ThemeProvider>
+
+  );
 }
