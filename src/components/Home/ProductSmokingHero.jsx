@@ -20,6 +20,7 @@ function ProductSmokingHero() {
           py: 2,
           px: 5,
         }}
+        href="mailto:fakeemail@gmail.com"
       >
         <Typography variant="h4" component="span">
           Got any questions? Need help?
