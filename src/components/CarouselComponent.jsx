@@ -11,24 +11,31 @@ const breakPoints = [
   { width: 1200, itemsToShow: 4 },
 ];
 
+// let data = {};
+
+// data = {
+//   items: [
+//     { id: 1, url: 'https://miro.medium.com/max/5000/1*tqlsrfxiy0owv8VEDmPK8A.jpeg', title: 'item #1' },
+//     { id: 2, url: 'image2', title: 'item #2' },
+//     { id: 3, url: 'image3', title: 'item #3' },
+//   ],
+// };
+
+// const { items } = data;
+
+//  <Carousel itemsToShow={1}>
+//       {data.photoPath.map((image) => {
+//           return <item><img src={require(`assets/img/${image}`)} alt="phone" /></item>}
+//       </Carousel>
+
+// 1. loop
+// 2. fn
+// 3. create render fn
+// fn to retrive obj e.g {Render(getCarouselitems ())}
+// getCarouselitem = get items
+// Render create render jsx
+
 export default function CarouselComponent() {
-  // let data = {};
-
-  // data = {
-  //   items: [
-  //     { id: 1, url: 'https://miro.medium.com/max/5000/1*tqlsrfxiy0owv8VEDmPK8A.jpeg', title: 'item #1' },
-  //     { id: 2, url: 'image2', title: 'item #2' },
-  //     { id: 3, url: 'image3', title: 'item #3' },
-  //   ],
-  // };
-
-  // const { items } = data;
-
-  //  <Carousel itemsToShow={1}>
-  //       {data.photoPath.map((image) => {
-  //           return <item><img src={require(`assets/img/${image}`)} alt="phone" /></item>}
-  //       </Carousel>
-
   const imgURL = 'https://miro.medium.com/max/5000/1*tqlsrfxiy0owv8VEDmPK8A.jpeg';
   return (
     <>

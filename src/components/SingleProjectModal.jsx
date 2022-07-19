@@ -40,7 +40,7 @@ export default function SingleProjectModal({ rowContent }) {
   const checkIfProjectFull = () => {
     const engineersEnrolled = Number(rowContent.user_projects.length);
     const engineersRequired = Number(rowContent.noEngineersRequired);
-    if ((engineersEnrolled / engineersRequired) === 1) { return true; }
+    if ((engineersEnrolled / engineersRequired) === 1) return true;
     return false;
   };
 
