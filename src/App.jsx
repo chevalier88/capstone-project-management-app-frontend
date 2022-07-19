@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './app/store.js';
+import store from './redux/store.js';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Home from './Pages/Home.jsx';
 import Search from './Pages/Search.jsx';
