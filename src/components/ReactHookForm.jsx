@@ -17,7 +17,6 @@ import {
 } from '@mui/material';
 
 import MuiInput from '@mui/material/Input';
-// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CodeIcon from '@mui/icons-material/Code';
 import { styled } from '@mui/material/styles';
 
@@ -25,6 +24,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { useNavigate } from 'react-router-dom';
 import BACKEND_URL from '../supportFunctions.js';
 
 const Input = styled(MuiInput)`
@@ -38,6 +38,8 @@ export default function ReactHookForm({ setOpen }) {
 
   const [skills, setSkills] = useState([]);
   const [users, setUsers] = useState([]);
+
+  const navigate = useNavigate();
 
   async function getAllSkills() {
     try {
@@ -81,6 +83,7 @@ export default function ReactHookForm({ setOpen }) {
       const postedProject = await axios.post(`${BACKEND_URL}/project`, event);
       console.log(postedProject);
       setOpen(false);
+      navigate('/dashboard');
     } catch (error) {
       console.log(error);
     }

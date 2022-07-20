@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Tabs, Tab, Toolbar, AppBar, Box, Typography,
 } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { UserContext } from '../UserContext.jsx';
 
 // create theme for styling
 const theme = createTheme({
@@ -19,6 +20,7 @@ const theme = createTheme({
 export default function Navbar() {
   // .............STATES...............
   const [value, setValue] = React.useState(1);
+  const { user } = useContext(UserContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -55,16 +57,27 @@ export default function Navbar() {
                     component={Link}
                     to="/"
                   />
-                  <Tab
-                    label="OneProject"
-                    component={Link}
-                    to="/projects"
-                  />
+                  {user.accountType !== 'client' && user.length !== 0 && (
                   <Tab
                     label="Dashboard"
                     component={Link}
                     to="/dashboard"
                   />
+                  )}
+                  {user.accountType === 'manager' && (
+                  <Tab
+                    label="DocuSein"
+                    component={Link}
+                    to="/fakeDocusign"
+                  />
+                  )}
+                  {user.accountType === 'client' && (
+                  <Tab
+                    label="DocuSein"
+                    component={Link}
+                    to="/fakeDocusign"
+                  />
+                  )}
                   <Tab
                     label="Search"
                     component={Link}

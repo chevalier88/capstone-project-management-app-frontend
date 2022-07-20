@@ -15,10 +15,14 @@ import { UserContext } from '../components/UserContext.jsx';
 import DashboardGridRow from '../components/DashboardGridRow.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 
+// import CircularIndeterminate from '../components/CircularIndeterminate.jsx';
+import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
+
 const theme = createTheme();
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
+  const [showLoading, setShowLoading] = useState(true);
 
   const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
@@ -32,6 +36,7 @@ export default function Dashboard() {
       data.forEach((project) => currentArray.push(project));
 
       setCurrentProjects(currentArray);
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -61,6 +66,7 @@ export default function Dashboard() {
       });
 
       setOpenProjects(openArray);
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -73,12 +79,14 @@ export default function Dashboard() {
       data.forEach((project) => completedArray.push(project));
 
       setCompletedProjects(completedArray);
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
   }
 
   async function getAllProjects() {
+    // consider filtering from backend and returning 3 arrays instead
     try {
       const results = await axios.get(`${BACKEND_URL}/projects`);
       const { data } = results;
@@ -100,6 +108,8 @@ export default function Dashboard() {
       setCurrentProjects(currentArray);
       setOpenProjects(openArray);
       setCompletedProjects(completedArray);
+
+      setShowLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -107,11 +117,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user.accountType === 'manager') {
-      getAllProjects();
+      console.log(user);
+      setTimeout(getAllProjects,
+        1500);
     } else {
-      getCurrentProjects();
-      getOpenProjects();
-      getUserCompletedProjects();
+      setTimeout(getCurrentProjects,
+        1500);
+      setTimeout(getOpenProjects,
+        1500);
+      setTimeout(getUserCompletedProjects,
+        1500);
     }
   }, []);
 
@@ -124,42 +139,43 @@ export default function Dashboard() {
       </div>
     );
   }
-  if (user.length !== 0) {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <main>
-          {/* {user.accountType === 'manager' && <FloatingSubmitProjectFormButton />} */}
-          {user.accountType === 'manager' && <ProjectSubmitFormButton />}
-          <Box
-            sx={{
-              bgcolor: 'background.paper',
-              pt: 8,
-              pb: 6,
-            }}
-          >
-            <Container maxWidth="sm">
-              <Typography
-                component="h1"
-                variant="h2"
-                align="center"
-                color="text.primary"
-                gutterBottom
-              >
-                Dashboard
-              </Typography>
-              <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                View all Current, Available and Completed Projects
-              </Typography>
-            </Container>
-          </Box>
 
-          <Container sx={{ py: 8 }} maxWidth="md">
-            <Typography variant="h3">
-              Current
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <main>
+        {user.accountType === 'manager' && <ProjectSubmitFormButton />}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography
+              component="h1"
+              variant="h2"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              Dashboard
             </Typography>
-            <Divider />
-            <br />
+            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+              View all Current, Available and Completed Projects
+            </Typography>
+          </Container>
+        </Box>
+
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography variant="h3">
+            Current
+          </Typography>
+          <Divider />
+          {showLoading ? (
+            <LinearIndeterminate showLoading={showLoading} />
+          ) : (
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && currentProjects.map((row) => (
                 <DashboardGridRow key={row.project.id} row={row.project} />
@@ -168,27 +184,34 @@ export default function Dashboard() {
                 <DashboardGridRow key={row.id} row={row} />
               ))}
             </Grid>
-          </Container>
+          )}
 
-          <Container sx={{ py: 8 }} maxWidth="md">
-            <Typography variant="h3">
-              Available
-            </Typography>
-            <Divider />
+        </Container>
 
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography variant="h3">
+            Available
+          </Typography>
+          <Divider />
+          {showLoading ? (
+            <LinearIndeterminate showLoading={showLoading} />
+          ) : (
             <Grid container spacing={4}>
               {openProjects.map((row) => (
                 <DashboardGridRow key={row.id} row={row} />
               ))}
             </Grid>
-          </Container>
+          )}
+        </Container>
 
-          <Container sx={{ py: 8 }} maxWidth="md">
-            <Typography variant="h3">
-              Completed
-            </Typography>
-            <Divider />
-            <br />
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography variant="h3">
+            Completed
+          </Typography>
+          <Divider />
+          {showLoading ? (
+            <LinearIndeterminate showLoading={showLoading} />
+          ) : (
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && completedProjects.map((row) => (
                 <DashboardGridRow key={row.project.id} row={row.project} />
@@ -197,11 +220,11 @@ export default function Dashboard() {
                 <DashboardGridRow key={row.id} row={row} />
               ))}
             </Grid>
-          </Container>
+          )}
+        </Container>
 
-        </main>
-      </ThemeProvider>
+      </main>
+    </ThemeProvider>
 
-    );
-  }
+  );
 }

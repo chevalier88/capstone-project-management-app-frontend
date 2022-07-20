@@ -33,9 +33,7 @@ export default function Navbar() {
         <NavLink to="/profile" activeStyle>
           Profile Page
         </NavLink>
-        <NavLink to="/oneProject" activeStyle>
-          OneProject
-        </NavLink>
+
       </NavMenu>
       <NavBtn>
         <div>

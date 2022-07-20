@@ -1,15 +1,20 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import Checkbox from '@mui/material/Checkbox';
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  Select,
+  MenuItem,
+  Slider,
+  Autocomplete,
+} from '@mui/material';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
 
@@ -20,9 +25,12 @@ export default function ProfileEdit() {
 
   // .............STATES...............
   const [skills, setSkills] = useState([]);
-  const [selected, setSelected] = useState({});
 
   // .......... HELPER FUNCTIONS .................
+
+  const navigate = useNavigate();
+
+  // get all skills to populate dropdown
   async function getSkills() {
     try {
       const results = await axios.get(`${BACKEND_URL}/skills`);
@@ -33,12 +41,24 @@ export default function ProfileEdit() {
       console.log(error);
     }
   }
-  const handleChange = (event) => {
-    setSelected({
-      ...selected,
-      [event.target.name]: event.target.checked,
-    });
-  };
+  const { control, handleSubmit } = useForm({
+    reValidateMode: 'onBlur',
+  });
+
+  // function to run when submitting form
+  async function handleOnSubmit(event) {
+    console.log('updating user data');
+    console.log(event);
+    try {
+      const updateUserData = await axios.post(`${BACKEND_URL}/users/edit/${user.id}`, event);
+      console.log(updateUserData);
+      // redirect to profile page
+      navigate('../profile', { replace: true });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // return message when user is not logged in
   if (user.length === 0) {
@@ -56,95 +76,226 @@ export default function ProfileEdit() {
     // get all the skills
     useEffect(() => { getSkills(); }, []);
 
+    const userSkills = [];
+
+    user.skills.forEach((element) => {
+      const skillToAdd = skills.find((x) => x.id === element.id);
+      console.log('skillToAdd', skillToAdd);
+      userSkills.push(skillToAdd);
+    });
+    console.log('userSkills', userSkills);
+
     return (
       <div id="">
-        <h1>
-          This is the Edit Page
-        </h1>
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <TextField
-              id="name"
-              label="My Name"
-              defaultValue={user.name}
-              variant="standard"
-            />
-            <TextField
-              id="email"
-              label="My Email Address"
-              defaultValue={user.email}
-              variant="standard"
-            />
-            <TextField
-              id="location"
-              label="My Location"
-              defaultValue={user.location}
-              variant="standard"
-            />
-            <TextField
-              id="minimumSalary"
-              label="My Minimum Salary"
-              defaultValue={user.minimumSalary}
-              variant="standard"
-            />
-            <TextField
-              id="industry"
-              label="My Industry"
-              defaultValue={user.industry.name}
-              variant="standard"
-            />
-            <TextField
-              id="portfolioUrl"
-              label="My Profolio link"
-              defaultValue={user.portfolioUrl}
-              variant="standard"
-            />
-            <TextField
-              id="aboutMe"
-              label="About Me"
-              multiline
-              rows={4}
-              defaultValue={user.aboutMe}
-              variant="standard"
-            />
-            <TextField
-              id="experience"
-              label="My Experience"
-              multiline
-              rows={4}
-              defaultValue={user.experience}
-              variant="standard"
-            />
-            <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
-              <FormLabel component="legend">My Skills</FormLabel>
-              <FormGroup>
+        <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant="h4">
+                Edit your profile
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Controller
+                control={control}
+                name="name"
+                defaultValue={user.name}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="standard"
+                      fullWidth
+                      label="My Name"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Controller
+                control={control}
+                name="email"
+                defaultValue={user.email}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="standard"
+                      fullWidth
+                      label="My Email"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Controller
+                control={control}
+                name="location"
+                defaultValue={user.location}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="standard"
+                      fullWidth
+                      label="My Location"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Controller
+                control={control}
+                name="aboutMe"
+                defaultValue={user.aboutMe}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="standard"
+                      fullWidth
+                      multiline
+                      label="About Me"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Controller
+                control={control}
+                name="experience"
+                defaultValue={user.experience}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="standard"
+                      fullWidth
+                      multiline
+                      label="My Experience"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Controller
+                control={control}
+                name="industryId"
+                defaultValue={user.industryId}
+                render={({ field }) => (
+                  <>
+                    <Typography>
+                      My Industry:
+                    </Typography>
+                    <Select
+                      {...field}
+                      fullWidth
+                    >
+                      <MenuItem value="1">Airline</MenuItem>
+                      <MenuItem value="2">Finance</MenuItem>
+                      <MenuItem value="3">Market Research</MenuItem>
+                      <MenuItem value="4">Human Resources</MenuItem>
+                      <MenuItem value="5">Technology</MenuItem>
+                    </Select>
+                  </>
 
-                {skills.map((data) => (
-                  <FormControlLabel
-                    key={data.id}
-                    control={
-                      <Checkbox onChange={handleChange} name={data.name} />
-}
-                    label={data.name}
-                  />
-                ))}
-              </FormGroup>
-              <FormHelperText>Select all that apply</FormHelperText>
-            </FormControl>
-          </div>
-          <div>
-            <br />
-            <Button variant="contained" disableElevation color="success">
-              Save Changes
-            </Button>
-          </div>
+                )}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Controller
+                control={control}
+                name="portfolioUrl"
+                defaultValue={user.portfolioUrl}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="standard"
+                      fullWidth
+                      label="My Portfolio"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            {' '}
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                name="minimumSalary"
+                defaultValue={Number(user.minimumSalary)}
+                render={({ field: { value, ...field } }) => (
+                  <>
+                    <Typography id="input-slider" gutterBottom>
+                      My Minimum Salary
+                    </Typography>
+                    <Grid container spacing={2} alignItems="center">
+                      <Grid item>
+                        <Typography
+                          variant="h5"
+                          {...field}
+                        >
+                          {' '}
+                          $
+                          {' '}
+                          {value}
+                        </Typography>
+                      </Grid>
+                      <br />
+                      <Grid item xs>
+                        <Slider
+                          {...field}
+                          min={0}
+                          max={200}
+                          step={1}
+                          value={value}
+                          aria-labelledby="input-slider"
+                        />
+                      </Grid>
+                    </Grid>
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                name="skills"
+                render={({ field: { ref, onChange, ...field } }) => (
+                  <>
+                    <Typography>
+                      My Skills
+                    </Typography>
+                    <Autocomplete
+                      multiple
+                      options={skills}
+                      getOptionLabel={(option) => option.name}
+                      onChange={(_, data) => onChange(data)}
+                      // defaultValue={[skills[4]]}
+                      renderInput={(params) => (
+                        <TextField
+                          {...field}
+                          {...params}
+                          fullWidth
+                          inputRef={ref}
+                          variant="standard"
+                        />
+                      )}
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+          </Grid>
+          <br />
+          <Button variant="contained" disableElevation color="success" type="submit">
+            Save Changes
+          </Button>
         </Box>
       </div>
     );

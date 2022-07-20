@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, {
@@ -10,9 +11,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 import { UserContext } from './UserContext.jsx';
 import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
-import RandomLoremIpsum from './RandomLoremIpsum.jsx';
+import Typography from './Home/Typography.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   const { user } = useContext(UserContext);
@@ -40,7 +43,7 @@ export default function SingleProjectModal({ rowContent }) {
   const checkIfProjectFull = () => {
     const engineersEnrolled = Number(rowContent.user_projects.length);
     const engineersRequired = Number(rowContent.noEngineersRequired);
-    if ((engineersEnrolled / engineersRequired) === 1) { return true; }
+    if ((engineersEnrolled / engineersRequired) === 1) return true;
     return false;
   };
 
@@ -68,9 +71,7 @@ export default function SingleProjectModal({ rowContent }) {
     }
   }, [open]);
 
-  const projectId = rowContent.id;
-  console.log(projectId);
-  const openSingleProject = `${/projects/}${projectId}`;
+  console.log(rowContent);
 
   return (
     <>
@@ -101,47 +102,53 @@ export default function SingleProjectModal({ rowContent }) {
             <Divider component="div" />
             {rowContent.summary}
             <Divider component="div" />
-
             <br />
-            Number of Engineers Required:
+            <Typography variant="h3">
+              {' '}
+              $
+              {rowContent.minimumSalary}
+              /hr
+
+            </Typography>
+            <br />
+            Current Number of Engineers Enrolled:
             {' '}
+            {rowContent.user_projects.length}
+            /
             {rowContent.noEngineersRequired}
             <br />
+            {rowContent.user_projects.length !== 0 && (
+            <Autocomplete
+              multiple
+              id="Engineer IDs Enrolled"
+              options={rowContent.user_projects.map((option) => option.id)}
+              defaultValue={rowContent.user_projects.map((option) => option.id)}
+              readOnly
+              renderInput={(params) => (
+                <TextField {...params} label="readOnly" placeholder="Favorites" />
+              )}
+            />
+            )}
+
             Enrolment Deadline:
             {rowContent.enrolmentDeadline.slice(0, 10)}
-            <br />
-            Time:
+            /
             {rowContent.enrolmentDeadline.slice(11, 16)}
-            <br />
-            Salary Paid:
-            {rowContent.minimumSalary}
-            /hr
-            <br />
-            {' '}
             <br />
             Delivery Deadline:
             {rowContent.deliveryDeadline.slice(0, 10)}
-            <br />
-            Time:
+            /
             {rowContent.deliveryDeadline.slice(11, 16)}
             {' '}
             <br />
             {' '}
             <br />
-            {/* {JSON.stringify(rowContent)} */}
             <Divider component="div" />
-            <RandomLoremIpsum />
 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {' '}
-          <a href={openSingleProject}>
-            {' '}
-            <Button>Open Project</Button>
-            {' '}
-          </a>
-          {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
+          {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
           {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
