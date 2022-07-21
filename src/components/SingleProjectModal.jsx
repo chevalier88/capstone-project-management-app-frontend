@@ -25,6 +25,7 @@ import BACKEND_URL from '../supportFunctions.js';
 
 import CircularIndeterminate from './CircularIndeterminate.jsx';
 import UserMoreMenu from './UserMoreMenu.jsx';
+import HorizontalStepper from './HorizontalStepper.jsx';
 
 export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
   const [open, setOpen] = useState(false);
@@ -122,22 +123,26 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
               ref={descriptionElementRef}
               tabIndex={-1}
             >
+              <Grid>
+                <HorizontalStepper />
+              </Grid>
+              <Divider />
               <Grid
                 container
                 spacing={2}
               >
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                   ID:
                   {' '}
                   {rowContent.id}
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                   Industry:
                   {' '}
                   <br />
                   {rowContent.industry.name}
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={3}>
                   Created Date:
                   {' '}
                   <br />
@@ -149,7 +154,6 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
                   hrs
                 </Grid>
               </Grid>
-
               <Divider component="div" />
               Summary:
               <br />
