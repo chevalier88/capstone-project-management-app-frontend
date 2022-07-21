@@ -11,8 +11,12 @@ import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu({ rowContent }) {
+export default function UserMoreMenu({ rowContent, usersList }) {
   const { user } = useContext(UserContext);
+  console.log('printing usersList:');
+  console.log(usersList);
+  console.log('printing useContext user');
+  console.log(user);
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 

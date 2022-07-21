@@ -28,6 +28,7 @@ import UserMoreMenu from './UserMoreMenu.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   // const { user } = useContext(UserContext);
+  console.log(rowContent);
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
 
@@ -98,8 +99,7 @@ export default function SingleProjectModal({ rowContent }) {
               </Typography>
             </Grid>
             <Grid item xs={1}>
-              <UserMoreMenu rowContent={rowContent} />
-
+              {!showLoading && <UserMoreMenu rowContent={rowContent} usersList={usersList} />}
             </Grid>
           </Grid>
 
