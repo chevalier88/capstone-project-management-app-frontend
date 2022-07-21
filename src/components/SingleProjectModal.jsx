@@ -13,17 +13,42 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 import { UserContext } from './UserContext.jsx';
 import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
 import Typography from './Home/Typography.jsx';
+import BACKEND_URL from '../supportFunctions.js';
+
+import CircularIndeterminate from './CircularIndeterminate.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   const { user } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
 
+  const [showLoading, setShowLoading] = useState(true);
+
+  const [userList, setUserList] = useState([]);
+  // const [skillList, setSkillList] = useState([]);
+
+  async function getUsersAndSkillsForThisProject() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/project/${rowContent.id}`);
+      const { data } = results;
+      console.log(data);
+      const usersArray = [];
+      data.forEach((item) => usersArray.push(item.user.name));
+      console.log(usersArray);
+      setUserList(usersArray);
+      setShowLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const handleClickOpen = () => () => {
     setOpen(true);
+    setTimeout(getUsersAndSkillsForThisProject, 3000);
   };
 
   const handleClose = () => {
@@ -84,69 +109,71 @@ export default function SingleProjectModal({ rowContent }) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">
-          PLACEHOLDER FOR ONE PROJECT
-          {' '}
           {rowContent.name}
         </DialogTitle>
 
-        <DialogContent component="div" dividers={scroll === 'paper'}>
-          <DialogContentText
-            component="div"
-            id="scroll-dialog-description"
-            ref={descriptionElementRef}
-            tabIndex={-1}
-          >
-            Project ID:
-            {' '}
-            {rowContent.id}
-            <Divider component="div" />
-            {rowContent.summary}
-            <Divider component="div" />
-            <br />
-            <Typography variant="h3">
+        {showLoading ? (<CircularIndeterminate showLoading={showLoading} />
+        ) : (
+          <DialogContent component="div" dividers={scroll === 'paper'}>
+            <DialogContentText
+              component="div"
+              id="scroll-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
+            >
+              ID:
               {' '}
-              $
-              {rowContent.minimumSalary}
-              /hr
+              {rowContent.id}
+              <Divider component="div" />
+              {rowContent.summary}
+              <Divider component="div" />
+              <br />
+              <Typography variant="h4">
+                {' '}
+                $
+                {rowContent.minimumSalary}
+                /hr
 
-            </Typography>
-            <br />
-            Number of Engineers Enrolled/Required:
-            {' '}
-            {rowContent.user_projects.length}
-            /
-            {rowContent.noEngineersRequired}
-            <br />
-            {rowContent.user_projects.length !== 0 && (
-            <Autocomplete
-              multiple
-              id="Engineer IDs Enrolled"
-              options={rowContent.user_projects.map((option) => option.id)}
-              defaultValue={rowContent.user_projects.map((option) => option.id)}
-              readOnly
-              renderInput={(params) => (
-                <TextField {...params} placeholder="Enrolled So Far" />
+              </Typography>
+              <br />
+              Number of Engineers Enrolled/Required:
+              {' '}
+              {rowContent.user_projects.length}
+              /
+              {rowContent.noEngineersRequired}
+              <br />
+              {rowContent.user_projects.length !== 0 && (
+              <Autocomplete
+                multiple
+                id="Engineer IDs Enrolled"
+                options={userList.map((option) => option)}
+                defaultValue={userList.map((option) => option)}
+                readOnly
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Enrolled So Far" />
+                )}
+              />
               )}
-            />
-            )}
 
-            Enrolment Deadline:
-            {rowContent.enrolmentDeadline.slice(0, 10)}
-            /
-            {rowContent.enrolmentDeadline.slice(11, 16)}
-            <br />
-            Delivery Deadline:
-            {rowContent.deliveryDeadline.slice(0, 10)}
-            /
-            {rowContent.deliveryDeadline.slice(11, 16)}
-            {' '}
-            <br />
-            {' '}
-            <br />
-            <Divider component="div" />
+              Enrolment Deadline:
+              {rowContent.enrolmentDeadline.slice(0, 10)}
+              /
+              {rowContent.enrolmentDeadline.slice(11, 16)}
+              <br />
+              Delivery Deadline:
+              {rowContent.deliveryDeadline.slice(0, 10)}
+              /
+              {rowContent.deliveryDeadline.slice(11, 16)}
+              {' '}
+              <br />
+              {' '}
+              <br />
+              <Divider component="div" />
 
-          </DialogContentText>
-        </DialogContent>
+            </DialogContentText>
+          </DialogContent>
+
+        )}
         <DialogActions>
           {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
           {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}

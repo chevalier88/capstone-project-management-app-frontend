@@ -15,7 +15,6 @@ import { UserContext } from '../components/UserContext.jsx';
 import DashboardGridRow from '../components/DashboardGridRow.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 
-// import CircularIndeterminate from '../components/CircularIndeterminate.jsx';
 import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
 
 const theme = createTheme();
