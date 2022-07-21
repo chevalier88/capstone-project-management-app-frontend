@@ -4,6 +4,7 @@
 import React, {
   useState, useRef, useEffect, useContext,
 } from 'react';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -28,8 +29,8 @@ export default function SingleProjectModal({ rowContent }) {
 
   const [showLoading, setShowLoading] = useState(true);
 
-  const [userList, setUserList] = useState([]);
-  // const [skillList, setSkillList] = useState([]);
+  const [usersList, setUsersList] = useState([]);
+  const [skillsList, setSkillsList] = useState([]);
 
   async function getUsersAndSkillsForThisProject() {
     try {
@@ -37,9 +38,11 @@ export default function SingleProjectModal({ rowContent }) {
       const { data } = results;
       console.log(data);
       const usersArray = [];
-      data.forEach((item) => usersArray.push(item.user.name));
-      console.log(usersArray);
-      setUserList(usersArray);
+      const skillsArray = [];
+      data.skills.forEach((skillObject) => skillsArray.push(skillObject.skill.name));
+      data.users.forEach((userObject) => usersArray.push(userObject.user.name));
+      setSkillsList(skillsArray);
+      setUsersList(usersArray);
       setShowLoading(false);
     } catch (error) {
       console.log(error);
@@ -60,10 +63,6 @@ export default function SingleProjectModal({ rowContent }) {
     console.log('USER ID:', user.id, 'ADDED PROJECT', rowContent.id);
     setOpen(false);
   };
-
-  console.log('user_projects', rowContent.user_projects.length);
-  console.log('user_engineers required', rowContent.noEngineersRequired);
-  console.log('user id ', user.id);
 
   const checkIfProjectFull = () => {
     const engineersEnrolled = Number(rowContent.user_projects.length);
@@ -96,12 +95,12 @@ export default function SingleProjectModal({ rowContent }) {
     }
   }, [open]);
 
-  console.log(rowContent);
-
   return (
     <>
       <Button onClick={handleClickOpen()}>View</Button>
       <Dialog
+        maxWidth="md"
+        fullWidth
         open={open}
         onClose={handleClose}
         scroll={scroll}
@@ -109,10 +108,24 @@ export default function SingleProjectModal({ rowContent }) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">
-          {rowContent.name}
+          <Typography component="span" variant="h3">
+            {' '}
+            {rowContent.name}
+          </Typography>
+
         </DialogTitle>
 
-        {showLoading ? (<CircularIndeterminate showLoading={showLoading} />
+        {showLoading ? (
+          <Grid
+            container
+            spacing={2}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <CircularIndeterminate showLoading={showLoading} />
+          </Grid>
+
         ) : (
           <DialogContent component="div" dividers={scroll === 'paper'}>
             <DialogContentText
@@ -121,11 +134,39 @@ export default function SingleProjectModal({ rowContent }) {
               ref={descriptionElementRef}
               tabIndex={-1}
             >
-              ID:
-              {' '}
-              {rowContent.id}
+              <Grid container spacing={2}>
+                <Grid item xs={2}>
+                  ID:
+                  {' '}
+                  {rowContent.id}
+                </Grid>
+                <Grid item xs={4}>
+                  Industry:
+                  {' '}
+                  <br />
+                  {rowContent.industry.name}
+                </Grid>
+                <Grid item xs={6}>
+                  Created Date:
+                  {' '}
+                  <br />
+                  {rowContent.createdAt.slice(0, 10)}
+                  /
+                  {' '}
+                  {rowContent.createdAt.slice(11, 16)}
+                  {' '}
+                  hrs
+                </Grid>
+              </Grid>
+
               <Divider component="div" />
+              Summary:
+              <br />
               {rowContent.summary}
+              <Divider component="div" />
+              Forecasted Hours Required for Project Completion:
+              <br />
+              {rowContent.projectedHours}
               <Divider component="div" />
               <br />
               <Typography variant="h4">
@@ -145,26 +186,52 @@ export default function SingleProjectModal({ rowContent }) {
               {rowContent.user_projects.length !== 0 && (
               <Autocomplete
                 multiple
-                id="Engineer IDs Enrolled"
-                options={userList.map((option) => option)}
-                defaultValue={userList.map((option) => option)}
+                id="Engineers Enrolled"
+                options={usersList.map((option) => option)}
+                defaultValue={usersList.map((option) => option)}
                 readOnly
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="Enrolled So Far" />
+                  <TextField
+                    {...params}
+                    variant="filled"
+                    placeholder="Enrolled So Far"
+                  />
                 )}
               />
               )}
-
+              <br />
+              Skills Needed for this Project:
+              <Autocomplete
+                multiple
+                id="Skills"
+                options={skillsList.map((option) => option)}
+                defaultValue={skillsList.map((option) => option)}
+                readOnly
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="filled"
+                  />
+                )}
+              />
+              <br />
               Enrolment Deadline:
+              {' '}
               {rowContent.enrolmentDeadline.slice(0, 10)}
               /
+              {' '}
               {rowContent.enrolmentDeadline.slice(11, 16)}
+              {' '}
+              hrs
               <br />
               Delivery Deadline:
+              {' '}
               {rowContent.deliveryDeadline.slice(0, 10)}
               /
+              {' '}
               {rowContent.deliveryDeadline.slice(11, 16)}
               {' '}
+              hrs
               <br />
               {' '}
               <br />
