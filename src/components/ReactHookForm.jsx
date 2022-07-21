@@ -31,7 +31,7 @@ const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-export default function ReactHookForm({ setOpen }) {
+export default function ReactHookForm({ setOpen, setJustSubmitted }) {
   const { control, handleSubmit } = useForm({
     reValidateMode: 'onBlur',
   });
@@ -82,7 +82,10 @@ export default function ReactHookForm({ setOpen }) {
     try {
       const postedProject = await axios.post(`${BACKEND_URL}/project`, event);
       console.log(postedProject);
+
+      setJustSubmitted(true);
       setOpen(false);
+
       navigate('/dashboard');
     } catch (error) {
       console.log(error);

@@ -21,8 +21,8 @@ const theme = createTheme();
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
-  const [showLoading, setShowLoading] = useState(true);
-
+  const [showLoading, setShowLoading] = useState(false);
+  const [justSubmitted, setJustSubmitted] = useState(false);
   const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
@@ -115,6 +115,8 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
+    setShowLoading(true);
+
     if (user.accountType === 'manager') {
       console.log(user);
       setTimeout(getAllProjects,
@@ -127,7 +129,7 @@ export default function Dashboard() {
       setTimeout(getUserCompletedProjects,
         1500);
     }
-  }, []);
+  }, [justSubmitted]);
 
   if (user.length === 0) {
     return (
@@ -143,7 +145,7 @@ export default function Dashboard() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        {user.accountType === 'manager' && <ProjectSubmitFormButton />}
+        {user.accountType === 'manager' && <ProjectSubmitFormButton setJustSubmitted={setJustSubmitted} />}
         <Box
           sx={{
             bgcolor: 'background.paper',
