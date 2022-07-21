@@ -26,7 +26,7 @@ import ProductSmokingHero from '../components/Home/ProductSmokingHero.jsx';
 import ProductHero from '../components/Home/ProductHero.jsx';
 import ProductValues from '../components/Home/ProductValues.jsx';
 import ProductHowItWorks from '../components/Home/ProductHowItWorks.jsx';
-import ProductCTA from '../components/Home/ProductCTA.jsx';
+// import ProductCTA from '../components/Home/ProductCTA.jsx';
 // import AppAppBar from '../components/Home/AppAppBar.jsx';
 
 export default function Home() {
@@ -36,7 +36,7 @@ export default function Home() {
       <ProductValues />
       <ProductCategories />
       <ProductHowItWorks />
-      <ProductCTA />
+      {/* <ProductCTA /> */}
       <ProductSmokingHero />
     </>
   );
