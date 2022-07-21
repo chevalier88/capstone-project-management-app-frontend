@@ -83,7 +83,7 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
       const postedProject = await axios.post(`${BACKEND_URL}/project`, event);
       console.log(postedProject);
 
-      setJustSubmitted(false);
+      setJustSubmitted(true);
       setOpen(false);
 
       navigate('/dashboard');
