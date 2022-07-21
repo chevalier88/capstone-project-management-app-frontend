@@ -51,7 +51,7 @@ export default function SingleProjectModal({ rowContent }) {
 
   const handleClickOpen = () => () => {
     setOpen(true);
-    setTimeout(getUsersAndSkillsForThisProject, 3000);
+    setTimeout(getUsersAndSkillsForThisProject, 1500);
   };
 
   const handleClose = () => {
