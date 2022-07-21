@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // import * as React from 'react';
 import React, { useState, useEffect, useContext } from 'react';
 
@@ -179,10 +180,10 @@ export default function Dashboard() {
           ) : (
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} />
+                <DashboardGridRow key={row.project.id} row={row.project} setJustSubmitted={setJustSubmitted} />
               ))}
               {user.accountType === 'manager' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
+                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
               ))}
             </Grid>
           )}
@@ -199,7 +200,7 @@ export default function Dashboard() {
           ) : (
             <Grid container spacing={4}>
               {openProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
+                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
               ))}
             </Grid>
           )}
@@ -215,10 +216,10 @@ export default function Dashboard() {
           ) : (
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} />
+                <DashboardGridRow key={row.project.id} row={row.project} setJustSubmitted={setJustSubmitted} />
               ))}
               {user.accountType === 'manager' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
+                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
               ))}
             </Grid>
           )}

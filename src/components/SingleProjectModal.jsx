@@ -26,9 +26,7 @@ import BACKEND_URL from '../supportFunctions.js';
 import CircularIndeterminate from './CircularIndeterminate.jsx';
 import UserMoreMenu from './UserMoreMenu.jsx';
 
-export default function SingleProjectModal({ rowContent }) {
-  // const { user } = useContext(UserContext);
-  console.log(rowContent);
+export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
 
@@ -99,7 +97,7 @@ export default function SingleProjectModal({ rowContent }) {
               </Typography>
             </Grid>
             <Grid item xs={1}>
-              {!showLoading && <UserMoreMenu rowContent={rowContent} usersList={usersList} />}
+              {!showLoading && <UserMoreMenu rowContent={rowContent} usersList={usersList} setJustSubmitted={setJustSubmitted} />}
             </Grid>
           </Grid>
 

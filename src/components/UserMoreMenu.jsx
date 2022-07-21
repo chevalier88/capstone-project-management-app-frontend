@@ -3,18 +3,16 @@
 import React, {
   useRef, useState, useContext, useEffect,
 } from 'react';
-// material
 import {
   Menu, MenuItem, IconButton, ListItemIcon, ListItemText,
 } from '@mui/material';
-// component
+import axios from 'axios';
 import Iconify from './Iconify.jsx';
 import { UserContext } from './UserContext.jsx';
 import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
+import BACKEND_URL from '../supportFunctions.js';
 
-// ----------------------------------------------------------------------
-
-export default function UserMoreMenu({ rowContent, usersList }) {
+export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }) {
   const { user } = useContext(UserContext);
 
   const ref = useRef(null);
@@ -29,12 +27,22 @@ export default function UserMoreMenu({ rowContent, usersList }) {
 
   const handleOpen = () => {
     setIsOpen(true);
-    console.log('clicked');
   };
+
+  async function deleteCurrentProject() {
+    try {
+      const deletion = await axios.delete(`${BACKEND_URL}/project/${rowContent.id}`);
+      console.log(deletion);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleDeleteButtonClick = () => {
     console.log('delete button was clicked');
+    deleteCurrentProject();
     setIsOpen(false);
+    setJustSubmitted(true);
   };
 
   const handleSignContractButtonClick = () => {
