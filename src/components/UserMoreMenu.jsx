@@ -16,10 +16,7 @@ import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
 
 export default function UserMoreMenu({ rowContent, usersList }) {
   const { user } = useContext(UserContext);
-  console.log('printing usersList:');
-  console.log(usersList);
-  console.log('printing useContext user');
-  console.log(user);
+
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showJoinButton, setShowJoinButton] = useState(false);
@@ -39,8 +36,13 @@ export default function UserMoreMenu({ rowContent, usersList }) {
     console.log('delete button was clicked');
     setIsOpen(false);
   };
+
+  const handleSignContractButtonClick = () => {
+    console.log('contract button was clicked');
+    setIsOpen(false);
+  };
   // Add Controller here
-  const addProject = () => {
+  const addUserToProject = () => {
     console.log('USER ID:', user.id, 'ADDED PROJECT', rowContent.id);
     setIsOpen(false);
   };
@@ -90,17 +92,40 @@ export default function UserMoreMenu({ rowContent, usersList }) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
-
         {user.accountType === 'manager' && (
-        <MenuItem sx={{ color: 'text.secondary' }} onClick={handleDeleteButtonClick}>
+        <MenuItem
+          sx={{ color: 'text.secondary' }}
+          onClick={handleSignContractButtonClick}
+        >
           <ListItemIcon>
-            <Iconify icon="eva:trash-2-outline" width={24} height={24} />
+            <Iconify
+              sx={{ color: 'text.secondary' }}
+              icon="clarity:contract-line"
+              width={24}
+              height={24}
+            />
+          </ListItemIcon>
+          <ListItemText primary="Sign Contract" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
+        )}
+        {user.accountType === 'manager' && (
+        <MenuItem
+          sx={{ color: 'error.main' }}
+          onClick={handleDeleteButtonClick}
+        >
+          <ListItemIcon>
+            <Iconify
+              sx={{ color: 'error.main' }}
+              icon="eva:trash-2-outline"
+              width={24}
+              height={24}
+            />
           </ListItemIcon>
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
         )}
         {showJoinButton ? (
-          <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => addProject(e)}>
+          <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => addUserToProject(e)}>
             <ListItemIcon>
               <Iconify
                 icon="fluent:arrow-join-20-regular"
