@@ -1,5 +1,8 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable max-len */
-import React, { useRef, useState, useContext } from 'react';
+import React, {
+  useRef, useState, useContext, useEffect,
+} from 'react';
 // material
 import {
   Menu, MenuItem, IconButton, ListItemIcon, ListItemText,
@@ -19,6 +22,13 @@ export default function UserMoreMenu({ rowContent, usersList }) {
   console.log(user);
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [showJoinButton, setShowJoinButton] = useState(false);
+
+  const checkIfUserIsAlreadyEnrolledHere = () => {
+    if (usersList.some((name) => name === user.name)) {
+      return true;
+    } return false;
+  };
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -54,6 +64,15 @@ export default function UserMoreMenu({ rowContent, usersList }) {
     }
     return false;
   };
+
+  useEffect(() => {
+    if (rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && !checkIfUserIsAlreadyEnrolledHere()) {
+      setShowJoinButton(true);
+    } else {
+      console.log('this user cannot join this project.');
+    }
+  }, []);
+
   return (
     <>
       <IconButton ref={ref} onClick={handleOpen}>
@@ -80,17 +99,28 @@ export default function UserMoreMenu({ rowContent, usersList }) {
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
         )}
-        {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && (
-        <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => addProject(e)}>
-          <ListItemIcon>
-            <Iconify
-              icon="fluent:arrow-join-20-regular"
-              width={24}
-              height={24}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Join Project" primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem>
+        {showJoinButton ? (
+          <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => addProject(e)}>
+            <ListItemIcon>
+              <Iconify
+                icon="fluent:arrow-join-20-regular"
+                width={24}
+                height={24}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Join Project" primaryTypographyProps={{ variant: 'body2' }} />
+          </MenuItem>
+        ) : (
+          <MenuItem sx={{ color: 'text.secondary' }} disabled>
+            <ListItemIcon>
+              <Iconify
+                icon="fluent:arrow-join-20-regular"
+                width={24}
+                height={24}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Join Project" primaryTypographyProps={{ variant: 'body2' }} />
+          </MenuItem>
         )}
       </Menu>
     </>
