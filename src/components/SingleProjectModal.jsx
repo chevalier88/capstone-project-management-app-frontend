@@ -111,7 +111,7 @@ export default function SingleProjectModal({ rowContent }) {
 
             </Typography>
             <br />
-            Current Number of Engineers Enrolled:
+            Number of Engineers Required:
             {' '}
             {rowContent.user_projects.length}
             /
@@ -125,7 +125,7 @@ export default function SingleProjectModal({ rowContent }) {
               defaultValue={rowContent.user_projects.map((option) => option.id)}
               readOnly
               renderInput={(params) => (
-                <TextField {...params} label="readOnly" placeholder="Favorites" />
+                <TextField {...params} placeholder="Enrolled So Far" />
               )}
             />
             )}
