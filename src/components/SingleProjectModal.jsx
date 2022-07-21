@@ -111,7 +111,7 @@ export default function SingleProjectModal({ rowContent }) {
 
             </Typography>
             <br />
-            Number of Engineers Required:
+            Number of Engineers Enrolled/Required:
             {' '}
             {rowContent.user_projects.length}
             /
