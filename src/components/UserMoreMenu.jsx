@@ -3,6 +3,8 @@
 import React, {
   useRef, useState, useContext, useEffect,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
   Menu, MenuItem, IconButton, ListItemIcon, ListItemText,
 } from '@mui/material';
@@ -14,7 +16,7 @@ import BACKEND_URL from '../supportFunctions.js';
 
 export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }) {
   const { user } = useContext(UserContext);
-
+  const navigate = useNavigate();
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showJoinButton, setShowJoinButton] = useState(false);
@@ -27,6 +29,12 @@ export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }
 
   const handleOpen = () => {
     setIsOpen(true);
+  };
+
+  const handleSignContractButtonClick = () => {
+    console.log('contract button was clicked');
+    setIsOpen(false);
+    navigate('/fakeDocusign');
   };
 
   async function deleteCurrentProject() {
@@ -45,10 +53,6 @@ export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }
     setJustSubmitted(true);
   };
 
-  const handleSignContractButtonClick = () => {
-    console.log('contract button was clicked');
-    setIsOpen(false);
-  };
   // Add Controller here
   const addUserToProject = () => {
     console.log('USER ID:', user.id, 'ADDED PROJECT', rowContent.id);
@@ -100,6 +104,7 @@ export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
+
         {user.accountType === 'manager' && (
         <MenuItem
           sx={{ color: 'text.primary' }}
@@ -116,6 +121,7 @@ export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }
           <ListItemText primary="Sign Contract" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
         )}
+
         {user.accountType === 'manager' && (
         <MenuItem
           sx={{ color: 'error.main' }}

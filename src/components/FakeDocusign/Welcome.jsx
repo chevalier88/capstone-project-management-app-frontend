@@ -6,10 +6,6 @@ import {
   Box, Button, Container, Heading,
 } from 'gestalt';
 
-// import {
-//   Grid,
-//   Button, Container, Typography,
-// } from '@mui/material';
 import SignList from './Lists/SignList.jsx';
 import SignedList from './Lists/SignedList.jsx';
 import { resetDocToView } from './ViewDocument/ViewDocumentSlice.js';
