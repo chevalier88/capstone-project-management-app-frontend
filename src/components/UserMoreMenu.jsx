@@ -66,6 +66,8 @@ export default function UserMoreMenu({ rowContent }) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
+
         {user.accountType === 'manager' && (
         <MenuItem sx={{ color: 'text.secondary' }} onClick={handleDeleteButtonClick}>
           <ListItemIcon>
@@ -76,14 +78,16 @@ export default function UserMoreMenu({ rowContent }) {
         )}
         {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && (
         <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => addProject(e)}>
-          {/* <ListItemIcon>
-            <Iconify icon="eva:trash-2-outline" width={24} height={24} />
-          </ListItemIcon> */}
+          <ListItemIcon>
+            <Iconify
+              icon="fluent:arrow-join-20-regular"
+              width={24}
+              height={24}
+            />
+          </ListItemIcon>
           <ListItemText primary="Join Project" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
         )}
-        {/* {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>} */}
-        {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
       </Menu>
     </>
   );

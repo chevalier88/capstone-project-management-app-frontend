@@ -13,6 +13,7 @@ import {
   MenuItem, ListItemIcon, ListItemText,
 } from '@mui/material';
 import Board from 'react-trello';
+import Iconify from './Iconify.jsx';
 
 const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
@@ -33,7 +34,11 @@ export default function SingleProjectKanbanModal({ row }) {
     <div>
       <MenuItem sx={{ color: 'text.secondary' }} onClick={handleClickOpen}>
         <ListItemIcon>
-          {/* <Iconify icon="eva:trash-2-outline" width={24} height={24} /> */}
+          <Iconify
+            icon="ph:kanban-duotone"
+            width={24}
+            height={24}
+          />
         </ListItemIcon>
         <ListItemText primary="Open Kanban" primaryTypographyProps={{ variant: 'body2' }} />
       </MenuItem>
