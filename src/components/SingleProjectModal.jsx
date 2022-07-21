@@ -244,6 +244,7 @@ export default function SingleProjectModal({ rowContent }) {
         <DialogActions>
           {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
           {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
+          <Button onClick={handleClose}>Delete</Button>
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
