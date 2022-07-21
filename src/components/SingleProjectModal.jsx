@@ -4,6 +4,7 @@
 import React, {
   useState, useRef, useEffect, useContext,
 } from 'react';
+
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -14,6 +15,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+// import ButtonGroup from '@mui/material/ButtonGroup';
+
 import axios from 'axios';
 import { UserContext } from './UserContext.jsx';
 import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
@@ -21,6 +24,7 @@ import Typography from './Home/Typography.jsx';
 import BACKEND_URL from '../supportFunctions.js';
 
 import CircularIndeterminate from './CircularIndeterminate.jsx';
+import UserMoreMenu from './UserMoreMenu.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
   const { user } = useContext(UserContext);
@@ -108,10 +112,24 @@ export default function SingleProjectModal({ rowContent }) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">
-          <Typography component="span" variant="h3">
-            {' '}
-            {rowContent.name}
-          </Typography>
+          <Grid
+            container
+            spacing={1}
+            alignItems="center"
+          >
+            <Grid item xs={11}>
+              <Typography component="span" variant="h3">
+                {' '}
+                {rowContent.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <UserMoreMenu />
+              {user.accountType === 'manager' && <Button onClick={handleClose}>Delete</Button>}
+              {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
+              {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
+            </Grid>
+          </Grid>
 
         </DialogTitle>
 
@@ -134,7 +152,10 @@ export default function SingleProjectModal({ rowContent }) {
               ref={descriptionElementRef}
               tabIndex={-1}
             >
-              <Grid container spacing={2}>
+              <Grid
+                container
+                spacing={2}
+              >
                 <Grid item xs={2}>
                   ID:
                   {' '}
@@ -242,10 +263,9 @@ export default function SingleProjectModal({ rowContent }) {
 
         )}
         <DialogActions>
-          {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
-          {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
-          <Button onClick={handleClose}>Delete</Button>
+
           <Button onClick={handleClose}>Close</Button>
+
         </DialogActions>
       </Dialog>
     </>
