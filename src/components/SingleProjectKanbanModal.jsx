@@ -32,10 +32,10 @@ export default function SingleProjectKanbanModal({ row }) {
 
   return (
     <div>
-      <MenuItem sx={{ color: 'text.primary' }} onClick={handleClickOpen}>
+      <MenuItem sx={{ color: 'success.dark' }} onClick={handleClickOpen}>
         <ListItemIcon>
           <Iconify
-            sx={{ color: 'text.primary' }}
+            sx={{ color: 'success.dark' }}
             icon="ph:kanban-duotone"
             width={24}
             height={24}

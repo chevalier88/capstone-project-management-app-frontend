@@ -94,12 +94,12 @@ export default function UserMoreMenu({ rowContent, usersList }) {
         {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
         {user.accountType === 'manager' && (
         <MenuItem
-          sx={{ color: 'text.secondary' }}
+          sx={{ color: 'text.primary' }}
           onClick={handleSignContractButtonClick}
         >
           <ListItemIcon>
             <Iconify
-              sx={{ color: 'text.secondary' }}
+              sx={{ color: 'text.primary' }}
               icon="clarity:contract-line"
               width={24}
               height={24}
