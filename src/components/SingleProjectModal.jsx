@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, {
-  useState, useRef, useEffect, useContext,
+  useState, useRef, useEffect,
 } from 'react';
 
 import Grid from '@mui/material/Grid';
@@ -15,11 +15,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+
 // import ButtonGroup from '@mui/material/ButtonGroup';
 
 import axios from 'axios';
-import { UserContext } from './UserContext.jsx';
-import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
+// import { UserContext } from './UserContext.jsx';
 import Typography from './Home/Typography.jsx';
 import BACKEND_URL from '../supportFunctions.js';
 
@@ -27,7 +27,7 @@ import CircularIndeterminate from './CircularIndeterminate.jsx';
 import UserMoreMenu from './UserMoreMenu.jsx';
 
 export default function SingleProjectModal({ rowContent }) {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
 
@@ -60,32 +60,6 @@ export default function SingleProjectModal({ rowContent }) {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  // Add Controller here
-  const addProject = () => {
-    console.log('USER ID:', user.id, 'ADDED PROJECT', rowContent.id);
-    setOpen(false);
-  };
-
-  const checkIfProjectFull = () => {
-    const engineersEnrolled = Number(rowContent.user_projects.length);
-    const engineersRequired = Number(rowContent.noEngineersRequired);
-    if ((engineersEnrolled / engineersRequired) === 1) return true;
-    return false;
-  };
-
-  const checkDateValid = () => {
-    const date = (rowContent.deliveryDeadline.slice(0, 10)).value;
-    const varDate = new Date(date); // dd-mm-YYYY
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    // check if the project deadline date is bigger than today, if yes, TRUE
-    if (varDate >= today) {
-      console.log('checkDateValid!');
-      return true;
-    }
-    return false;
   };
 
   const descriptionElementRef = useRef(null);
@@ -124,10 +98,8 @@ export default function SingleProjectModal({ rowContent }) {
               </Typography>
             </Grid>
             <Grid item xs={1}>
-              <UserMoreMenu />
-              {user.accountType === 'manager' && <Button onClick={handleClose}>Delete</Button>}
-              {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
-              {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
+              <UserMoreMenu rowContent={rowContent} />
+
             </Grid>
           </Grid>
 

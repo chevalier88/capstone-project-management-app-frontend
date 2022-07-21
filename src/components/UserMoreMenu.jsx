@@ -1,14 +1,18 @@
-import React, { useRef, useState } from 'react';
+/* eslint-disable max-len */
+import React, { useRef, useState, useContext } from 'react';
 // material
 import {
   Menu, MenuItem, IconButton, ListItemIcon, ListItemText,
 } from '@mui/material';
 // component
 import Iconify from './Iconify.jsx';
+import { UserContext } from './UserContext.jsx';
+import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu() {
+export default function UserMoreMenu({ rowContent }) {
+  const { user } = useContext(UserContext);
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,7 +25,31 @@ export default function UserMoreMenu() {
     console.log('delete button was clicked');
     setIsOpen(false);
   };
+  // Add Controller here
+  const addProject = () => {
+    console.log('USER ID:', user.id, 'ADDED PROJECT', rowContent.id);
+    setIsOpen(false);
+  };
 
+  const checkIfProjectFull = () => {
+    const engineersEnrolled = Number(rowContent.user_projects.length);
+    const engineersRequired = Number(rowContent.noEngineersRequired);
+    if ((engineersEnrolled / engineersRequired) === 1) return true;
+    return false;
+  };
+
+  const checkDateValid = () => {
+    const date = (rowContent.deliveryDeadline.slice(0, 10)).value;
+    const varDate = new Date(date); // dd-mm-YYYY
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    // check if the project deadline date is bigger than today, if yes, TRUE
+    if (varDate >= today) {
+      console.log('checkDateValid!');
+      return true;
+    }
+    return false;
+  };
   return (
     <>
       <IconButton ref={ref} onClick={handleOpen}>
@@ -38,12 +66,24 @@ export default function UserMoreMenu() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        {user.accountType === 'manager' && (
         <MenuItem sx={{ color: 'text.secondary' }} onClick={handleDeleteButtonClick}>
           <ListItemIcon>
             <Iconify icon="eva:trash-2-outline" width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
+        )}
+        {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && (
+        <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => addProject(e)}>
+          {/* <ListItemIcon>
+            <Iconify icon="eva:trash-2-outline" width={24} height={24} />
+          </ListItemIcon> */}
+          <ListItemText primary="Join Project" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
+        )}
+        {/* {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>} */}
+        {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
       </Menu>
     </>
   );

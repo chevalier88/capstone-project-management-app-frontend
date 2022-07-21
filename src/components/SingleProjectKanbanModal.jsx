@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { forwardRef, useState } from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
@@ -10,7 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-
+import {
+  MenuItem, ListItemIcon, ListItemText,
+} from '@mui/material';
 import Board from 'react-trello';
 
 const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
@@ -30,9 +31,15 @@ export default function SingleProjectKanbanModal({ row }) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <MenuItem sx={{ color: 'text.secondary' }} onClick={handleClickOpen}>
+        <ListItemIcon>
+          {/* <Iconify icon="eva:trash-2-outline" width={24} height={24} /> */}
+        </ListItemIcon>
+        <ListItemText primary="Open Kanban" primaryTypographyProps={{ variant: 'body2' }} />
+      </MenuItem>
+      {/* <Button variant="outlined" onClick={handleClickOpen}>
         Open Kanban
-      </Button>
+      </Button> */}
       <Dialog
         fullScreen
         open={open}
