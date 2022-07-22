@@ -56,7 +56,7 @@ const ImageIconButton = styled(ButtonBase)(({ theme }) => ({
 const images = [
   {
     url: 'https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=400',
-    title: 'Create an App to store your photos!',
+    title: 'Create an App to store your photos',
     width: '40%',
   },
   {
@@ -81,12 +81,12 @@ const images = [
   },
   {
     url: 'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=400',
-    title: 'Expense Tracker App!',
+    title: 'Expense Tracker App',
     width: '24%',
   },
   {
     url: 'https://images.unsplash.com/photo-1506941433945-99a2aa4bd50a?auto=format&fit=crop&w=400',
-    title: 'Share your experiences!',
+    title: 'Share your experiences',
     width: '40%',
   },
   {
@@ -96,7 +96,7 @@ const images = [
   },
   {
     url: 'https://images.unsplash.com/photo-1518136247453-74e7b5265980?auto=format&fit=crop&w=400',
-    title: 'Reading List to Track your reading!',
+    title: 'Reading List to Track your reading',
     width: '40%',
   },
 ];
