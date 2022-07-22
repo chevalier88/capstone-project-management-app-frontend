@@ -13,25 +13,46 @@ import {
   MenuItem, ListItemIcon, ListItemText, Tooltip,
 } from '@mui/material';
 import Board from 'react-trello';
+import axios from 'axios';
 import Iconify from './Iconify.jsx';
+import BACKEND_URL from '../supportFunctions.js';
 
 const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
-export default function SingleProjectKanbanModal({ row }) {
-  console.log(row.kanbanData);
-
+export default function SingleProjectKanbanModal({
+  projectId, name, data, setJustSubmitted,
+}) {
   const [open, setOpen] = useState(false);
+  const [currentKanbanData, setCurrentKanbanData] = useState(data);
+
+  async function updateKanban() {
+    try {
+      const currentKanbanDataObject = {
+        id: projectId,
+        kanbanData: currentKanbanData,
+      };
+      console.log(currentKanbanDataObject);
+
+      const updatedKanbanQuery = await axios.put(`${BACKEND_URL}/project/update-kanban/${projectId}`, currentKanbanDataObject);
+      console.log(updatedKanbanQuery);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    updateKanban();
+    setJustSubmitted(true);
     setOpen(false);
   };
 
-  const handleKanbanChanges = (data) => {
-    console.log(data);
+  const handleKanbanChanges = (newData) => {
+    console.log(newData);
+    setCurrentKanbanData(newData);
   };
 
   return (
@@ -66,7 +87,7 @@ export default function SingleProjectKanbanModal({ row }) {
               </Tooltip>
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {row.name}
+              {name}
               {' '}
               Kanban
             </Typography>
@@ -74,7 +95,7 @@ export default function SingleProjectKanbanModal({ row }) {
           </Toolbar>
           <Divider />
           {/* {JSON.stringify(row.kanbanData)} */}
-          <Board data={row.kanbanData} editable onDataChange={handleKanbanChanges} />
+          <Board data={data} editable onDataChange={handleKanbanChanges} />
         </AppBar>
 
       </Dialog>
