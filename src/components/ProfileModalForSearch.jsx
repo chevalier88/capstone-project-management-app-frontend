@@ -1,7 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
@@ -36,7 +39,6 @@ export default function ProfileModalForSearch({ user }) {
   }, [open]);
   // role and account mapping
   const accountMapping = {
-
     name: 'Software Engineer',
     icon: HandymanTwoToneIcon,
     color: 'secondary',
@@ -54,44 +56,64 @@ export default function ProfileModalForSearch({ user }) {
       >
         <DialogTitle id="scroll-dialog-title">
           {user.username}
-          <Chip
-            icon={<accountMapping.icon />}
-            label={accountMapping.name}
-            color={accountMapping.color}
-          />
         </DialogTitle>
 
         <DialogContent component="div" dividers={scroll === 'paper'}>
-          {/* <DialogContentText
-            component="div"
-            id="scroll-dialog-description"
-            ref={descriptionElementRef}
-            tabIndex={-1}
-          >
-            Project ID:
-            {' '}
-            {rowContent.id}
-            <Divider component="div" />
-            {rowContent.summary}
-            <Divider component="div" />
-            {JSON.stringify(rowContent)}
-            <Divider component="div" />
-            <RandomLoremIpsum />
-
-          </DialogContentText> */}
           <Box
             component="form"
             sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' },
+              '& .MuiTextField-root': { m: 1 },
             }}
             noValidate
             autoComplete="off"
           >
+            <Box sx={{ margin: 2 }}>
+              <Badge
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeContent={(
+                  <Chip
+                    icon={<accountMapping.icon />}
+                    label={accountMapping.name}
+                    color={accountMapping.color}
+                    size="small"
+                  />
+            )}
+              >
+                <Avatar
+                  alt="Nothing"
+                  src={user.profilePhoto}
+                  sx={{ width: 100, height: 100 }}
+                />
+              </Badge>
+            </Box>
             <div>
               <TextField
                 id="name"
-                label="My Name"
+                label="Name"
+                multiline
                 defaultValue={user.name}
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+              />
+              <TextField
+                id="aboutMe"
+                label="About Me"
+                multiline
+                fullWidth
+                defaultValue={user.aboutMe}
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+              />
+              <TextField
+                id="experience"
+                label="My Experience"
+                multiline
+                fullWidth
+                defaultValue={user.experience}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -100,6 +122,7 @@ export default function ProfileModalForSearch({ user }) {
               <TextField
                 id="email"
                 label="My Email Address"
+                multiline
                 defaultValue={user.email}
                 InputProps={{
                   readOnly: true,
@@ -109,6 +132,7 @@ export default function ProfileModalForSearch({ user }) {
               <TextField
                 id="location"
                 label="My Location"
+                multiline
                 defaultValue={user.location}
                 InputProps={{
                   readOnly: true,
@@ -118,6 +142,7 @@ export default function ProfileModalForSearch({ user }) {
               <TextField
                 id="minimumSalary"
                 label="My Minimum Salary"
+                multiline
                 defaultValue={user.minimumSalary}
                 InputProps={{
                   readOnly: true,
@@ -136,46 +161,25 @@ export default function ProfileModalForSearch({ user }) {
               <TextField
                 id="portfolioUrl"
                 label="My Profolio link"
+                multiline
                 defaultValue={user.portfolioUrl}
                 InputProps={{
                   readOnly: true,
                 }}
                 variant="standard"
               />
-              <TextField
-                id="aboutMe"
-                label="About Me"
-                multiline
-                rows={4}
-                defaultValue={user.aboutMe}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="experience"
-                label="My Experience"
-                multiline
-                rows={4}
-                defaultValue={user.experience}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <Container>
-                <div>
-                  Skills:
-                  {' '}
-                  {user.skills.map((data) => (
-                    <Chip
-                      key={data.id}
-                      label={data.name}
-                      color="primary"
-                    />
-                  ))}
-                </div>
+              <Container sx={{ padding: 1 }}>
+                My Skills:
+                {' '}
+                {user.skills.map((data) => (
+                  <Chip
+                    key={data.id}
+                    label={data.name}
+                    color="warning"
+                    variant="outlined"
+                    size="small"
+                  />
+                ))}
               </Container>
             </div>
           </Box>

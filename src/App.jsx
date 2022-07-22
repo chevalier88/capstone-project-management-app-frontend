@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -24,6 +24,14 @@ import Welcome from './components/FakeDocusign/Welcome.jsx';
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Nanum Gothic',
+    ].join(','),
+  },
+});
+
 export default function App() {
   // .............STATES...............
   const [user, setUser] = useState([]);
@@ -45,22 +53,24 @@ export default function App() {
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ user, setUser }}>
-        <Provider store={store}>
-          <Navbar />
-          <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="dashboard" exact element={<Dashboard />} />
-            <Route path="profile" exact element={<Profile />} />
-            <Route path="search" element={<Search />} />
-            <Route path="login" element={<Login />} />
-            <Route path="profile/edit" element={<ProfileEdit />} />
-            <Route path="fakeDocusign" exact element={<Welcome />} />
-            <Route path="assignUsers" exact element={<AssignUsers />} />
-            <Route path="prepareDocument" exact element={<Preparation />} />
-            <Route path="signDocument" exact element={<Sign />} />
-            <Route path="viewDocument" exact element={<View />} />
-          </Routes>
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <Navbar />
+            <Routes>
+              <Route path="/" exact element={<Home />} />
+              <Route path="dashboard" exact element={<Dashboard />} />
+              <Route path="profile" exact element={<Profile />} />
+              <Route path="search" element={<Search />} />
+              <Route path="login" element={<Login />} />
+              <Route path="profile/edit" element={<ProfileEdit />} />
+              <Route path="fakeDocusign" exact element={<Welcome />} />
+              <Route path="assignUsers" exact element={<AssignUsers />} />
+              <Route path="prepareDocument" exact element={<Preparation />} />
+              <Route path="signDocument" exact element={<Sign />} />
+              <Route path="viewDocument" exact element={<View />} />
+            </Routes>
+          </Provider>
+        </ThemeProvider>
       </UserContext.Provider>
     </BrowserRouter>
 
