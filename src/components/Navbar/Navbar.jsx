@@ -19,7 +19,7 @@ const theme = createTheme({
 
 export default function Navbar() {
   // .............STATES...............
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(0);
   const { user } = useContext(UserContext);
 
   const handleChange = (event, newValue) => {

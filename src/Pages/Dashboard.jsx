@@ -122,6 +122,7 @@ export default function Dashboard() {
       console.log(user);
       setTimeout(getAllProjects,
         1500);
+      setJustSubmitted(false);
     } else {
       setTimeout(getCurrentProjects,
         1500);
@@ -129,6 +130,7 @@ export default function Dashboard() {
         1500);
       setTimeout(getUserCompletedProjects,
         1500);
+      setJustSubmitted(false);
     }
   }, [justSubmitted]);
 

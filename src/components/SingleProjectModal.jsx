@@ -15,10 +15,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
 // import ButtonGroup from '@mui/material/ButtonGroup';
 
-import axios from 'axios';
 // import { UserContext } from './UserContext.jsx';
 import Typography from './Home/Typography.jsx';
 import BACKEND_URL from '../supportFunctions.js';
@@ -124,7 +124,7 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
               tabIndex={-1}
             >
               <Grid>
-                <HorizontalStepper stage={rowContent.stage} />
+                <HorizontalStepper stage={rowContent.stage} projectId={rowContent.id} setJustSubmitted={setJustSubmitted} />
               </Grid>
               <Divider />
               <Grid
