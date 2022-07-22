@@ -86,7 +86,7 @@ export default function ProfileEdit() {
     console.log('userSkills', userSkills);
 
     return (
-      <Box sx={{ margin: 7 }}>
+      <Box sx={{ margin: 2 }}>
         <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
           <Grid container spacing={3}>
             <Grid item xs={12}>

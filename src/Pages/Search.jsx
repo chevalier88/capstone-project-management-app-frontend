@@ -83,7 +83,7 @@ export default function Search() {
   const dataFiltered = filterData(searchQuery, users);
 
   return (
-    <Box sx={{ margin: 7 }}>
+    <Box sx={{ margin: 2 }}>
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -92,7 +92,7 @@ export default function Search() {
           </Grid>
         </Grid>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 400 }}>
+          <TableContainer sx={{ maxHeight: 520 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
