@@ -19,7 +19,9 @@ import BACKEND_URL from '../supportFunctions.js';
 
 const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
-export default function SingleProjectKanbanModal({ projectId, name, data }) {
+export default function SingleProjectKanbanModal({
+  projectId, name, data, setJustSubmitted,
+}) {
   const [open, setOpen] = useState(false);
   const [currentKanbanData, setCurrentKanbanData] = useState(data);
 
@@ -44,6 +46,7 @@ export default function SingleProjectKanbanModal({ projectId, name, data }) {
 
   const handleClose = () => {
     updateKanban();
+    setJustSubmitted(true);
     setOpen(false);
   };
 

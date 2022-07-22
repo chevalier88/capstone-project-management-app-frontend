@@ -116,7 +116,7 @@ export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal projectId={rowContent.id} name={rowContent.name} data={rowContent.kanbanData} />}
+        {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal projectId={rowContent.id} name={rowContent.name} data={rowContent.kanbanData} setJustSubmitted={setJustSubmitted} />}
 
         {user.accountType === 'manager' && (
         <MenuItem
