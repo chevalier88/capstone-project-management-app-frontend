@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import {
-  MenuItem, ListItemIcon, ListItemText,
+  MenuItem, ListItemIcon, ListItemText, Tooltip,
 } from '@mui/material';
 import Board from 'react-trello';
 import Iconify from './Iconify.jsx';
@@ -30,6 +30,10 @@ export default function SingleProjectKanbanModal({ row }) {
     setOpen(false);
   };
 
+  const handleKanbanChanges = (data) => {
+    console.log(data);
+  };
+
   return (
     <div>
       <MenuItem sx={{ color: 'success.dark' }} onClick={handleClickOpen}>
@@ -43,9 +47,6 @@ export default function SingleProjectKanbanModal({ row }) {
         </ListItemIcon>
         <ListItemText primary="Open Kanban" primaryTypographyProps={{ variant: 'body2' }} />
       </MenuItem>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open Kanban
-      </Button> */}
       <Dialog
         fullScreen
         open={open}
@@ -60,7 +61,9 @@ export default function SingleProjectKanbanModal({ row }) {
               onClick={handleClose}
               aria-label="close"
             >
-              <CloseIcon />
+              <Tooltip title="Save and Close">
+                <CloseIcon />
+              </Tooltip>
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               {row.name}
@@ -71,7 +74,7 @@ export default function SingleProjectKanbanModal({ row }) {
           </Toolbar>
           <Divider />
           {/* {JSON.stringify(row.kanbanData)} */}
-          <Board data={row.kanbanData} editable />
+          <Board data={row.kanbanData} editable onDataChange={handleKanbanChanges} />
         </AppBar>
 
       </Dialog>
