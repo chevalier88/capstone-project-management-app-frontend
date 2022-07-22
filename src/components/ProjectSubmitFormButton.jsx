@@ -15,7 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import ReactHookForm from './ReactHookForm.jsx';
 
-export default function ProjectSubmitFormButton() {
+export default function ProjectSubmitFormButton({ setJustSubmitted }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -46,11 +46,9 @@ export default function ProjectSubmitFormButton() {
             right: 100,
           }}
         >
-          {/* <AnimateButton type="rotate"> */}
           <IconButton color="inherit" size="large" disableRipple>
             <AddIcon />
           </IconButton>
-          {/* </AnimateButton> */}
         </Fab>
       </Tooltip>
       <Dialog
@@ -62,7 +60,7 @@ export default function ProjectSubmitFormButton() {
         <DialogTitle>Submit New Project</DialogTitle>
         <Divider />
         <DialogContent>
-          <ReactHookForm setOpen={setOpen} />
+          <ReactHookForm setOpen={setOpen} setJustSubmitted={setJustSubmitted} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close & Cancel</Button>

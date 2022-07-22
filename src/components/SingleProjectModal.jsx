@@ -2,8 +2,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, {
-  useState, useRef, useEffect, useContext,
+  useState, useRef, useEffect,
 } from 'react';
+
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,51 +15,51 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { UserContext } from './UserContext.jsx';
-import SingleProjectKanbanModal from './SingleProjectKanbanModal.jsx';
-import Typography from './Home/Typography.jsx';
+import axios from 'axios';
 
-export default function SingleProjectModal({ rowContent }) {
-  const { user } = useContext(UserContext);
+// import ButtonGroup from '@mui/material/ButtonGroup';
+
+// import { UserContext } from './UserContext.jsx';
+import Typography from './Home/Typography.jsx';
+import BACKEND_URL from '../supportFunctions.js';
+
+import CircularIndeterminate from './CircularIndeterminate.jsx';
+import UserMoreMenu from './UserMoreMenu.jsx';
+import HorizontalStepper from './HorizontalStepper.jsx';
+
+export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
   const [open, setOpen] = useState(false);
   const [scroll] = useState('paper');
 
+  const [showLoading, setShowLoading] = useState(true);
+
+  const [usersList, setUsersList] = useState([]);
+  const [skillsList, setSkillsList] = useState([]);
+
+  async function getUsersAndSkillsForThisProject() {
+    try {
+      const results = await axios.get(`${BACKEND_URL}/project/${rowContent.id}`);
+      const { data } = results;
+      console.log(data);
+      const usersArray = [];
+      const skillsArray = [];
+      data.skills.forEach((skillObject) => skillsArray.push(skillObject.skill.name));
+      data.users.forEach((userObject) => usersArray.push(userObject.user.name));
+      setSkillsList(skillsArray);
+      setUsersList(usersArray);
+      setShowLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const handleClickOpen = () => () => {
     setOpen(true);
+    setTimeout(getUsersAndSkillsForThisProject, 1500);
   };
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  // Add Controller here
-  const addProject = () => {
-    console.log('USER ID:', user.id, 'ADDED PROJECT', rowContent.id);
-    setOpen(false);
-  };
-
-  console.log('user_projects', rowContent.user_projects.length);
-  console.log('user_engineers required', rowContent.noEngineersRequired);
-  console.log('user id ', user.id);
-
-  const checkIfProjectFull = () => {
-    const engineersEnrolled = Number(rowContent.user_projects.length);
-    const engineersRequired = Number(rowContent.noEngineersRequired);
-    if ((engineersEnrolled / engineersRequired) === 1) return true;
-    return false;
-  };
-
-  const checkDateValid = () => {
-    const date = (rowContent.deliveryDeadline.slice(0, 10)).value;
-    const varDate = new Date(date); // dd-mm-YYYY
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    // check if the project deadline date is bigger than today, if yes, TRUE
-    if (varDate >= today) {
-      console.log('checkDateValid!');
-      return true;
-    }
-    return false;
   };
 
   const descriptionElementRef = useRef(null);
@@ -71,12 +73,12 @@ export default function SingleProjectModal({ rowContent }) {
     }
   }, [open]);
 
-  console.log(rowContent);
-
   return (
     <>
       <Button onClick={handleClickOpen()}>View</Button>
       <Dialog
+        maxWidth="md"
+        fullWidth
         open={open}
         onClose={handleClose}
         scroll={scroll}
@@ -84,73 +86,160 @@ export default function SingleProjectModal({ rowContent }) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">
-          PLACEHOLDER FOR ONE PROJECT
-          {' '}
-          {rowContent.name}
+          <Grid
+            container
+            spacing={1}
+            alignItems="center"
+          >
+            <Grid item xs={11}>
+              <Typography component="span" variant="h3">
+                {' '}
+                {rowContent.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              {!showLoading && <UserMoreMenu rowContent={rowContent} usersList={usersList} setJustSubmitted={setJustSubmitted} />}
+            </Grid>
+          </Grid>
+
         </DialogTitle>
 
-        <DialogContent component="div" dividers={scroll === 'paper'}>
-          <DialogContentText
-            component="div"
-            id="scroll-dialog-description"
-            ref={descriptionElementRef}
-            tabIndex={-1}
+        {showLoading ? (
+          <Grid
+            container
+            spacing={2}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
           >
-            Project ID:
-            {' '}
-            {rowContent.id}
-            <Divider component="div" />
-            {rowContent.summary}
-            <Divider component="div" />
-            <br />
-            <Typography variant="h3">
+            <CircularIndeterminate showLoading={showLoading} />
+          </Grid>
+
+        ) : (
+          <DialogContent component="div" dividers={scroll === 'paper'}>
+            <DialogContentText
+              component="div"
+              id="scroll-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
+            >
+              <Grid>
+                <HorizontalStepper stage={rowContent.stage} projectId={rowContent.id} setJustSubmitted={setJustSubmitted} />
+              </Grid>
+              <Divider />
+              <Grid
+                container
+                spacing={2}
+              >
+                <Grid item xs={1}>
+                  ID:
+                  {' '}
+                  {rowContent.id}
+                </Grid>
+                <Grid item xs={2}>
+                  Industry:
+                  {' '}
+                  <br />
+                  {rowContent.industry.name}
+                </Grid>
+                <Grid item xs={3}>
+                  Created Date:
+                  {' '}
+                  <br />
+                  {rowContent.createdAt.slice(0, 10)}
+                  /
+                  {' '}
+                  {rowContent.createdAt.slice(11, 16)}
+                  {' '}
+                  hrs
+                </Grid>
+              </Grid>
+              <Divider component="div" />
+              Summary:
+              <br />
+              {rowContent.summary}
+              <Divider component="div" />
+              Forecasted Hours Required for Project Completion:
+              <br />
+              {rowContent.projectedHours}
+              <Divider component="div" />
+              <br />
+              <Typography variant="h4">
+                {' '}
+                $
+                {rowContent.minimumSalary}
+                /hr
+
+              </Typography>
+              <br />
+              Number of Engineers Enrolled/Required:
               {' '}
-              $
-              {rowContent.minimumSalary}
-              /hr
-
-            </Typography>
-            <br />
-            Current Number of Engineers Enrolled:
-            {' '}
-            {rowContent.user_projects.length}
-            /
-            {rowContent.noEngineersRequired}
-            <br />
-            {rowContent.user_projects.length !== 0 && (
-            <Autocomplete
-              multiple
-              id="Engineer IDs Enrolled"
-              options={rowContent.user_projects.map((option) => option.id)}
-              defaultValue={rowContent.user_projects.map((option) => option.id)}
-              readOnly
-              renderInput={(params) => (
-                <TextField {...params} label="readOnly" placeholder="Favorites" />
+              {rowContent.user_projects.length}
+              /
+              {rowContent.noEngineersRequired}
+              <br />
+              {rowContent.user_projects.length !== 0 && (
+              <Autocomplete
+                multiple
+                id="Engineers Enrolled"
+                options={usersList.map((option) => option)}
+                defaultValue={usersList.map((option) => option)}
+                readOnly
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="filled"
+                    placeholder="Enrolled So Far"
+                  />
+                )}
+              />
               )}
-            />
-            )}
+              <br />
+              Skills Needed for this Project:
+              <Autocomplete
+                multiple
+                id="Skills"
+                options={skillsList.map((option) => option)}
+                defaultValue={skillsList.map((option) => option)}
+                readOnly
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="filled"
+                  />
+                )}
+              />
+              <br />
+              Enrolment Deadline:
+              {' '}
+              {rowContent.enrolmentDeadline.slice(0, 10)}
+              /
+              {' '}
+              {rowContent.enrolmentDeadline.slice(11, 16)}
+              {' '}
+              hrs
+              <br />
+              Delivery Deadline:
+              {' '}
+              {rowContent.deliveryDeadline.slice(0, 10)}
+              /
+              {' '}
+              {rowContent.deliveryDeadline.slice(11, 16)}
+              {' '}
+              hrs
+              <br />
+              {' '}
+              <br />
+              <Divider component="div" />
 
-            Enrolment Deadline:
-            {rowContent.enrolmentDeadline.slice(0, 10)}
-            /
-            {rowContent.enrolmentDeadline.slice(11, 16)}
-            <br />
-            Delivery Deadline:
-            {rowContent.deliveryDeadline.slice(0, 10)}
-            /
-            {rowContent.deliveryDeadline.slice(11, 16)}
-            {' '}
-            <br />
-            {' '}
-            <br />
-            <Divider component="div" />
+            </DialogContentText>
+          </DialogContent>
 
-          </DialogContentText>
-        </DialogContent>
+        )}
         <DialogActions>
-          {rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && <Button onClick={(e) => addProject(e)}>Join Project</Button>}
-          {rowContent.stage === 'in-progress' && <SingleProjectKanbanModal row={rowContent} />}
+
           <Button onClick={handleClose}>Close</Button>
+
         </DialogActions>
       </Dialog>
     </>

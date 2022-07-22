@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { forwardRef, useState } from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
@@ -10,8 +9,11 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-
+import {
+  MenuItem, ListItemIcon, ListItemText, Tooltip,
+} from '@mui/material';
 import Board from 'react-trello';
+import Iconify from './Iconify.jsx';
 
 const Transition = forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
@@ -28,11 +30,23 @@ export default function SingleProjectKanbanModal({ row }) {
     setOpen(false);
   };
 
+  const handleKanbanChanges = (data) => {
+    console.log(data);
+  };
+
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open Kanban
-      </Button>
+      <MenuItem sx={{ color: 'success.dark' }} onClick={handleClickOpen}>
+        <ListItemIcon>
+          <Iconify
+            sx={{ color: 'success.dark' }}
+            icon="ph:kanban-duotone"
+            width={24}
+            height={24}
+          />
+        </ListItemIcon>
+        <ListItemText primary="Open Kanban" primaryTypographyProps={{ variant: 'body2' }} />
+      </MenuItem>
       <Dialog
         fullScreen
         open={open}
@@ -47,7 +61,9 @@ export default function SingleProjectKanbanModal({ row }) {
               onClick={handleClose}
               aria-label="close"
             >
-              <CloseIcon />
+              <Tooltip title="Save and Close">
+                <CloseIcon />
+              </Tooltip>
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               {row.name}
@@ -58,7 +74,7 @@ export default function SingleProjectKanbanModal({ row }) {
           </Toolbar>
           <Divider />
           {/* {JSON.stringify(row.kanbanData)} */}
-          <Board data={row.kanbanData} editable />
+          <Board data={row.kanbanData} editable onDataChange={handleKanbanChanges} />
         </AppBar>
 
       </Dialog>

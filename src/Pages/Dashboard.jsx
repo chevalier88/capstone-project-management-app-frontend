@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // import * as React from 'react';
 import React, { useState, useEffect, useContext } from 'react';
 
@@ -15,15 +16,14 @@ import { UserContext } from '../components/UserContext.jsx';
 import DashboardGridRow from '../components/DashboardGridRow.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 
-// import CircularIndeterminate from '../components/CircularIndeterminate.jsx';
 import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
 
 const theme = createTheme();
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
-  const [showLoading, setShowLoading] = useState(true);
-
+  const [showLoading, setShowLoading] = useState(false);
+  const [justSubmitted, setJustSubmitted] = useState(false);
   const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
@@ -116,10 +116,13 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
+    setShowLoading(true);
+
     if (user.accountType === 'manager') {
       console.log(user);
       setTimeout(getAllProjects,
         1500);
+      setJustSubmitted(false);
     } else {
       setTimeout(getCurrentProjects,
         1500);
@@ -127,8 +130,9 @@ export default function Dashboard() {
         1500);
       setTimeout(getUserCompletedProjects,
         1500);
+      setJustSubmitted(false);
     }
-  }, []);
+  }, [justSubmitted]);
 
   if (user.length === 0) {
     return (
@@ -144,7 +148,7 @@ export default function Dashboard() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        {user.accountType === 'manager' && <ProjectSubmitFormButton />}
+        {user.accountType === 'manager' && <ProjectSubmitFormButton setJustSubmitted={setJustSubmitted} />}
         <Box
           sx={{
             bgcolor: 'background.paper',
@@ -178,10 +182,10 @@ export default function Dashboard() {
           ) : (
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} />
+                <DashboardGridRow key={row.project.id} row={row.project} setJustSubmitted={setJustSubmitted} />
               ))}
               {user.accountType === 'manager' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
+                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
               ))}
             </Grid>
           )}
@@ -198,7 +202,7 @@ export default function Dashboard() {
           ) : (
             <Grid container spacing={4}>
               {openProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
+                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
               ))}
             </Grid>
           )}
@@ -214,10 +218,10 @@ export default function Dashboard() {
           ) : (
             <Grid container spacing={4}>
               {user.accountType === 'engineer' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} />
+                <DashboardGridRow key={row.project.id} row={row.project} setJustSubmitted={setJustSubmitted} />
               ))}
               {user.accountType === 'manager' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} />
+                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
               ))}
             </Grid>
           )}

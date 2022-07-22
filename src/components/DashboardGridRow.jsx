@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import SingleProjectModal from './SingleProjectModal.jsx';
 
-export default function DashboardGridRow({ row }) {
+export default function DashboardGridRow({ row, setJustSubmitted }) {
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card
@@ -48,7 +48,7 @@ export default function DashboardGridRow({ row }) {
 
         </CardContent>
         <CardActions>
-          <SingleProjectModal key={row.name} rowContent={row} />
+          <SingleProjectModal key={row.name} rowContent={row} setJustSubmitted={setJustSubmitted} />
         </CardActions>
       </Card>
     </Grid>
