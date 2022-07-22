@@ -22,6 +22,8 @@ export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { user } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
+
   console.log(user);
 
   const handleOpenNavMenu = (event) => {
@@ -161,22 +163,25 @@ export default function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              {user.length === 0
+              && (
               <MenuItem key="login" onClick={handleCloseUserMenu}>
-                {user.length !== 0 && (
                 <Nav.Link as={Link} to="/login">
                   <Typography textAlign="center" as={Link} to="/login">
                     Login
                   </Typography>
                 </Nav.Link>
-                )}
-                {user.length === 0 && (
-                <Nav.Link as={Link} to="/logout">
-                  <Typography textAlign="center" as={Link} to="/login">
-                    Logout
-                  </Typography>
-                </Nav.Link>
-                )}
               </MenuItem>
+              )}
+              {user.length !== 0 && (
+                <MenuItem key="logout" onClick={handleCloseUserMenu}>
+                  <Nav.Link as={Link} to="/logout">
+                    <Typography textAlign="center" as={Link} to="/login">
+                      Logout
+                    </Typography>
+                  </Nav.Link>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
