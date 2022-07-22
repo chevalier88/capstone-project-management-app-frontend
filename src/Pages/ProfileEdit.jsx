@@ -86,7 +86,7 @@ export default function ProfileEdit() {
     console.log('userSkills', userSkills);
 
     return (
-      <div id="">
+      <Box sx={{ margin: 7 }}>
         <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -103,9 +103,46 @@ export default function ProfileEdit() {
                   <>
                     <TextField
                       {...field}
-                      variant="standard"
+                      variant="outlined"
                       fullWidth
                       label="My Name"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                name="aboutMe"
+                defaultValue={user.aboutMe}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="outlined"
+                      fullWidth
+                      multiline
+                      label="About Me"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                name="experience"
+                defaultValue={user.experience}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      variant="outlined"
+                      fullWidth
+                      multiline
+                      label="My Experience"
                     />
                   </>
                 )}
@@ -120,7 +157,7 @@ export default function ProfileEdit() {
                   <>
                     <TextField
                       {...field}
-                      variant="standard"
+                      variant="outlined"
                       fullWidth
                       label="My Email"
                     />
@@ -137,45 +174,9 @@ export default function ProfileEdit() {
                   <>
                     <TextField
                       {...field}
-                      variant="standard"
+                      variant="outlined"
                       fullWidth
                       label="My Location"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Controller
-                control={control}
-                name="aboutMe"
-                defaultValue={user.aboutMe}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="standard"
-                      fullWidth
-                      multiline
-                      label="About Me"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Controller
-                control={control}
-                name="experience"
-                defaultValue={user.experience}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="standard"
-                      fullWidth
-                      multiline
-                      label="My Experience"
                     />
                   </>
                 )}
@@ -215,8 +216,9 @@ export default function ProfileEdit() {
                   <>
                     <TextField
                       {...field}
-                      variant="standard"
+                      variant="outlined"
                       fullWidth
+                      multiline
                       label="My Portfolio"
                     />
                   </>
@@ -274,16 +276,16 @@ export default function ProfileEdit() {
                     <Autocomplete
                       multiple
                       options={skills}
+                      // inputValue={[skills[4].name]}
                       getOptionLabel={(option) => option.name}
                       onChange={(_, data) => onChange(data)}
-                      // defaultValue={[skills[4]]}
                       renderInput={(params) => (
                         <TextField
                           {...field}
                           {...params}
                           fullWidth
                           inputRef={ref}
-                          variant="standard"
+                          variant="outlined"
                         />
                       )}
                     />
@@ -293,11 +295,11 @@ export default function ProfileEdit() {
             </Grid>
           </Grid>
           <br />
-          <Button variant="contained" disableElevation color="success" type="submit">
+          <Button sx={{ margin: 2 }} variant="contained" disableElevation color="success" type="submit">
             Save Changes
           </Button>
         </Box>
-      </div>
+      </Box>
     );
   }
 }
