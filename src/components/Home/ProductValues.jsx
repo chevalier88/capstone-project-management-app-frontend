@@ -43,8 +43,8 @@ function ProductValues() {
               <Typography variant="h6" sx={{ my: 5 }}>
                 THE BEST TEAM
               </Typography>
-              <Typography variant="h5">
-                Have an experienced team working on your Web Application, with a few simple steps!
+              <Typography variant="h5" marked="center" align="center">
+                Have an experienced team working on your Web Application, with a few simple steps.
               </Typography>
             </Box>
           </Grid>
@@ -59,8 +59,8 @@ function ProductValues() {
               <Typography variant="h6" sx={{ my: 5 }}>
                 AWESOME ROI
               </Typography>
-              <Typography variant="h5">
-                Get the most value out of every dollar spent!
+              <Typography variant="h5" marked="center" align="center">
+                Get the most value out of every dollar spent.
               </Typography>
             </Box>
           </Grid>
@@ -75,7 +75,7 @@ function ProductValues() {
               <Typography variant="h6" sx={{ my: 5 }}>
                 EXCLUSIVE RATES
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h5" marked="center" align="center">
                 By registering, you will have access to rates that you will not find anywhere else.
               </Typography>
             </Box>
