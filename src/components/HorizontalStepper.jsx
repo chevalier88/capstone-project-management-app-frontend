@@ -6,10 +6,12 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = ['contracting', 'sourcing', 'in-progress', 'client-review', 'payment-pending', 'completed'];
 
-export default function HorizontalStepper() {
-  const [activeStep, setActiveStep] = useState(0);
+export default function HorizontalStepper({ stage }) {
+  console.log(`current project stage: ${stage}`);
+  const [activeStep, setActiveStep] = useState((steps.indexOf(stage)));
+  console.log((steps.indexOf(stage)));
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -25,7 +27,7 @@ export default function HorizontalStepper() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => {
           const stepProps = {};
           const labelProps = {};

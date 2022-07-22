@@ -124,7 +124,7 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
               tabIndex={-1}
             >
               <Grid>
-                <HorizontalStepper />
+                <HorizontalStepper stage={rowContent.stage} />
               </Grid>
               <Divider />
               <Grid
