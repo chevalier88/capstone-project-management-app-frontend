@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -8,6 +8,7 @@ import Typography from './Typography.jsx';
 import ProductHowItWorks1 from './HomeAssets/productHowItWorks1.svg';
 import ProductHowItWorks2 from './HomeAssets/productHowItWorks2.svg';
 import ProductHowItWorks3 from './HomeAssets/productHowItWorks3.svg';
+import { UserContext } from '../UserContext.jsx';
 
 const item = {
   display: 'flex',
@@ -29,6 +30,8 @@ const image = {
 };
 
 function ProductHowItWorks() {
+  const { user } = useContext(UserContext);
+
   return (
     <Box
       component="section"
@@ -106,16 +109,29 @@ function ProductHowItWorks() {
             </Grid>
           </Grid>
         </div>
-        <Button
-          color="secondary"
-          size="large"
-          variant="contained"
-          component="a"
-          href="/login"
-          sx={{ mt: 8 }}
-        >
-          Get started
-        </Button>
+        {user.length !== 0 ? (
+          <Button
+            color="secondary"
+            variant="contained"
+            size="large"
+            component="a"
+            href="/dashboard"
+            sx={{ minWidth: 200 }}
+          >
+            Get Started
+          </Button>
+        ) : (
+          <Button
+            color="secondary"
+            variant="contained"
+            size="large"
+            component="a"
+            href="/login"
+            sx={{ minWidth: 200 }}
+          >
+            Get Started
+          </Button>
+        )}
       </Container>
     </Box>
   );
