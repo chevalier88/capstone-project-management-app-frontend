@@ -5,7 +5,6 @@ import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
-import Navbar from './components/Navbar/Navbar.jsx';
 import Home from './Pages/Home.jsx';
 import Search from './Pages/Search.jsx';
 import Login from './Pages/Login.jsx';
@@ -20,6 +19,7 @@ import Preparation from './components/FakeDocusign/Preparation.jsx';
 import Sign from './components/FakeDocusign/Sign.jsx';
 import View from './components/FakeDocusign/View.jsx';
 import Welcome from './components/FakeDocusign/Welcome.jsx';
+import ResponsiveAppBar from './components/ResponsiveAppBar.jsx';
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
@@ -55,7 +55,8 @@ export default function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            <Navbar />
+            {/* <Navbar /> */}
+            <ResponsiveAppBar />
             <Routes>
               <Route path="/" exact element={<Home />} />
               <Route path="dashboard" exact element={<Dashboard />} />

@@ -138,7 +138,7 @@ export default function Dashboard() {
     return (
       <div id="page-container">
         <h1>
-          Please login first.
+          You are logged out! Please login to view more pages.
         </h1>
       </div>
     );
