@@ -3,7 +3,7 @@ import {
 } from 'react-router-dom';
 
 import { Nav } from 'react-bootstrap';
-
+import Cookies from 'universal-cookie';
 import React, { useContext, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,7 +16,10 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
 import { UserContext } from './UserContext.jsx';
+
+const cookies = new Cookies();
 
 export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -26,6 +29,11 @@ export default function ResponsiveAppBar() {
 
   console.log(user);
 
+  const handleLogoutClick = () => {
+    cookies.remove('token', {});
+    setUser([]);
+    setAnchorElUser(null);
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -92,16 +100,36 @@ export default function ResponsiveAppBar() {
                   <Typography textAlign="center">Home</Typography>
                 </Nav.Link>
               </MenuItem>
+
+              {user.accountType !== 'client' && user.length !== 0 && (
               <MenuItem key="Dashboard" onClick={handleCloseNavMenu}>
                 <Nav.Link as={Link} to="/dashboard">
                   <Typography textAlign="center">Dashboard</Typography>
                 </Nav.Link>
               </MenuItem>
+              )}
+
               <MenuItem key="Search" onClick={handleCloseNavMenu}>
                 <Nav.Link as={Link} to="/search">
                   <Typography textAlign="center">Search</Typography>
                 </Nav.Link>
               </MenuItem>
+
+              {user.accountType === 'manager' && (
+              <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
+                <Nav.Link as={Link} to="/fakeDocusign">
+                  <Typography textAlign="center">DocuSein</Typography>
+                </Nav.Link>
+              </MenuItem>
+              )}
+
+              {user.accountType === 'client' && (
+              <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
+                <Nav.Link as={Link} to="/fakeDocusign">
+                  <Typography textAlign="center">DocuSein</Typography>
+                </Nav.Link>
+              </MenuItem>
+              )}
             </Menu>
           </Box>
           <Typography
@@ -142,7 +170,7 @@ export default function ResponsiveAppBar() {
             </Box> */}
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Login/LogOut">
+            <Tooltip title="User Settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="" src={user.profilePhoto} />
               </IconButton>
@@ -174,13 +202,31 @@ export default function ResponsiveAppBar() {
               </MenuItem>
               )}
               {user.length !== 0 && (
-                <MenuItem key="logout" onClick={handleCloseUserMenu}>
-                  <Nav.Link as={Link} to="/logout">
-                    <Typography textAlign="center" as={Link} to="/login">
+                <>
+                  <Box sx={{ my: 1.5, px: 2.5 }}>
+                    <Typography variant="subtitle2" noWrap>
+                      {user.username}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                      {user.name}
+                    </Typography>
+                  </Box>
+                  <Divider sx={{ borderStyle: 'dashed' }} />
+                  <MenuItem key="profile" onClick={handleCloseUserMenu}>
+                    <Nav.Link as={Link} to="/profile">
+                      <Typography textAlign="center" as={Link} to="/profile">
+                        Profile
+                      </Typography>
+                    </Nav.Link>
+                  </MenuItem>
+                  <MenuItem key="logout" onClick={handleLogoutClick}>
+                    {/* <Nav.Link as={Link} to="/logout"> */}
+                    <Typography textAlign="center">
                       Logout
                     </Typography>
-                  </Nav.Link>
-                </MenuItem>
+                    {/* </Nav.Link> */}
+                  </MenuItem>
+                </>
               )}
             </Menu>
           </Box>
