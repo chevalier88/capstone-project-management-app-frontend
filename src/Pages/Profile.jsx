@@ -31,7 +31,7 @@ export default function Profile() {
     return (
       <div id="page-container">
         <h1>
-          Please login first.
+          You are logged out! Please login to view your Profile.
         </h1>
       </div>
     );

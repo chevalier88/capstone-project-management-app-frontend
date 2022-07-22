@@ -117,7 +117,7 @@ export default function Login() {
             sm={4}
             md={7}
             sx={{
-              backgroundImage: 'url(https://img.freepik.com/free-vector/face-cute-otter-logo-design-vector-graphic-symbol-icon-sign-illustration-creative-idea_15473-10082.jpg?w=2000)',
+              backgroundImage: 'url("http://ricemedia.co/wp-content/uploads/2018/02/rice-media-otter-obsession-9.jpg")',
               backgroundRepeat: 'no-repeat',
               backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
               backgroundSize: 'cover',
