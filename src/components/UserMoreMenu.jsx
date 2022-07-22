@@ -53,10 +53,23 @@ export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }
     setJustSubmitted(true);
   };
 
-  // Add Controller here
-  const addUserToProject = () => {
+  async function addUserToProject() {
+    try {
+      const enrolUserToProjectObject = {
+        userId: user.id,
+        projectId: rowContent.id,
+      };
+      const enrolUser = await axios.post(`${BACKEND_URL}/project/enrol-user/${user.id}`, enrolUserToProjectObject);
+      console.log(enrolUser);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleAddUserToProject = () => {
     console.log('USER ID:', user.id, 'ADDED PROJECT', rowContent.id);
     setIsOpen(false);
+    addUserToProject();
+    setJustSubmitted(true);
   };
 
   const checkIfProjectFull = () => {
@@ -139,7 +152,7 @@ export default function UserMoreMenu({ rowContent, usersList, setJustSubmitted }
         </MenuItem>
         )}
         {showJoinButton ? (
-          <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => addUserToProject(e)}>
+          <MenuItem sx={{ color: 'text.secondary' }} onClick={(e) => handleAddUserToProject(e)}>
             <ListItemIcon>
               <Iconify
                 icon="fluent:arrow-join-20-regular"
