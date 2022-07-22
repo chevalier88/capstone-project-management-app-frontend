@@ -1,13 +1,16 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import Button from './Button.jsx';
 import Typography from './Typography.jsx';
 import ProductHeroLayout from './ProductHeroLayout.jsx';
+import { UserContext } from '../UserContext.jsx';
 
 // const backgroundImage = 'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400';
 
 const backgroundImage = 'https://images.squarespace-cdn.com/content/v1/58f0ecc029687fbef7b86b03/1493045721551-01K5S40PKH6I3XJVA104/93l9RDL.gif';
 
 export default function ProductHero() {
+  const { user } = useContext(UserContext);
+
   return (
     <ProductHeroLayout
       sxBackground={{
@@ -31,19 +34,32 @@ export default function ProductHero() {
         variant="h5"
         sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
       >
-        We get your app working at reasonable rates.
+        We build apps at reasonable rates.
       </Typography>
 
-      <Button
-        color="secondary"
-        variant="contained"
-        size="large"
-        component="a"
-        href="/login"
-        sx={{ minWidth: 200 }}
-      >
-        Login
-      </Button>
+      {user.length !== 0 ? (
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          component="a"
+          href="/dashboard"
+          sx={{ minWidth: 200 }}
+        >
+          Get Started
+        </Button>
+      ) : (
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          component="a"
+          href="/login"
+          sx={{ minWidth: 200 }}
+        >
+          Get Started
+        </Button>
+      )}
 
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Discover the experience

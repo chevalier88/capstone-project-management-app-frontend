@@ -17,8 +17,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Container from '@mui/material/Container';
 import { UserContext } from '../components/UserContext.jsx';
 import BACKEND_URL from '../supportFunctions.js';
+// import CircularIndeterminate from './CircularIndeterminate.jsx';
 
 const cookies = new Cookies();
 
@@ -29,6 +31,7 @@ export default function Login() {
   const { user } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  // const [showLoading, setShowLoading] = useState(true);
 
   //          HELPER FUNCTIONS
   // ================================
@@ -55,12 +58,6 @@ export default function Login() {
       .catch((error) => { console.log(error); });
   };
 
-  // logout, clear cookies and reset User context
-  const logout = () => {
-    cookies.remove('token', {});
-    setUser([]);
-  };
-
   function Copyright(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -83,25 +80,25 @@ export default function Login() {
   // return message when user is already logged in
   if (user.length !== 0) {
     return (
-      <div id="page-container">
-        <Box>
-          <h1>
-            Hi,
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <CssBaseline />
+        <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
+          <Typography variant="h2" component="h1" gutterBottom>
             {user.username}
-          </h1>
-        </Box>
-        <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            color="warning"
-            onClick={logout}
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Logout
-          </Button>
-        </Box>
-      </div>
+            , you&apos;ve already logged in!
+          </Typography>
+          <Typography variant="h5" component="h2" gutterBottom>
+            Head to the Dashboard to find some projects.
+          </Typography>
+        </Container>
+
+      </Box>
     );
   }
 
