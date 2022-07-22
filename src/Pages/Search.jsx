@@ -13,6 +13,8 @@ import {
   TableHead,
   TablePagination,
   Paper,
+  Avatar,
+  Typography,
 } from '@mui/material';
 import SearchBar from '../components/SearchBar.jsx';
 import BACKEND_URL from '../supportFunctions.js';
@@ -22,15 +24,12 @@ import ProfileModalForSearch from '../components/ProfileModalForSearch.jsx';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'Location', minWidth: 100 },
+  { id: 'location', label: 'Location', minWidth: 100 },
+  { id: 'accountType', label: 'Role', minWidth: 100 },
+  { id: 'minSalary', label: 'Minimum Salary', minWidth: 100 },
+  { id: 'portfolio', label: 'Portfolio', minWidth: 100 },
   {
-    id: 'role', label: 'Role', minWidth: 170, align: 'right',
-  },
-  {
-    id: 'minSalart',
-    label: 'Minimum Salary',
-    minWidth: 170,
-    align: 'right',
+    id: 'viewProfile', label: '', minWidth: 50,
   },
 ];
 
@@ -40,7 +39,7 @@ export default function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -91,16 +90,9 @@ export default function Search() {
             {' '}
             <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           </Grid>
-          {dataFiltered.map((test) => (
-            <>
-              <Grid key={test.id} item xs={12}>
-                <ProfileModalForSearch key={test.id} user={test} />
-              </Grid>
-            </>
-          ))}
         </Grid>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 400 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -108,7 +100,7 @@ export default function Search() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth, fontWeight: 'bold' }}
                     >
                       {column.label}
                     </TableCell>
@@ -120,23 +112,43 @@ export default function Search() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                      {TABLE_HEAD.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === 'number'
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
+                      <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ margin: 1 }}>
+                          <Avatar alt={row.name} src={row.profilePhoto} />
+                        </Box>
+                        <Box>
+                          <Typography
+                            noWrap
+                            sx={{ fontWeight: 'bold' }}
+                          >
+                            {row.name}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.location}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.accountType}
+                      </TableCell>
+                      <TableCell align="left">
+                        $
+                        {' '}
+                        {row.minimumSalary}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.portfolioUrl}
+                      </TableCell>
+                      <TableCell align="center">
+                        <ProfileModalForSearch key={row.id} user={row} />
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[5, 10]}
             component="div"
             count={dataFiltered.length}
             rowsPerPage={rowsPerPage}
