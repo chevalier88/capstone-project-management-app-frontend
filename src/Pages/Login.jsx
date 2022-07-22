@@ -84,13 +84,11 @@ export default function Login() {
   if (user.length !== 0) {
     return (
       <div id="page-container">
-        <Box>
+        <Box sx={{ margin: 2, alignItems: 'center' }}>
           <h1>
             Hi,
             {user.username}
           </h1>
-        </Box>
-        <Box>
           <Button
             type="submit"
             variant="contained"
