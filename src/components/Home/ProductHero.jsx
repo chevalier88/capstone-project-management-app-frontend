@@ -31,16 +31,18 @@ export default function ProductHero() {
       >
         We get your app working at reasonable rates.
       </Typography>
+
       <Button
         color="secondary"
         variant="contained"
         size="large"
         component="a"
-        href="/premium-themes/onepirate/sign-up/"
+        href="/login"
         sx={{ minWidth: 200 }}
       >
-        Register
+        Login
       </Button>
+
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Discover the experience
       </Typography>
