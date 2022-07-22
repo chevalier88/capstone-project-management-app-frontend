@@ -2,6 +2,8 @@
 import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
@@ -51,21 +53,35 @@ export default function Profile() {
     }
 
     return (
-      <div id="">
-        <h1>
-          Hello
-          {' '}
-          {user.username}
-          <Chip
-            icon={<accountMapping.icon />}
-            label={accountMapping.name}
-            color={accountMapping.color}
-          />
-        </h1>
+      <Box sx={{ margin: 7 }}>
+        <Box sx={{ margin: 2 }}>
+          <h1>
+            Hello
+            {' '}
+            {user.username}
+          </h1>
+          <Badge
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            badgeContent={(
+              <Chip
+                icon={<accountMapping.icon />}
+                label={accountMapping.name}
+                color={accountMapping.color}
+                size="small"
+              />
+            )}
+          >
+            <Avatar
+              alt="Nothing"
+              src={user.profilePhoto}
+              sx={{ width: 100, height: 100 }}
+            />
+          </Badge>
+        </Box>
         <Box
           component="form"
           sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
+            '& .MuiTextField-root': { m: 1 },
           }}
           noValidate
           autoComplete="off"
@@ -74,52 +90,8 @@ export default function Profile() {
             <TextField
               id="name"
               label="My Name"
+              multiline
               defaultValue={user.name}
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-            <TextField
-              id="email"
-              label="My Email Address"
-              defaultValue={user.email}
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-            <TextField
-              id="location"
-              label="My Location"
-              defaultValue={user.location}
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-            <TextField
-              id="minimumSalary"
-              label="My Minimum Salary"
-              defaultValue={user.minimumSalary}
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-            <TextField
-              id="industry"
-              label="My Industry"
-              defaultValue={user.industry.name}
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-            />
-            <TextField
-              id="portfolioUrl"
-              label="My Profolio link"
-              defaultValue={user.portfolioUrl}
               InputProps={{
                 readOnly: true,
               }}
@@ -129,7 +101,7 @@ export default function Profile() {
               id="aboutMe"
               label="About Me"
               multiline
-              rows={4}
+              fullWidth
               defaultValue={user.aboutMe}
               InputProps={{
                 readOnly: true,
@@ -140,35 +112,85 @@ export default function Profile() {
               id="experience"
               label="My Experience"
               multiline
-              rows={4}
+              fullWidth
               defaultValue={user.experience}
               InputProps={{
                 readOnly: true,
               }}
               variant="standard"
             />
-            <Container>
-              <div>
-                My Skills:
-                {' '}
-                {user.skills.map((data) => (
-                  <Chip
-                    key={data.id}
-                    label={data.name}
-                    color="primary"
-                  />
-                ))}
-              </div>
+            <TextField
+              id="email"
+              label="My Email Address"
+              multiline
+              defaultValue={user.email}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="location"
+              label="My Location"
+              multiline
+              defaultValue={user.location}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="minimumSalary"
+              label="My Minimum Salary"
+              multiline
+              defaultValue={user.minimumSalary}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="industry"
+              label="My Industry"
+              multiline
+              defaultValue={user.industry.name}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="portfolioUrl"
+              label="My Profolio link"
+              multiline
+              defaultValue={user.portfolioUrl}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <Container sx={{ padding: 1 }}>
+              My Skills:
+              {' '}
+              {user.skills.map((data) => (
+                <Chip
+                  key={data.id}
+                  label={data.name}
+                  color="warning"
+                  variant="outlined"
+                  size="small"
+                />
+              ))}
             </Container>
           </div>
           <div>
             <br />
-            <Button variant="contained" color="secondary" disableElevation onClick={navigateEdit}>
+            <Button sx={{ margin: 2 }} variant="contained" color="success" disableElevation onClick={navigateEdit}>
               Edit Profile
             </Button>
           </div>
         </Box>
-      </div>
+      </Box>
     );
   }
 }

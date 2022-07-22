@@ -43,7 +43,7 @@ export default function Search() {
   const dataFiltered = filterData(searchQuery, users);
 
   return (
-    <Box>
+    <Box sx={{ margin: 7 }}>
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12}>

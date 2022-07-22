@@ -1,11 +1,9 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(232, 232, 233);
+  background-color: rgb(255, 255, 255);
 }
 
 #page-container {
@@ -15,11 +13,9 @@ body {
   height: 60vh;
 }
 
-
 #dashboard-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 60vh;
 }
-
