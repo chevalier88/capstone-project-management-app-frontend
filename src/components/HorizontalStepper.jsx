@@ -14,7 +14,7 @@ import BACKEND_URL from '../supportFunctions.js';
 
 const steps = ['contracting', 'sourcing', 'in-progress', 'client-review', 'payment-pending', 'completed'];
 
-export default function HorizontalStepper({ stage, projectId }) {
+export default function HorizontalStepper({ stage, projectId, setJustSubmitted }) {
   const { user } = useContext(UserContext);
   const [activeStep, setActiveStep] = useState((steps.indexOf(stage)));
 
@@ -54,6 +54,7 @@ export default function HorizontalStepper({ stage, projectId }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     confirmStageChange();
+    setJustSubmitted(true);
   };
 
   return (
