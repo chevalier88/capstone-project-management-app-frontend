@@ -53,7 +53,7 @@ export default function Profile() {
     }
 
     return (
-      <Box sx={{ margin: 7 }}>
+      <Box sx={{ margin: 3 }}>
         <Box sx={{ margin: 2 }}>
           <h1>
             Hello

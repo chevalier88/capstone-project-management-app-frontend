@@ -27,7 +27,7 @@ axios.defaults.withCredentials = true;
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'Nanum Gothic',
+      'Public Sans, sans-serif',
     ].join(','),
   },
 });

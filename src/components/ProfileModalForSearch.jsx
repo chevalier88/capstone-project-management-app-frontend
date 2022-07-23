@@ -1,19 +1,22 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, { useState, useEffect, useRef } from 'react';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Badge from '@mui/material/Badge';
-import TextField from '@mui/material/TextField';
-import Chip from '@mui/material/Chip';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
+import {
+  IconButton,
+  Box,
+  Container,
+  Avatar,
+  Badge,
+  TextField,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from '@mui/material';
+import Iconify from './Iconify.jsx';
 
 export default function ProfileModalForSearch({ user }) {
   const [open, setOpen] = useState(false);
@@ -46,7 +49,9 @@ export default function ProfileModalForSearch({ user }) {
 
   return (
     <>
-      <Button onClick={handleClickOpen()}>{user.name}</Button>
+      <IconButton onClick={handleClickOpen()}>
+        <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
+      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
