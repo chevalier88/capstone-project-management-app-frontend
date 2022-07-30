@@ -4,8 +4,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 export default function LinearIndeterminate() {
   return (
-    <Box sx={{ width: '100%' }}>
-      <LinearProgress />
+    <Box sx={{ width: '100%', my: 5 }}>
+      <LinearProgress color="success" />
     </Box>
   );
 }

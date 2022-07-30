@@ -19,10 +19,10 @@ function ProductValues() {
   return (
     <Box
       component="section"
-      sx={{ display: 'flex', overflow: 'hidden', bgcolor: 'secondary.light' }}
+      sx={{ display: 'flex', overflow: 'hidden', bgcolor: 'dark2.light' }}
     >
       <Container sx={{
-        mt: 15, mb: 30, display: 'flex', position: 'relative',
+        mt: 7, mb: 7, display: 'flex', position: 'relative',
       }}
       >
         <Box
@@ -43,7 +43,7 @@ function ProductValues() {
               <Typography variant="h6" sx={{ my: 5 }}>
                 THE BEST TEAM
               </Typography>
-              <Typography variant="h5" marked="center" align="center">
+              <Typography variant="subtitle1" marked="center" align="center">
                 Have an experienced team working on your Web Application, with a few simple steps.
               </Typography>
             </Box>
@@ -59,7 +59,7 @@ function ProductValues() {
               <Typography variant="h6" sx={{ my: 5 }}>
                 AWESOME ROI
               </Typography>
-              <Typography variant="h5" marked="center" align="center">
+              <Typography variant="subtitle1" marked="center" align="center">
                 Get the most value out of every dollar spent.
               </Typography>
             </Box>
@@ -75,7 +75,7 @@ function ProductValues() {
               <Typography variant="h6" sx={{ my: 5 }}>
                 EXCLUSIVE RATES
               </Typography>
-              <Typography variant="h5" marked="center" align="center">
+              <Typography variant="subtitle1" marked="center" align="center">
                 By registering, you will have access to rates that you will not find anywhere else.
               </Typography>
             </Box>

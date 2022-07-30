@@ -1,5 +1,6 @@
 import {
   Link,
+  useNavigate,
 } from 'react-router-dom';
 
 import { Nav } from 'react-bootstrap';
@@ -14,12 +15,18 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 // import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
+// import { grey } from '@mui/material/colors';
 import { UserContext } from './UserContext.jsx';
 
 const cookies = new Cookies();
+
+const headerNav = {
+  textAlign: 'center',
+  color: 'primary.main',
+  fontWeight: '600',
+};
 
 export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -29,10 +36,13 @@ export default function ResponsiveAppBar() {
 
   console.log(user);
 
+  const navigate = useNavigate();
+
   const handleLogoutClick = () => {
     cookies.remove('token', {});
     setUser([]);
     setAnchorElUser(null);
+    navigate('../login', { replace: true });
   };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -76,55 +86,50 @@ export default function ResponsiveAppBar() {
           }}
           open={Boolean(anchorElNav)}
           onClose={handleCloseNavMenu}
-          // sx={{
-          //   display: { xs: 'block', md: 'none' },
-          // }}
         >
           <MenuItem key="Home" onClick={handleCloseNavMenu}>
-            <Nav.Link as={Link} to="/">
-              <Typography component="span" textAlign="center">Home</Typography>
+            <Nav.Link as={Link} to="/" style={{ textDecoration: 'none' }}>
+              <Typography sx={headerNav}>Home</Typography>
             </Nav.Link>
           </MenuItem>
 
           {user.accountType !== 'client' && user.length !== 0 && (
-          <MenuItem key="Dashboard" onClick={handleCloseNavMenu}>
-            <Nav.Link as={Link} to="/dashboard">
-              <Typography textAlign="center">Dashboard</Typography>
-            </Nav.Link>
-          </MenuItem>
+            <MenuItem key="Dashboard" onClick={handleCloseNavMenu}>
+              <Nav.Link as={Link} to="/dashboard" style={{ textDecoration: 'none' }}>
+                <Typography sx={headerNav}>Dashboard</Typography>
+              </Nav.Link>
+            </MenuItem>
           )}
 
           <MenuItem key="Search" onClick={handleCloseNavMenu}>
-            <Nav.Link as={Link} to="/search">
-              <Typography textAlign="center">Search</Typography>
+            <Nav.Link as={Link} to="/search" style={{ textDecoration: 'none' }}>
+              <Typography sx={headerNav}>Search</Typography>
             </Nav.Link>
           </MenuItem>
 
           {user.accountType === 'manager' && (
-          <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
-            <Nav.Link as={Link} to="/fakeDocusign">
-              <Typography textAlign="center">DocuSein</Typography>
-            </Nav.Link>
-          </MenuItem>
+            <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
+              <Nav.Link as={Link} to="/fakeDocusign" style={{ textDecoration: 'none' }}>
+                <Typography sx={headerNav}>DocuSein</Typography>
+              </Nav.Link>
+            </MenuItem>
           )}
 
           {user.accountType === 'client' && (
-          <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
-            <Nav.Link as={Link} to="/fakeDocusign">
-              <Typography textAlign="center">DocuSein</Typography>
-            </Nav.Link>
-          </MenuItem>
+            <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
+              <Nav.Link as={Link} to="/fakeDocusign" style={{ textDecoration: 'none' }}>
+                <Typography sx={headerNav}>DocuSein</Typography>
+              </Nav.Link>
+            </MenuItem>
           )}
         </Menu>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Full Stack Otter
+        <Typography variant="title" component="div" sx={{ flexGrow: 1, fontFamily: 'Six Caps' }}>
+          FullStackOtter
         </Typography>
         <div>
-          <Tooltip title="User Settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="" src={user.profilePhoto} />
-            </IconButton>
-          </Tooltip>
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="" src={user.profilePhoto} />
+          </IconButton>
           <Menu
             sx={{ mt: '45px' }}
             id="menu-appbar"
@@ -144,8 +149,8 @@ export default function ResponsiveAppBar() {
             {user.length === 0
               && (
               <MenuItem key="login" onClick={handleCloseUserMenu}>
-                <Nav.Link as={Link} to="/login">
-                  <Typography textAlign="center" as={Link} to="/login">
+                <Nav.Link as={Link} to="/login" style={{ textDecoration: 'none' }}>
+                  <Typography style={{ textDecoration: 'none' }} sx={headerNav} as={Link} to="/login">
                     Login
                   </Typography>
                 </Nav.Link>
@@ -154,7 +159,7 @@ export default function ResponsiveAppBar() {
             {user.length !== 0 && (
               <Box>
                 <Box sx={{ my: 1.5, px: 2.5 }}>
-                  <Typography variant="subtitle2" noWrap>
+                  <Typography variant="body1" noWrap>
                     {user.username}
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
@@ -163,18 +168,16 @@ export default function ResponsiveAppBar() {
                 </Box>
                 <Divider sx={{ borderStyle: 'dashed' }} />
                 <MenuItem key="profile" onClick={handleCloseUserMenu}>
-                  <Nav.Link as={Link} to="/profile">
-                    <Typography textAlign="center" as={Link} to="/profile">
+                  <Nav.Link as={Link} to="/profile" style={{ textDecoration: 'none' }}>
+                    <Typography sx={headerNav} as={Link} style={{ textDecoration: 'none' }} to="/profile">
                       Profile
                     </Typography>
                   </Nav.Link>
                 </MenuItem>
                 <MenuItem key="logout" onClick={handleLogoutClick}>
-                  {/* <Nav.Link as={Link} to="/logout"> */}
-                  <Typography textAlign="center">
+                  <Typography sx={headerNav}>
                     Logout
                   </Typography>
-                  {/* </Nav.Link> */}
                 </MenuItem>
               </Box>
             )}

@@ -14,7 +14,8 @@ function ProductSmokingHero() {
     >
       <Button
         sx={{
-          border: '4px solid currentColor',
+          border: '4px solid',
+          color: 'green.main',
           borderRadius: 0,
           height: 'auto',
           py: 2,

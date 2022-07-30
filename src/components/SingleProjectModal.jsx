@@ -4,23 +4,20 @@
 import React, {
   useState, useRef, useEffect,
 } from 'react';
-
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Divider from '@mui/material/Divider';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import axios from 'axios';
-
-// import ButtonGroup from '@mui/material/ButtonGroup';
-
-// import { UserContext } from './UserContext.jsx';
-import Typography from './Home/Typography.jsx';
+import {
+  Grid,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  Autocomplete,
+  TextField,
+  Typography,
+} from '@mui/material';
 import BACKEND_URL from '../supportFunctions.js';
 
 import CircularIndeterminate from './CircularIndeterminate.jsx';

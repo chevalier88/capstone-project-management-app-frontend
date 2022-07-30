@@ -91,7 +91,7 @@ const images = [
   },
   {
     url: 'https://images.unsplash.com/photo-1533727937480-da3a97967e95?auto=format&fit=crop&w=400',
-    title: '',
+    title: 'Track your workouts',
     width: '20%',
   },
   {
