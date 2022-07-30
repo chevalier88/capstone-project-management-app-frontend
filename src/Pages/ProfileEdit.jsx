@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
@@ -268,7 +269,7 @@ export default function ProfileEdit() {
               <Controller
                 control={control}
                 name="skills"
-                render={({ field: { ref, onChange, ...field } }) => (
+                render={({ field: { onChange, ...field } }) => (
                   <>
                     <Typography>
                       My Skills
@@ -276,7 +277,8 @@ export default function ProfileEdit() {
                     <Autocomplete
                       multiple
                       options={skills}
-                      // inputValue={[skills[4].name]}
+                      defaultValue={user.skills}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
                       getOptionLabel={(option) => option.name}
                       onChange={(_, data) => onChange(data)}
                       renderInput={(params) => (
@@ -284,7 +286,6 @@ export default function ProfileEdit() {
                           {...field}
                           {...params}
                           fullWidth
-                          inputRef={ref}
                           variant="outlined"
                         />
                       )}

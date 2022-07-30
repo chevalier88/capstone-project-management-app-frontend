@@ -76,7 +76,6 @@ export default function Search() {
     //   return null;
     // }
     const searchResults = data.filter((user) => user.skills.find((skill) => skill.name.toLowerCase().includes(query)) || user.name.toLowerCase().includes(query));
-
     return searchResults;
   };
 
