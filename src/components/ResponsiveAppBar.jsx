@@ -152,31 +152,31 @@ export default function ResponsiveAppBar() {
               </MenuItem>
               )}
             {user.length !== 0 && (
-            <>
-              <Box sx={{ my: 1.5, px: 2.5 }}>
-                <Typography variant="subtitle2" noWrap>
-                  {user.username}
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                  {user.name}
-                </Typography>
-              </Box>
-              <Divider sx={{ borderStyle: 'dashed' }} />
-              <MenuItem key="profile" onClick={handleCloseUserMenu}>
-                <Nav.Link as={Link} to="/profile">
-                  <Typography textAlign="center" as={Link} to="/profile">
-                    Profile
+              <Box>
+                <Box sx={{ my: 1.5, px: 2.5 }}>
+                  <Typography variant="subtitle2" noWrap>
+                    {user.username}
                   </Typography>
-                </Nav.Link>
-              </MenuItem>
-              <MenuItem key="logout" onClick={handleLogoutClick}>
-                {/* <Nav.Link as={Link} to="/logout"> */}
-                <Typography textAlign="center">
-                  Logout
-                </Typography>
-                {/* </Nav.Link> */}
-              </MenuItem>
-            </>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                    {user.name}
+                  </Typography>
+                </Box>
+                <Divider sx={{ borderStyle: 'dashed' }} />
+                <MenuItem key="profile" onClick={handleCloseUserMenu}>
+                  <Nav.Link as={Link} to="/profile">
+                    <Typography textAlign="center" as={Link} to="/profile">
+                      Profile
+                    </Typography>
+                  </Nav.Link>
+                </MenuItem>
+                <MenuItem key="logout" onClick={handleLogoutClick}>
+                  {/* <Nav.Link as={Link} to="/logout"> */}
+                  <Typography textAlign="center">
+                    Logout
+                  </Typography>
+                  {/* </Nav.Link> */}
+                </MenuItem>
+              </Box>
             )}
           </Menu>
         </div>

@@ -10,13 +10,12 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
-import DashboardGridRow from '../components/DashboardGridRow.jsx';
+// import DashboardGridRow from '../components/DashboardGridRow.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
-
 import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
+import DashboardTable from '../components/DashboardTable.jsx';
 
 const theme = createTheme();
 
@@ -134,6 +133,10 @@ export default function Dashboard() {
     }
   }, [justSubmitted]);
 
+  console.log('currentProjects', currentProjects);
+  console.log('openProjects', openProjects);
+  console.log('completedProjects', completedProjects);
+
   if (user.length === 0) {
     return (
       <div id="page-container">
@@ -152,14 +155,14 @@ export default function Dashboard() {
         <Box
           sx={{
             bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
+            pt: 4,
+            pb: 4,
           }}
         >
           <Container maxWidth="sm">
             <Typography
-              component="h1"
-              variant="h2"
+              component="h3"
+              variant="h4"
               align="center"
               color="text.primary"
               gutterBottom
@@ -172,63 +175,49 @@ export default function Dashboard() {
           </Container>
         </Box>
 
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Typography variant="h3">
+        <Container sx={{ py: 2 }} maxWidth="md">
+          <Typography variant="h5">
             Current
           </Typography>
           <Divider />
           {showLoading ? (
             <LinearIndeterminate showLoading={showLoading} />
           ) : (
-            <Grid container spacing={4}>
-              {user.accountType === 'engineer' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} setJustSubmitted={setJustSubmitted} />
-              ))}
-              {user.accountType === 'manager' && currentProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
-              ))}
+            <Grid>
+              <DashboardTable type="current" user={user} data={currentProjects} setJustSubmitted={setJustSubmitted} />
             </Grid>
           )}
-
         </Container>
 
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Typography variant="h3">
+        <Container sx={{ py: 2 }} maxWidth="md">
+          <Typography variant="h5">
             Available
           </Typography>
           <Divider />
           {showLoading ? (
             <LinearIndeterminate showLoading={showLoading} />
           ) : (
-            <Grid container spacing={4}>
-              {openProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
-              ))}
+            <Grid>
+              <DashboardTable type="available" user={user} data={openProjects} setJustSubmitted={setJustSubmitted} />
             </Grid>
           )}
         </Container>
 
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Typography variant="h3">
+        <Container sx={{ py: 2 }} maxWidth="md">
+          <Typography variant="h5">
             Completed
           </Typography>
           <Divider />
           {showLoading ? (
             <LinearIndeterminate showLoading={showLoading} />
           ) : (
-            <Grid container spacing={4}>
-              {user.accountType === 'engineer' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.project.id} row={row.project} setJustSubmitted={setJustSubmitted} />
-              ))}
-              {user.accountType === 'manager' && completedProjects.map((row) => (
-                <DashboardGridRow key={row.id} row={row} setJustSubmitted={setJustSubmitted} />
-              ))}
+            <Grid>
+              <DashboardTable type="completed" user={user} data={completedProjects} setJustSubmitted={setJustSubmitted} />
             </Grid>
           )}
         </Container>
 
       </main>
     </ThemeProvider>
-
   );
 }
