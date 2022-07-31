@@ -97,7 +97,6 @@ export default function Login() {
             Head to the Dashboard to find some projects.
           </Typography>
         </Container>
-
       </Box>
     );
   }

@@ -17,8 +17,10 @@ import {
   Autocomplete,
   TextField,
   Typography,
+  IconButton,
 } from '@mui/material';
 import BACKEND_URL from '../supportFunctions.js';
+import Iconify from './Iconify.jsx';
 
 import CircularIndeterminate from './CircularIndeterminate.jsx';
 import UserMoreMenu from './UserMoreMenu.jsx';
@@ -72,7 +74,10 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
 
   return (
     <>
-      <Button onClick={handleClickOpen()}>View</Button>
+      <IconButton onClick={handleClickOpen()}>
+        <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
+      </IconButton>
+      {/* <Button onClick={>View</Button> */}
       <Dialog
         maxWidth="md"
         fullWidth
