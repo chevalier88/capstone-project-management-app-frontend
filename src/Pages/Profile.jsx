@@ -116,7 +116,6 @@ export default function Profile() {
               />
             ))}
           </Container>
-
         </Box>
         {/* <Box sx={{ margin: 3 }}> */}
         <Container maxWidth="md">

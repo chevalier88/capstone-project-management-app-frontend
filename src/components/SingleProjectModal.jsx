@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import {
-  // Chip,
+  Chip,
   Grid,
   Button,
   Dialog,
@@ -14,8 +14,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider,
-  Autocomplete,
   TextField,
   Typography,
   IconButton,
@@ -80,10 +78,7 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
       <IconButton onClick={handleClickOpen()}>
         <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
       </IconButton>
-      {/* <Button onClick={>View</Button> */}
       <Dialog
-        // maxWidth="md"
-        // fullWidth
         open={open}
         onClose={handleClose}
         scroll={scroll}
@@ -147,7 +142,32 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
                     <Grid item xs={12}>
                       <HorizontalStepper stage={rowContent.stage} projectId={rowContent.id} setJustSubmitted={setJustSubmitted} />
                     </Grid>
-                    <Divider />
+                    <Grid item xs={12}>
+                      <Typography variant="h3" textAlign="center" color="green.main">
+                        {' '}
+                        $
+                        {rowContent.minimumSalary}
+                        /hr
+                      </Typography>
+                      <Typography variant="h4" textAlign="center" color="primary">
+                        @
+                        {' '}
+                        {rowContent.projectedHours}
+                        {' '}
+                        projected hours, per engineer
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      {skillsList.map((data) => (
+                        <Chip
+                          key={data}
+                          label={data}
+                          color="warning"
+                          variant="outlined"
+                          size="small"
+                        />
+                      ))}
+                    </Grid>
                     <Grid item xs={1}>
                       <TextField
                         id="project-id"
@@ -197,87 +217,57 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
                         variant="standard"
                       />
                     </Grid>
+
                     <Grid item xs={12}>
-                      <Typography variant="h3" textAlign="center" color="green.main">
+                      <Typography variant="span" textAlign="center" color="primary">
+                        Number of Engineers Enrolled/Required:
                         {' '}
-                        $
-                        {rowContent.minimumSalary}
-                        /hr
+                        {rowContent.user_projects.length}
+                        /
+                        {rowContent.noEngineersRequired}
                       </Typography>
-                      <Typography variant="h4" textAlign="center" color="primary">
-                        @
+
+                    </Grid>
+                    <Grid item xs={12}>
+                      {rowContent.user_projects.length !== 0 && (
+                        usersList.map((data) => (
+                          <Chip
+                            key={data}
+                            label={data}
+                            color="secondary"
+                            variant="outlined"
+                            size="small"
+                          />
+                        )))}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="span" textAlign="center" color="primary">
+                        Enrolment Deadline:
                         {' '}
-                        {rowContent.projectedHours}
+                        {rowContent.enrolmentDeadline.slice(0, 10)}
+                        /
                         {' '}
-                        projected hours, per engineer
+                        {rowContent.enrolmentDeadline.slice(11, 16)}
+                        {' '}
+                        hrs
+                      </Typography>
+
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="span" textAlign="center" color="error">
+
+                        Delivery Deadline:
+                        {' '}
+
+                        {rowContent.deliveryDeadline.slice(0, 10)}
+                        /
+                        {' '}
+                        {rowContent.deliveryDeadline.slice(11, 16)}
+                        {' '}
+                        hrs
                       </Typography>
                     </Grid>
                   </Grid>
-
-                  <br />
-                  <Grid item xs={12}>
-                    Number of Engineers Enrolled/Required:
-                    {' '}
-                    {rowContent.user_projects.length}
-                    /
-                    {rowContent.noEngineersRequired}
-                    {rowContent.user_projects.length !== 0 && (
-                    <Autocomplete
-                      multiple
-                      id="Engineers Enrolled"
-                      options={usersList.map((option) => option)}
-                      defaultValue={usersList.map((option) => option)}
-                      readOnly
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="filled"
-                          placeholder="Enrolled So Far"
-                        />
-                      )}
-                    />
-                    )}
-                  </Grid>
-
-                  <br />
-
-                  <br />
-                  Skills Needed for this Project:
-                  <Autocomplete
-                    multiple
-                    id="Skills"
-                    options={skillsList.map((option) => option)}
-                    defaultValue={skillsList.map((option) => option)}
-                    readOnly
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                      />
-                    )}
-                  />
-                  <br />
-                  Enrolment Deadline:
-                  {' '}
-                  {rowContent.enrolmentDeadline.slice(0, 10)}
-                  /
-                  {' '}
-                  {rowContent.enrolmentDeadline.slice(11, 16)}
-                  {' '}
-                  hrs
-                  <br />
-                  Delivery Deadline:
-                  {' '}
-                  {rowContent.deliveryDeadline.slice(0, 10)}
-                  /
-                  {' '}
-                  {rowContent.deliveryDeadline.slice(11, 16)}
-                  {' '}
-                  hrs
-                  <br />
-                  {' '}
-                  <br />
-                  <Divider component="div" />
                 </Box>
               </Container>
             </DialogContentText>
