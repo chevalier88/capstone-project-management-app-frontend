@@ -102,90 +102,78 @@ export default function ProfileModalForSearch({ user }) {
                 />
               ))}
             </Container>
-            <div>
-              <TextField
-                id="name"
-                label="Name"
-                multiline
-                defaultValue={user.name}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="aboutMe"
-                label="About Me"
-                multiline
-                fullWidth
-                defaultValue={user.aboutMe}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="experience"
-                label="My Experience"
-                multiline
-                fullWidth
-                defaultValue={user.experience}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="email"
-                label="My Email Address"
-                multiline
-                defaultValue={user.email}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="location"
-                label="My Location"
-                multiline
-                defaultValue={user.location}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="minimumSalary"
-                label="My Minimum Salary"
-                multiline
-                defaultValue={user.minimumSalary}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              {/* <TextField
-                id="industry"
-                label="My Industry"
-                defaultValue={user.industry.name}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              /> */}
-              <TextField
-                id="portfolioUrl"
-                label="My Profolio link"
-                multiline
-                defaultValue={user.portfolioUrl}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-
-            </div>
+            <TextField
+              id="name"
+              label="Name"
+              multiline
+              defaultValue={user.name}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="aboutMe"
+              label="About Me"
+              multiline
+              fullWidth
+              defaultValue={user.aboutMe}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="experience"
+              label="My Experience"
+              multiline
+              fullWidth
+              defaultValue={user.experience}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="email"
+              label="My Email Address"
+              multiline
+              defaultValue={user.email}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="location"
+              label="My Location"
+              multiline
+              defaultValue={user.location}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="minimumSalary"
+              label="My Minimum Salary"
+              multiline
+              defaultValue={user.minimumSalary}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
+            <TextField
+              id="portfolioUrl"
+              label="My Profolio link"
+              multiline
+              defaultValue={user.portfolioUrl}
+              InputProps={{
+                readOnly: true,
+              }}
+              variant="standard"
+            />
           </Box>
         </DialogContent>
         <DialogActions>
