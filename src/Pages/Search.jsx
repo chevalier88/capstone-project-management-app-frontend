@@ -82,81 +82,104 @@ export default function Search() {
   const dataFiltered = filterData(searchQuery, users);
 
   return (
-    <Box sx={{ margin: 2 }}>
-      <Container>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            {' '}
-            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+    <>
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 4,
+          pb: 1,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Typography
+            variant="h4"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            Search Users
+          </Typography>
+          <Typography variant="h6" align="center" color="text.secondary" paragraph>
+            Search all engineers by name or skillset
+          </Typography>
+        </Container>
+      </Box>
+      <Box sx={{ margin: 2 }}>
+        <Container>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              {' '}
+              <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+            </Grid>
           </Grid>
-        </Grid>
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 520 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {TABLE_HEAD.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth, fontWeight: 'bold' }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                      <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box sx={{ margin: 1 }}>
-                          <Avatar alt={row.name} src={row.profilePhoto} />
-                        </Box>
-                        <Box>
-                          <Typography
-                            noWrap
-                            sx={{ fontWeight: 'bold' }}
-                          >
-                            {row.name}
-                          </Typography>
-                        </Box>
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <TableContainer sx={{ maxHeight: 520 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {TABLE_HEAD.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth, fontWeight: 'bold' }}
+                      >
+                        {column.label}
                       </TableCell>
-                      <TableCell align="left">
-                        {row.location}
-                      </TableCell>
-                      <TableCell align="left">
-                        {row.accountType}
-                      </TableCell>
-                      <TableCell align="left">
-                        $
-                        {' '}
-                        {row.minimumSalary}
-                      </TableCell>
-                      <TableCell align="left">
-                        {row.portfolioUrl}
-                      </TableCell>
-                      <TableCell align="center">
-                        <ProfileModalForSearch key={row.id} user={row} />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10]}
-            component="div"
-            count={dataFiltered.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </Container>
-    </Box>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {dataFiltered
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                        <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Box sx={{ margin: 1 }}>
+                            <Avatar alt={row.name} src={row.profilePhoto} />
+                          </Box>
+                          <Box>
+                            <Typography
+                              noWrap
+                              sx={{ fontWeight: 'bold' }}
+                            >
+                              {row.name}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="left">
+                          {row.location}
+                        </TableCell>
+                        <TableCell align="left">
+                          {row.accountType}
+                        </TableCell>
+                        <TableCell align="left">
+                          $
+                          {' '}
+                          {row.minimumSalary}
+                        </TableCell>
+                        <TableCell align="left">
+                          {row.portfolioUrl}
+                        </TableCell>
+                        <TableCell align="center">
+                          <ProfileModalForSearch key={row.id} user={row} />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10]}
+              component="div"
+              count={dataFiltered.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Container>
+      </Box>
+    </>
   );
 }

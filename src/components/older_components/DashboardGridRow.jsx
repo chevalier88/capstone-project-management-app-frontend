@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import SingleProjectModal from './SingleProjectModal.jsx';
+import SingleProjectModal from '../SingleProjectModal.jsx';
 
 export default function DashboardGridRow({ row, setJustSubmitted }) {
   return (
