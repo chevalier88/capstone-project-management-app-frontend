@@ -117,6 +117,7 @@ export default function Search() {
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
+                    <TableCell />
                     {TABLE_HEAD.map((column) => (
                       <TableCell
                         key={column.id}
@@ -133,6 +134,9 @@ export default function Search() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
                       <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                        <TableCell align="center">
+                          <ProfileModalForSearch key={row.id} user={row} />
+                        </TableCell>
                         <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                           <Box sx={{ margin: 1 }}>
                             <Avatar alt={row.name} src={row.profilePhoto} />
@@ -160,9 +164,7 @@ export default function Search() {
                         <TableCell align="left">
                           {row.portfolioUrl}
                         </TableCell>
-                        <TableCell align="center">
-                          <ProfileModalForSearch key={row.id} user={row} />
-                        </TableCell>
+
                       </TableRow>
                     ))}
                 </TableBody>
