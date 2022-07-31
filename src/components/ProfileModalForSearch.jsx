@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogTitle,
   Button,
+  Grid,
 } from '@mui/material';
 import Iconify from './Iconify.jsx';
 
@@ -102,7 +103,7 @@ export default function ProfileModalForSearch({ user }) {
                 />
               ))}
             </Container>
-            <TextField
+            {/* <TextField
               id="name"
               label="Name"
               multiline
@@ -173,7 +174,103 @@ export default function ProfileModalForSearch({ user }) {
                 readOnly: true,
               }}
               variant="standard"
-            />
+            /> */}
+            <Grid
+              container
+              spacing={1}
+              alignItems="center"
+            >
+              <Grid item xs={12}>
+                <TextField
+                  id="name"
+                  label="My Name"
+                  multiline
+                  fullWidth
+                  defaultValue={user.name}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="aboutMe"
+                  label="About Me"
+                  multiline
+                  fullWidth
+                  defaultValue={user.aboutMe}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="experience"
+                  label="My Experience"
+                  multiline
+                  fullWidth
+                  defaultValue={user.experience}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={9}>
+                {' '}
+                <TextField
+                  id="email"
+                  label="My Email Address"
+                  fullWidth
+                  defaultValue={user.email}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  id="location"
+                  label="My Location"
+                  fullWidth
+                  defaultValue={user.location}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+
+              <Grid item xs={9}>
+                <TextField
+                  id="portfolioUrl"
+                  label="My Profolio link"
+                  fullWidth
+                  defaultValue={user.portfolioUrl}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  id="minimumSalary"
+                  label="My Minimum Salary"
+                  defaultValue={user.minimumSalary}
+                  fullWidth
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+            </Grid>
           </Box>
         </DialogContent>
         <DialogActions>
