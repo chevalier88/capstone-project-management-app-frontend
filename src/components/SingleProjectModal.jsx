@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import {
+  // Chip,
   Grid,
   Button,
   Dialog,
@@ -18,6 +19,8 @@ import {
   TextField,
   Typography,
   IconButton,
+  Container,
+  Box,
 } from '@mui/material';
 import BACKEND_URL from '../supportFunctions.js';
 import Iconify from './Iconify.jsx';
@@ -79,8 +82,8 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
       </IconButton>
       {/* <Button onClick={>View</Button> */}
       <Dialog
-        maxWidth="md"
-        fullWidth
+        // maxWidth="md"
+        // fullWidth
         open={open}
         onClose={handleClose}
         scroll={scroll}
@@ -125,120 +128,163 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
               ref={descriptionElementRef}
               tabIndex={-1}
             >
-              <Grid>
-                <HorizontalStepper stage={rowContent.stage} projectId={rowContent.id} setJustSubmitted={setJustSubmitted} />
-              </Grid>
-              <Divider />
-              <Grid
-                container
-                spacing={2}
-              >
-                <Grid item xs={1}>
-                  ID:
-                  {' '}
-                  {rowContent.id}
-                </Grid>
-                <Grid item xs={2}>
-                  Industry:
-                  {' '}
+              <Container maxWidth="md" alignItems="center">
+                {' '}
+
+                <Box
+                  component="form"
+                  sx={{
+                    '& .MuiTextField-root': { m: 1 },
+                  }}
+                  noValidate
+                  autoComplete="off"
+                  maxWidth="sm"
+                >
+                  <Grid
+                    container
+                    spacing={2}
+                  >
+                    <Grid item xs={12}>
+                      <HorizontalStepper stage={rowContent.stage} projectId={rowContent.id} setJustSubmitted={setJustSubmitted} />
+                    </Grid>
+                    <Divider />
+                    <Grid item xs={1}>
+                      <TextField
+                        id="project-id"
+                        label="ID"
+                        fullWidth
+                        defaultValue={rowContent.id}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        variant="standard"
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="industry"
+                        label="Industry"
+                        fullWidth
+                        defaultValue={rowContent.industry.name}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        variant="standard"
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        id="created-date"
+                        label="Created Date"
+                        fullWidth
+                        defaultValue={rowContent.createdAt.slice(0, 10)}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        variant="standard"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        id="summary"
+                        label="Project Summary"
+                        fullWidth
+                        multiline
+                        defaultValue={rowContent.summary}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        variant="standard"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h3" textAlign="center" color="green.main">
+                        {' '}
+                        $
+                        {rowContent.minimumSalary}
+                        /hr
+                      </Typography>
+                      <Typography variant="h4" textAlign="center" color="primary">
+                        @
+                        {' '}
+                        {rowContent.projectedHours}
+                        {' '}
+                        projected hours, per engineer
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
                   <br />
-                  {rowContent.industry.name}
-                </Grid>
-                <Grid item xs={3}>
-                  Created Date:
-                  {' '}
+                  <Grid item xs={12}>
+                    Number of Engineers Enrolled/Required:
+                    {' '}
+                    {rowContent.user_projects.length}
+                    /
+                    {rowContent.noEngineersRequired}
+                    {rowContent.user_projects.length !== 0 && (
+                    <Autocomplete
+                      multiple
+                      id="Engineers Enrolled"
+                      options={usersList.map((option) => option)}
+                      defaultValue={usersList.map((option) => option)}
+                      readOnly
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="filled"
+                          placeholder="Enrolled So Far"
+                        />
+                      )}
+                    />
+                    )}
+                  </Grid>
+
                   <br />
-                  {rowContent.createdAt.slice(0, 10)}
+
+                  <br />
+                  Skills Needed for this Project:
+                  <Autocomplete
+                    multiple
+                    id="Skills"
+                    options={skillsList.map((option) => option)}
+                    defaultValue={skillsList.map((option) => option)}
+                    readOnly
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="filled"
+                      />
+                    )}
+                  />
+                  <br />
+                  Enrolment Deadline:
+                  {' '}
+                  {rowContent.enrolmentDeadline.slice(0, 10)}
                   /
                   {' '}
-                  {rowContent.createdAt.slice(11, 16)}
+                  {rowContent.enrolmentDeadline.slice(11, 16)}
                   {' '}
                   hrs
-                </Grid>
-              </Grid>
-              <Divider component="div" />
-              Summary:
-              <br />
-              {rowContent.summary}
-              <Divider component="div" />
-              Forecasted Hours Required for Project Completion:
-              <br />
-              {rowContent.projectedHours}
-              <Divider component="div" />
-              <br />
-              <Typography variant="h4">
-                {' '}
-                $
-                {rowContent.minimumSalary}
-                /hr
-
-              </Typography>
-              <br />
-              Number of Engineers Enrolled/Required:
-              {' '}
-              {rowContent.user_projects.length}
-              /
-              {rowContent.noEngineersRequired}
-              <br />
-              {rowContent.user_projects.length !== 0 && (
-              <Autocomplete
-                multiple
-                id="Engineers Enrolled"
-                options={usersList.map((option) => option)}
-                defaultValue={usersList.map((option) => option)}
-                readOnly
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="filled"
-                    placeholder="Enrolled So Far"
-                  />
-                )}
-              />
-              )}
-              <br />
-              Skills Needed for this Project:
-              <Autocomplete
-                multiple
-                id="Skills"
-                options={skillsList.map((option) => option)}
-                defaultValue={skillsList.map((option) => option)}
-                readOnly
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="filled"
-                  />
-                )}
-              />
-              <br />
-              Enrolment Deadline:
-              {' '}
-              {rowContent.enrolmentDeadline.slice(0, 10)}
-              /
-              {' '}
-              {rowContent.enrolmentDeadline.slice(11, 16)}
-              {' '}
-              hrs
-              <br />
-              Delivery Deadline:
-              {' '}
-              {rowContent.deliveryDeadline.slice(0, 10)}
-              /
-              {' '}
-              {rowContent.deliveryDeadline.slice(11, 16)}
-              {' '}
-              hrs
-              <br />
-              {' '}
-              <br />
-              <Divider component="div" />
-
+                  <br />
+                  Delivery Deadline:
+                  {' '}
+                  {rowContent.deliveryDeadline.slice(0, 10)}
+                  /
+                  {' '}
+                  {rowContent.deliveryDeadline.slice(11, 16)}
+                  {' '}
+                  hrs
+                  <br />
+                  {' '}
+                  <br />
+                  <Divider component="div" />
+                </Box>
+              </Container>
             </DialogContentText>
           </DialogContent>
 
         )}
-        <DialogActions>
+        <DialogActions alignItems="center">
 
           <Button onClick={handleClose}>Close</Button>
 
