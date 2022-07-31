@@ -34,7 +34,7 @@ export default function ProjectSubmitFormButton({ setJustSubmitted }) {
           component="div"
           onClick={handleClickOpen}
           variant="circular"
-          color="primary"
+          color="green"
           sx={{
             borderRadius: 0,
             borderTopLeftRadius: '50%',
@@ -46,7 +46,7 @@ export default function ProjectSubmitFormButton({ setJustSubmitted }) {
             right: 100,
           }}
         >
-          <IconButton color="inherit" size="large" disableRipple>
+          <IconButton color="inherit" size="large">
             <AddIcon />
           </IconButton>
         </Fab>
