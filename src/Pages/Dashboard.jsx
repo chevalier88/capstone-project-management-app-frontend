@@ -2,20 +2,23 @@
 // import * as React from 'react';
 import React, { useState, useEffect, useContext } from 'react';
 
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
+import {
+  CssBaseline,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Divider,
+} from '@mui/material';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
-// import DashboardGridRow from '../components/DashboardGridRow.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
 import DashboardTable from '../components/DashboardTable.jsx';
+import AppWidgetSummary from '../components/AppWidgetSummary.jsx';
 
 const theme = createTheme();
 
@@ -156,12 +159,11 @@ export default function Dashboard() {
           sx={{
             bgcolor: 'background.paper',
             pt: 4,
-            pb: 4,
+            pb: 1,
           }}
         >
           <Container maxWidth="sm">
             <Typography
-              component="h3"
               variant="h4"
               align="center"
               color="text.primary"
@@ -169,11 +171,27 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            <Typography variant="h6" align="center" color="text.secondary" paragraph>
               View all Current, Available and Completed Projects
             </Typography>
           </Container>
         </Box>
+
+        <Container maxWidth="xl">
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={4} md={4}>
+              <AppWidgetSummary title="Weekly Sales" total={714000} icon="ant-design:android-filled" />
+            </Grid>
+
+            <Grid item xs={12} sm={4} md={4}>
+              <AppWidgetSummary title="New Users" total={1352831} color="info" icon="ant-design:apple-filled" />
+            </Grid>
+
+            <Grid item xs={12} sm={4} md={4}>
+              <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon="ant-design:windows-filled" />
+            </Grid>
+          </Grid>
+        </Container>
 
         <Container sx={{ py: 2 }} maxWidth="md">
           <Typography variant="h5">

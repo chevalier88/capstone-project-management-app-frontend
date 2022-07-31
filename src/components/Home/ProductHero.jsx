@@ -25,7 +25,7 @@ export default function ProductHero() {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography color="inherit" align="center" variant="h2" marked="center">
+      <Typography color="inherit" align="center" variant="subtitle2" marked="center" sx={{ fontFamily: 'Oleo Script Swash Caps' }}>
         Relax, and leave your troubles with us.
       </Typography>
       <Typography
@@ -39,7 +39,7 @@ export default function ProductHero() {
 
       {user.length !== 0 ? (
         <Button
-          color="secondary"
+          color="green"
           variant="contained"
           size="large"
           component="a"
@@ -50,7 +50,7 @@ export default function ProductHero() {
         </Button>
       ) : (
         <Button
-          color="secondary"
+          color="green"
           variant="contained"
           size="large"
           component="a"

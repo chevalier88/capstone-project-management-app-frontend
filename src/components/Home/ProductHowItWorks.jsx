@@ -20,7 +20,7 @@ const item = {
 const number = {
   fontSize: 24,
   fontFamily: 'default',
-  color: 'secondary.main',
+  color: 'green.main',
   fontWeight: 'medium',
 };
 
@@ -35,12 +35,12 @@ function ProductHowItWorks() {
   return (
     <Box
       component="section"
-      sx={{ display: 'flex', bgcolor: 'secondary.light', overflow: 'hidden' }}
+      sx={{ display: 'flex', bgcolor: 'dark2.light', overflow: 'hidden' }}
     >
       <Container
         sx={{
-          mt: 10,
-          mb: 15,
+          mt: 7,
+          mb: 7,
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
@@ -58,11 +58,11 @@ function ProductHowItWorks() {
             opacity: 0.7,
           }}
         />
-        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
+        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 5 }}>
           How it works
         </Typography>
         <div>
-          <Grid container spacing={5}>
+          <Grid container spacing={5} sx={{ mb: 5 }}>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}>1.</Box>
@@ -72,7 +72,7 @@ function ProductHowItWorks() {
                   alt="suitcase"
                   sx={image}
                 />
-                <Typography variant="h5" align="center">
+                <Typography variant="subtitle1" align="center">
                   Post the specifications of the application you want to be created!
                 </Typography>
               </Box>
@@ -86,7 +86,7 @@ function ProductHowItWorks() {
                   alt="graph"
                   sx={image}
                 />
-                <Typography variant="h5" align="center">
+                <Typography variant="subtitle1" align="center">
                   Project Managers are assigned various qualified
                   software engineers to develop your project!
                 </Typography>
@@ -101,7 +101,7 @@ function ProductHowItWorks() {
                   alt="clock"
                   sx={image}
                 />
-                <Typography variant="h5" align="center">
+                <Typography variant="subtitle1" align="center">
                   Be updated of the live progress of your project,
                   through our Kanban Board!
                 </Typography>
@@ -111,7 +111,7 @@ function ProductHowItWorks() {
         </div>
         {user.length !== 0 ? (
           <Button
-            color="secondary"
+            color="greenLight"
             variant="contained"
             size="large"
             component="a"
@@ -122,7 +122,7 @@ function ProductHowItWorks() {
           </Button>
         ) : (
           <Button
-            color="secondary"
+            color="greenLight"
             variant="contained"
             size="large"
             component="a"

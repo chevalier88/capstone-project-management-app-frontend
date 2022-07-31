@@ -13,6 +13,8 @@ import {
   Paper,
   Avatar,
   Typography,
+  Tooltip,
+  Zoom,
 } from '@mui/material';
 import SingleProjectModal from './SingleProjectModal.jsx';
 
@@ -120,7 +122,9 @@ export default function DashboardTable({
                   </TableCell>
                   <TableCell align="center">
                     <Box sx={{ margin: 1 }}>
-                      <Avatar alt={row.stage} src={getIconSrc(row.stage)} />
+                      <Tooltip TransitionComponent={Zoom} title={row.stage} placement="top" arrow>
+                        <Avatar alt={row.stage} src={getIconSrc(row.stage)} />
+                      </Tooltip>
                     </Box>
                   </TableCell>
                   <TableCell align="center">
