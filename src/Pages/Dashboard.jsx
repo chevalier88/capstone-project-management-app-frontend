@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import {
-  CssBaseline,
   Grid,
   Box,
   Typography,
@@ -11,16 +10,14 @@ import {
   Divider,
 } from '@mui/material';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+// import Page from '../components/Page.jsx';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
 import DashboardTable from '../components/DashboardTable.jsx';
 import AppWidgetSummary from '../components/AppWidgetSummary.jsx';
-
-const theme = createTheme();
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -151,8 +148,7 @@ export default function Dashboard() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <main>
         {user.accountType === 'manager' && <ProjectSubmitFormButton setJustSubmitted={setJustSubmitted} />}
         <Box
@@ -162,22 +158,22 @@ export default function Dashboard() {
             pb: 1,
           }}
         >
-          <Container maxWidth="sm">
+          <Container maxWidth="lg">
             <Typography
               variant="h4"
               align="center"
               color="text.primary"
               gutterBottom
             >
-              Dashboard
+              My Dashboard
             </Typography>
             <Typography variant="h6" align="center" color="text.secondary" paragraph>
-              View all Current, Available and Completed Projects
+              View all your current, available and completed projects
             </Typography>
           </Container>
         </Box>
 
-        <Container maxWidth="xl">
+        <Container sx={{ py: 2 }} maxWidth="md">
           <Grid container spacing={0}>
             <Grid item xs={12} sm={4} md={4}>
               <AppWidgetSummary title="Weekly Sales" total={714000} icon="ant-design:android-filled" />
@@ -236,6 +232,7 @@ export default function Dashboard() {
         </Container>
 
       </main>
-    </ThemeProvider>
+
+    </>
   );
 }

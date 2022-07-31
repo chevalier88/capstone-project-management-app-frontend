@@ -2,17 +2,25 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+// import {
+//   Box, Button, Container, Heading,
+// } from 'gestalt';
+
 import {
-  Box, Button, Container, Heading,
+  Button, Heading,
 } from 'gestalt';
 
-import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
+import {
+  Box,
+  Container,
+  Typography,
+} from '@mui/material';
+
+// import CssBaseline from '@mui/material/CssBaseline';
 import SignList from './Lists/SignList.jsx';
 import SignedList from './Lists/SignedList.jsx';
 import { resetDocToView } from './ViewDocument/ViewDocumentSlice.js';
 import { resetDocToSign } from './SignDocument/SignDocumentSlice.js';
-import 'gestalt/dist/gestalt.css';
 import { UserContext } from '../UserContext.jsx';
 
 function Welcome() {
@@ -27,23 +35,26 @@ function Welcome() {
   }, [dispatch]);
 
   return (
-
-    <div>
+    <>
       <Container>
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '100vh',
+            bgcolor: 'background.paper',
+            pt: 4,
+            pb: 1,
           }}
         >
-          <CssBaseline />
-          <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
-            <Typography variant="h2" component="h1" gutterBottom>
-              Get Your Contracts Signed
+          <Container maxWidth="lg">
+            <Typography
+              variant="h4"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              DocuSein
             </Typography>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Manage signatures via
+            <Typography variant="h6" align="center" color="text.secondary" paragraph>
+              Manage contracts and signatures via
               {' '}
               {user.email}
             </Typography>
@@ -75,7 +86,7 @@ function Welcome() {
           <SignedList />
         </Box>
       </Container>
-    </div>
+    </>
   );
 }
 export default Welcome;

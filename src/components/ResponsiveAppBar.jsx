@@ -96,14 +96,14 @@ export default function ResponsiveAppBar() {
           {user.accountType !== 'client' && user.length !== 0 && (
             <MenuItem key="Dashboard" onClick={handleCloseNavMenu}>
               <Nav.Link as={Link} to="/dashboard" style={{ textDecoration: 'none' }}>
-                <Typography sx={headerNav}>Dashboard</Typography>
+                <Typography sx={headerNav}>My Dashboard</Typography>
               </Nav.Link>
             </MenuItem>
           )}
 
           <MenuItem key="Search" onClick={handleCloseNavMenu}>
             <Nav.Link as={Link} to="/search" style={{ textDecoration: 'none' }}>
-              <Typography sx={headerNav}>Search</Typography>
+              <Typography sx={headerNav}>Search Users</Typography>
             </Nav.Link>
           </MenuItem>
 
