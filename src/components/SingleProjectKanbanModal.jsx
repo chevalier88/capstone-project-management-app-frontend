@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import {
-  MenuItem, ListItemIcon, ListItemText, Tooltip,
+  Button, ListItemIcon, ListItemText, Tooltip,
 } from '@mui/material';
 import Board from 'react-trello';
 import axios from 'axios';
@@ -57,17 +57,16 @@ export default function SingleProjectKanbanModal({
 
   return (
     <div>
-      <MenuItem sx={{ color: 'success.dark' }} onClick={handleClickOpen}>
+      <Button color="success" onClick={handleClickOpen}>
         <ListItemIcon>
           <Iconify
-            sx={{ color: 'success.dark' }}
             icon="ph:kanban-duotone"
             width={24}
             height={24}
           />
         </ListItemIcon>
         <ListItemText primary="Open Kanban" primaryTypographyProps={{ variant: 'body2' }} />
-      </MenuItem>
+      </Button>
       <Dialog
         fullScreen
         open={open}
