@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import {
-  CssBaseline,
   Grid,
   Box,
   Typography,
@@ -11,16 +10,14 @@ import {
   Divider,
 } from '@mui/material';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+// import Page from '../components/Page.jsx';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
 import DashboardTable from '../components/DashboardTable.jsx';
 import AppWidgetSummary from '../components/AppWidgetSummary.jsx';
-
-const theme = createTheme();
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -151,9 +148,9 @@ export default function Dashboard() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <main>
+
         {user.accountType === 'manager' && <ProjectSubmitFormButton setJustSubmitted={setJustSubmitted} />}
         <Box
           sx={{
@@ -236,6 +233,7 @@ export default function Dashboard() {
         </Container>
 
       </main>
-    </ThemeProvider>
+
+    </>
   );
 }
