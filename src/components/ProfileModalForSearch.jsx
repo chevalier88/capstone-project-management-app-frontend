@@ -91,6 +91,17 @@ export default function ProfileModalForSearch({ user }) {
                 />
               </Badge>
             </Box>
+            <Container sx={{ padding: 1 }}>
+              {user.skills.map((data) => (
+                <Chip
+                  key={data.id}
+                  label={data.name}
+                  color="warning"
+                  variant="outlined"
+                  size="small"
+                />
+              ))}
+            </Container>
             <div>
               <TextField
                 id="name"
@@ -173,19 +184,7 @@ export default function ProfileModalForSearch({ user }) {
                 }}
                 variant="standard"
               />
-              <Container sx={{ padding: 1 }}>
-                My Skills:
-                {' '}
-                {user.skills.map((data) => (
-                  <Chip
-                    key={data.id}
-                    label={data.name}
-                    color="warning"
-                    variant="outlined"
-                    size="small"
-                  />
-                ))}
-              </Container>
+
             </div>
           </Box>
         </DialogContent>
