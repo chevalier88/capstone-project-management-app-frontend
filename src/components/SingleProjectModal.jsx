@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, {
-  useState, useRef, useEffect, useContext,
+  useState, useEffect, useContext,
 } from 'react';
 import axios from 'axios';
 import {
@@ -45,6 +45,7 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
 
   const checkIfUserIsAlreadyEnrolledHere = () => {
     if (usersList.some((name) => name === user.name)) {
+      console.log('user already enrolled in this project!');
       return true;
     } return false;
   };
@@ -93,7 +94,14 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
       setShowJoinButton(true);
     } else {
       console.log('this user cannot join this project.');
+      setShowJoinButton(false);
     }
+    // if (open) {
+    //   const { current: descriptionElement } = descriptionElementRef;
+    //   if (descriptionElement !== null) {
+    //     descriptionElement.focus();
+    //   }
+    // }
   }, []);
 
   async function getUsersAndSkillsForThisProject() {
@@ -105,6 +113,13 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
       const skillsArray = [];
       data.skills.forEach((skillObject) => skillsArray.push(skillObject.skill.name));
       data.users.forEach((userObject) => usersArray.push(userObject.user.name));
+      console.log(usersArray);
+      if (rowContent.stage === 'sourcing' && !checkDateValid() && !checkIfProjectFull() && user.accountType === 'engineer' && !(usersArray.some((name) => name === user.name))) {
+        setShowJoinButton(true);
+      } else {
+        console.log('this user cannot join this project.');
+        setShowJoinButton(false);
+      }
       setSkillsList(skillsArray);
       setUsersList(usersArray);
       setShowLoading(false);
@@ -119,19 +134,9 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
   };
 
   const handleClose = () => {
+    setShowLoading(true);
     setOpen(false);
   };
-
-  const descriptionElementRef = useRef(null);
-
-  useEffect(() => {
-    if (open) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
-    }
-  }, [open]);
 
   return (
     <>
@@ -149,7 +154,6 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
           <Grid
             container
             spacing={1}
-            alignItems="center"
           >
             <Grid item xs={11}>
               <Typography component="span" variant="h3">
@@ -180,7 +184,7 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
             <DialogContentText
               component="div"
               id="scroll-dialog-description"
-              ref={descriptionElementRef}
+              // ref={descriptionElementRef}
               tabIndex={-1}
             >
               <Container maxWidth="md" alignItems="center">
