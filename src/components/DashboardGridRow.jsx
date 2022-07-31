@@ -48,7 +48,7 @@ export default function DashboardGridRow({ row, setJustSubmitted }) {
 
         </CardContent>
         <CardActions>
-          <SingleProjectModal key={row.name} rowContent={row} setJustSubmitted={setJustSubmitted} />
+          {/* <SingleProjectModal key={row.name} rowContent={row} setJustSubmitted={setJustSubmitted} /> */}
         </CardActions>
       </Card>
     </Grid>
