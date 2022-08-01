@@ -92,7 +92,6 @@ export default function ProfileEdit() {
 
     return (
       <Container maxWidth="md">
-
         <Box sx={{ margin: 2 }}>
           <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
             <Grid container spacing={3}>

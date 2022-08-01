@@ -20,26 +20,25 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { UserContext } from '../components/UserContext.jsx';
 import BACKEND_URL from '../supportFunctions.js';
+import Iconify from '../components/Iconify.jsx';
 
 const cookies = new Cookies();
 
 export default function Login() {
-// .......... STATES .................
+  // .......... STATES .................
   const { setUser } = useContext(UserContext);
   const { user } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  //          HELPER FUNCTIONS
-  // ================================
+  // .......... HELPER FUNCTIONS .................
   const Alert = forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnackbar(false);
   };
 
@@ -59,6 +58,8 @@ export default function Login() {
           cookies.set('token', `${token}`, { path: '/' });
           // redirect to dashboard
           navigate('../profile', { replace: true });
+        } else {
+          setOpenSnackbar(true);
         }
       })
       .catch((error) => {
@@ -110,12 +111,22 @@ export default function Login() {
   // return log in component if user is not logged in
   if (user.length === 0) {
     return (
-      <ThemeProvider theme={theme}>
-        <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleSnackbarClose}>
-          <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
-            This is a success message!
+      <Box>
+
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={2000}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+        >
+          <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
+            Invalid Username / Password
           </Alert>
         </Snackbar>
+
         <Grid container component="main" sx={{ height: '100vh' }}>
           <CssBaseline />
           <Grid
@@ -124,61 +135,71 @@ export default function Login() {
             sm={4}
             md={7}
             sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              backgroundImage: 'url("http://ricemedia.co/wp-content/uploads/2018/02/rice-media-otter-obsession-9.jpg")',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
-          >
-            <Avatar sx={{ m: 2, bgcolor: 'green.main' }}>
-              <Iconify icon="line-md:account" width={40} height={30} />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                onClick={attemptLogin}
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-
-              <Copyright sx={{ mt: 5 }} />
+          />
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <Iconify icon="line-md:account" width={30} height={30} />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <Box sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  onClick={attemptLogin}
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
     );
   }
 }
