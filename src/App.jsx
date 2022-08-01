@@ -176,7 +176,6 @@ export default function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {/* <Navbar /> */}
             <ResponsiveAppBar />
             <Routes>
               <Route path="/" exact element={<Home />} />

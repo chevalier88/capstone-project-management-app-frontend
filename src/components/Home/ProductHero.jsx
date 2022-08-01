@@ -26,7 +26,7 @@ export default function ProductHero() {
         alt="increase priority"
       />
       <Typography color="inherit" align="center" variant="subtitle2" marked="center" sx={{ fontFamily: 'Oleo Script Swash Caps' }}>
-        Relax, and leave your troubles with us.
+        Relax, and leave your software project troubles with us.
       </Typography>
       <Typography
         color="inherit"

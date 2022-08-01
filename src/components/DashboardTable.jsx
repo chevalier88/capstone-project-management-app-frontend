@@ -21,7 +21,7 @@ import SingleProjectModal from './SingleProjectModal.jsx';
 // SETTING TABLE HEADERS ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', minWidth: 170 },
+  { id: 'name', label: 'Name', maxWidth: 120 },
   { id: 'stage', label: 'Stage', minWidth: 100 },
   { id: 'enrollment', label: 'Enrollment', minWidth: 100 },
   { id: 'enrollmentDeadline', label: 'Enrollment Deadline', minWidth: 100 },
@@ -97,6 +97,7 @@ export default function DashboardTable({
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
+              <TableCell />
               {TABLE_HEAD.map((column) => (
                 <TableCell
                   key={column.id}
@@ -112,6 +113,9 @@ export default function DashboardTable({
             {newData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow hover tabIndex={-1} key={row.id}>
+                  <TableCell align="center">
+                    <SingleProjectModal key={row.name} rowContent={row} setJustSubmitted={setJustSubmitted} />
+                  </TableCell>
                   <TableCell align="left">
                     <Typography
                       sx={{ fontWeight: 'bold' }}
@@ -139,9 +143,7 @@ export default function DashboardTable({
                   <TableCell align="left">
                     {convertToDate(row.deliveryDeadline)}
                   </TableCell>
-                  <TableCell align="center">
-                    <SingleProjectModal key={row.name} rowContent={row} setJustSubmitted={setJustSubmitted} />
-                  </TableCell>
+
                 </TableRow>
               ))}
           </TableBody>

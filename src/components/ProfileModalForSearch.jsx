@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogTitle,
   Button,
+  Grid,
 } from '@mui/material';
 import Iconify from './Iconify.jsx';
 
@@ -91,102 +92,113 @@ export default function ProfileModalForSearch({ user }) {
                 />
               </Badge>
             </Box>
-            <div>
-              <TextField
-                id="name"
-                label="Name"
-                multiline
-                defaultValue={user.name}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="aboutMe"
-                label="About Me"
-                multiline
-                fullWidth
-                defaultValue={user.aboutMe}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="experience"
-                label="My Experience"
-                multiline
-                fullWidth
-                defaultValue={user.experience}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="email"
-                label="My Email Address"
-                multiline
-                defaultValue={user.email}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="location"
-                label="My Location"
-                multiline
-                defaultValue={user.location}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <TextField
-                id="minimumSalary"
-                label="My Minimum Salary"
-                multiline
-                defaultValue={user.minimumSalary}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              {/* <TextField
-                id="industry"
-                label="My Industry"
-                defaultValue={user.industry.name}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              /> */}
-              <TextField
-                id="portfolioUrl"
-                label="My Profolio link"
-                multiline
-                defaultValue={user.portfolioUrl}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="standard"
-              />
-              <Container sx={{ padding: 1 }}>
-                My Skills:
+            <Container sx={{ padding: 1 }}>
+              {user.skills.map((data) => (
+                <Chip
+                  key={data.id}
+                  label={data.name}
+                  color="warning"
+                  variant="outlined"
+                  size="small"
+                />
+              ))}
+            </Container>
+            <Grid
+              container
+              spacing={1}
+              alignItems="center"
+            >
+              <Grid item xs={12}>
+                <TextField
+                  id="name"
+                  label="My Name"
+                  multiline
+                  fullWidth
+                  defaultValue={user.name}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="aboutMe"
+                  label="About Me"
+                  multiline
+                  fullWidth
+                  defaultValue={user.aboutMe}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="experience"
+                  label="My Experience"
+                  multiline
+                  fullWidth
+                  defaultValue={user.experience}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={9}>
                 {' '}
-                {user.skills.map((data) => (
-                  <Chip
-                    key={data.id}
-                    label={data.name}
-                    color="warning"
-                    variant="outlined"
-                    size="small"
-                  />
-                ))}
-              </Container>
-            </div>
+                <TextField
+                  id="email"
+                  label="My Email Address"
+                  fullWidth
+                  defaultValue={user.email}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  id="location"
+                  label="My Location"
+                  fullWidth
+                  defaultValue={user.location}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+
+              <Grid item xs={9}>
+                <TextField
+                  id="portfolioUrl"
+                  label="My Profolio link"
+                  fullWidth
+                  defaultValue={user.portfolioUrl}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  id="minimumSalary"
+                  label="My Minimum Salary"
+                  defaultValue={user.minimumSalary}
+                  fullWidth
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+            </Grid>
           </Box>
         </DialogContent>
         <DialogActions>
