@@ -25,7 +25,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-AppWidgetSummary.propTypes = {
+DashboardWidgetSummary.propTypes = {
   color: PropTypes.string,
   icon: PropTypes.string,
   title: PropTypes.string.isRequired,
@@ -33,7 +33,7 @@ AppWidgetSummary.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function AppWidgetSummary({
+export default function DashboardWidgetSummary({
   title, total, icon, color = 'primary', sx, ...other
 }) {
   return (
@@ -57,12 +57,12 @@ export default function AppWidgetSummary({
           )} 100%)`,
         }}
       >
-        <Iconify icon={icon} width={24} height={24} />
+        <Iconify icon={icon} width={30} height={30} />
       </IconWrapperStyle>
 
-      <Typography variant="h3">{total}</Typography>
+      <Typography variant="h4">{total}</Typography>
 
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+      <Typography variant="subtitle1" sx={{ opacity: 0.72 }}>
         {title}
       </Typography>
     </Card>

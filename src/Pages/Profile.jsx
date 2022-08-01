@@ -63,7 +63,7 @@ export default function Profile() {
             pb: 1,
           }}
         >
-          <Container maxWidth="md">
+          <Container maxWidth="lg">
             <Typography
               variant="h4"
               align="left"
@@ -105,7 +105,7 @@ export default function Profile() {
               </Badge>
             </Box>
           </Container>
-          <Container sx={{ padding: 1 }} maxWidth="md">
+          <Container sx={{ padding: 1 }} maxWidth="lg">
             {user.skills.map((data) => (
               <Chip
                 key={data.id}
@@ -118,7 +118,7 @@ export default function Profile() {
           </Container>
         </Box>
         {/* <Box sx={{ margin: 3 }}> */}
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
           {' '}
 
           <Box
@@ -128,7 +128,7 @@ export default function Profile() {
             }}
             noValidate
             autoComplete="off"
-            maxWidth="sm"
+            maxWidth="lg"
           >
             <Grid
               container

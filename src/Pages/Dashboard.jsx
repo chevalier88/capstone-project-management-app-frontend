@@ -17,16 +17,60 @@ import { UserContext } from '../components/UserContext.jsx';
 import ProjectSubmitFormButton from '../components/ProjectSubmitFormButton.jsx';
 import LinearIndeterminate from '../components/LinearIndeterminate.jsx';
 import DashboardTable from '../components/DashboardTable.jsx';
-import AppWidgetSummary from '../components/AppWidgetSummary.jsx';
+import DashboardWidgetSummary from '../components/DashboardWidgetSummary.jsx';
+import DashboardPieChart from '../components/DashboardPieChart.jsx';
+import DashboardBarChart from '../components/DashboardBarChart.jsx';
+
+// .......... HELPER FUNCTIONS .................
+const getSkillsData = (data) => {
+  // tally skills count from projects
+  const skillsDataTally = {};
+  data.forEach((project) => {
+    project.skills.forEach((skill) => {
+      const skillName = skill.name;
+      if (skillName in skillsDataTally) {
+        skillsDataTally[skillName] += 1;
+      } else { skillsDataTally[skillName] = 1; }
+    });
+  });
+  return skillsDataTally;
+};
+
+const getProjectsData = (userType, data) => {
+  // tally skills count from projects
+  const projectDataTally = {};
+  data.forEach((id) => {
+    let statusName = '';
+    if (userType === 'PM') { statusName = id.stage; }
+    else { statusName = id.project.stage; }
+    if (statusName in projectDataTally) {
+      projectDataTally[statusName] += 1;
+    } else { projectDataTally[statusName] = 1; }
+  });
+  return projectDataTally;
+};
+
+const configureDataForChart = (dataTally) => {
+  const chartData = [];
+  Object.keys(dataTally).forEach((key) => chartData.push({
+    label: key,
+    value: dataTally[key],
+  }));
+  return chartData;
+};
 
 export default function Dashboard() {
+  // .......... STATES .................
   const { user } = useContext(UserContext);
   const [showLoading, setShowLoading] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);
   const [currentProjects, setCurrentProjects] = useState([]);
   const [openProjects, setOpenProjects] = useState([]);
   const [completedProjects, setCompletedProjects] = useState([]);
+  const [skillsData, setSkillsData] = useState([]);
+  const [projectsChartData, setProjectsChartData] = useState([]);
 
+  // .......... HELPER FUNCTIONS .................
   async function getCurrentProjects() {
     try {
       const results = await axios.get(`${BACKEND_URL}/projects/current/${user.id}`);
@@ -35,6 +79,7 @@ export default function Dashboard() {
       data.forEach((project) => currentArray.push(project));
 
       setCurrentProjects(currentArray);
+      setProjectsChartData(configureDataForChart(getProjectsData('NotPM', currentArray)));
       setShowLoading(false);
     } catch (error) {
       console.log(error);
@@ -65,6 +110,7 @@ export default function Dashboard() {
       });
 
       setOpenProjects(openArray);
+      setSkillsData(configureDataForChart(getSkillsData(openArray)));
       setShowLoading(false);
     } catch (error) {
       console.log(error);
@@ -107,6 +153,8 @@ export default function Dashboard() {
       setCurrentProjects(currentArray);
       setOpenProjects(openArray);
       setCompletedProjects(completedArray);
+      setSkillsData(configureDataForChart(getSkillsData(openArray)));
+      setProjectsChartData(configureDataForChart(getProjectsData('PM', currentArray)));
 
       setShowLoading(false);
     } catch (error) {
@@ -173,23 +221,31 @@ export default function Dashboard() {
           </Container>
         </Box>
 
-        <Container sx={{ py: 2 }} maxWidth="md">
-          <Grid container spacing={0}>
+        <Container sx={{ py: 2 }} maxWidth="lg">
+          <Grid container spacing={1}>
+
             <Grid item xs={12} sm={4} md={4}>
-              <AppWidgetSummary title="Weekly Sales" total={714000} icon="ant-design:android-filled" />
+              <DashboardPieChart
+                title="Your Projects"
+                chartData={projectsChartData}
+              />
             </Grid>
 
             <Grid item xs={12} sm={4} md={4}>
-              <AppWidgetSummary title="New Users" total={1352831} color="info" icon="ant-design:apple-filled" />
+              <DashboardWidgetSummary title="Available Projects" total={openProjects.length} color="yellow" icon="line-md:text-box-multiple-twotone" sx={{ mx: 3 }} />
             </Grid>
 
             <Grid item xs={12} sm={4} md={4}>
-              <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon="ant-design:windows-filled" />
+              <DashboardBarChart
+                title="Requested Skills"
+                chartData={skillsData}
+              />
             </Grid>
+
           </Grid>
         </Container>
 
-        <Container sx={{ py: 2 }} maxWidth="md">
+        <Container sx={{ py: 2 }} maxWidth="lg">
           <Typography variant="h5">
             Current
           </Typography>
@@ -203,7 +259,7 @@ export default function Dashboard() {
           )}
         </Container>
 
-        <Container sx={{ py: 2 }} maxWidth="md">
+        <Container sx={{ py: 2 }} maxWidth="lg">
           <Typography variant="h5">
             Available
           </Typography>
@@ -217,7 +273,7 @@ export default function Dashboard() {
           )}
         </Container>
 
-        <Container sx={{ py: 2 }} maxWidth="md">
+        <Container sx={{ py: 2 }} maxWidth="lg">
           <Typography variant="h5">
             Completed
           </Typography>

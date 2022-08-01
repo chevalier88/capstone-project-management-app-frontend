@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable max-len */
@@ -15,6 +16,7 @@ import {
   MenuItem,
   Slider,
   Autocomplete,
+  Container,
 } from '@mui/material';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
@@ -87,7 +89,14 @@ export default function ProfileEdit() {
     console.log('userSkills', userSkills);
 
     return (
-      <Box sx={{ margin: 2 }}>
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 4,
+          pb: 1,
+        }}
+      >
+        <Container maxWidth="lg">
         <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -300,6 +309,7 @@ export default function ProfileEdit() {
             Save Changes
           </Button>
         </Box>
+        </Container>
       </Box>
     );
   }

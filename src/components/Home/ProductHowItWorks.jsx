@@ -35,7 +35,7 @@ function ProductHowItWorks() {
   return (
     <Box
       component="section"
-      sx={{ display: 'flex', bgcolor: 'dark2.light', overflow: 'hidden' }}
+      sx={{ display: 'flex', bgcolor: 'green.xlight', overflow: 'hidden' }}
     >
       <Container
         sx={{

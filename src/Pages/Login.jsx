@@ -14,28 +14,24 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { UserContext } from '../components/UserContext.jsx';
 import BACKEND_URL from '../supportFunctions.js';
-// import CircularIndeterminate from './CircularIndeterminate.jsx';
+// components
+import Iconify from '../components/Iconify.jsx';
 
 const cookies = new Cookies();
 
 export default function Login() {
-  //             STATES
-  // ================================
+// .......... STATES .................
   const { setUser } = useContext(UserContext);
   const { user } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   // const [showLoading, setShowLoading] = useState(true);
 
-  //          HELPER FUNCTIONS
-  // ================================
-
+  // .......... HELPER FUNCTIONS .................
   const navigate = useNavigate();
 
   // AJAX call to attempt login. if sucessful, return all relevant account info
@@ -72,8 +68,6 @@ export default function Login() {
     );
   }
 
-  const theme = createTheme();
-
   //       RENDERING OF COMPONENT
   // ================================
 
@@ -104,81 +98,79 @@ export default function Login() {
   // return log in component if user is not logged in
   if (user.length === 0) {
     return (
-      <ThemeProvider theme={theme}>
-        <Grid container component="main" sx={{ height: '100vh' }}>
-          <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: 'url("http://ricemedia.co/wp-content/uploads/2018/02/rice-media-otter-obsession-9.jpg")',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
             sx={{
-              backgroundImage: 'url("http://ricemedia.co/wp-content/uploads/2018/02/rice-media-otter-obsession-9.jpg")',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
-          />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <Box
-              sx={{
-                my: 8,
-                mx: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                  autoFocus
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  onClick={attemptLogin}
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button>
+          >
+            <Avatar sx={{ m: 2, bgcolor: 'green.main' }}>
+              <Iconify icon="line-md:account" width={40} height={30} />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                onClick={attemptLogin}
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
 
-                <Copyright sx={{ mt: 5 }} />
-              </Box>
+              <Copyright sx={{ mt: 5 }} />
             </Box>
-          </Grid>
+          </Box>
         </Grid>
-      </ThemeProvider>
+      </Grid>
     );
   }
 }
