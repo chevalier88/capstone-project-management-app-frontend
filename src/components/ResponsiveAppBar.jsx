@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {
   Link,
   useNavigate,
@@ -89,28 +90,28 @@ export default function ResponsiveAppBar() {
         >
           <MenuItem key="Home" onClick={handleCloseNavMenu}>
             <Nav.Link as={Link} to="/" style={{ textDecoration: 'none' }}>
-              <Typography sx={headerNav}>Home</Typography>
+              <Typography component="span" sx={headerNav}>Home</Typography>
             </Nav.Link>
           </MenuItem>
 
           {user.accountType !== 'client' && user.length !== 0 && (
             <MenuItem key="Dashboard" onClick={handleCloseNavMenu}>
               <Nav.Link as={Link} to="/dashboard" style={{ textDecoration: 'none' }}>
-                <Typography sx={headerNav}>My Dashboard</Typography>
+                <Typography component="span" sx={headerNav}>My Dashboard</Typography>
               </Nav.Link>
             </MenuItem>
           )}
 
           <MenuItem key="Search" onClick={handleCloseNavMenu}>
             <Nav.Link as={Link} to="/search" style={{ textDecoration: 'none' }}>
-              <Typography sx={headerNav}>Search Users</Typography>
+              <Typography component="span" sx={headerNav}>Search Users</Typography>
             </Nav.Link>
           </MenuItem>
 
           {user.accountType === 'manager' && (
             <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
               <Nav.Link as={Link} to="/fakeDocusign" style={{ textDecoration: 'none' }}>
-                <Typography sx={headerNav}>DocuSein</Typography>
+                <Typography component="span" sx={headerNav}>DocuSein</Typography>
               </Nav.Link>
             </MenuItem>
           )}
@@ -118,12 +119,12 @@ export default function ResponsiveAppBar() {
           {user.accountType === 'client' && (
             <MenuItem key="DocuSein" onClick={handleCloseNavMenu}>
               <Nav.Link as={Link} to="/fakeDocusign" style={{ textDecoration: 'none' }}>
-                <Typography sx={headerNav}>DocuSein</Typography>
+                <Typography component="span" sx={headerNav}>DocuSein</Typography>
               </Nav.Link>
             </MenuItem>
           )}
         </Menu>
-        <Typography variant="title" component="div" sx={{ flexGrow: 1, fontFamily: 'Six Caps' }}>
+        <Typography component="span" variant="title" sx={{ flexGrow: 1, fontFamily: 'Six Caps' }}>
           FullStackOtter
         </Typography>
         <div>
@@ -150,7 +151,7 @@ export default function ResponsiveAppBar() {
               && (
               <MenuItem key="login" onClick={handleCloseUserMenu}>
                 <Nav.Link as={Link} to="/login" style={{ textDecoration: 'none' }}>
-                  <Typography style={{ textDecoration: 'none' }} sx={headerNav} as={Link} to="/login">
+                  <Typography component="span" style={{ textDecoration: 'none' }} sx={headerNav} as={Link} to="/login">
                     Login
                   </Typography>
                 </Nav.Link>
@@ -159,23 +160,27 @@ export default function ResponsiveAppBar() {
             {user.length !== 0 && (
               <Box>
                 <Box sx={{ my: 1.5, px: 2.5 }}>
-                  <Typography variant="body1" noWrap>
+                  <Typography component="span" variant="body1" noWrap>
                     {user.username}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                  <br />
+                  <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }} noWrap>
                     {user.name}
                   </Typography>
                 </Box>
                 <Divider sx={{ borderStyle: 'dashed' }} />
                 <MenuItem key="profile" onClick={handleCloseUserMenu}>
                   <Nav.Link as={Link} to="/profile" style={{ textDecoration: 'none' }}>
-                    <Typography sx={headerNav} as={Link} style={{ textDecoration: 'none' }} to="/profile">
+                    <Typography component="span" sx={headerNav}>
                       Profile
                     </Typography>
+                    {/* <Typography component="span" sx={headerNav} as={Link} style={{ textDecoration: 'none' }} to="/profile">
+                      Profile
+                    </Typography> */}
                   </Nav.Link>
                 </MenuItem>
                 <MenuItem key="logout" onClick={handleLogoutClick}>
-                  <Typography sx={headerNav}>
+                  <Typography component="span" sx={headerNav}>
                     Logout
                   </Typography>
                 </MenuItem>

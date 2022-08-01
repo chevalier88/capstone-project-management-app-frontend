@@ -20,7 +20,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { UserContext } from '../components/UserContext.jsx';
 import BACKEND_URL from '../supportFunctions.js';
-// import CircularIndeterminate from './CircularIndeterminate.jsx';
 
 const cookies = new Cookies();
 
@@ -31,7 +30,6 @@ export default function Login() {
   const { user } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const [showLoading, setShowLoading] = useState(true);
 
   //          HELPER FUNCTIONS
   // ================================
@@ -55,7 +53,9 @@ export default function Login() {
           navigate('../profile', { replace: true });
         }
       })
-      .catch((error) => { console.log(error); });
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   function Copyright(props) {
@@ -104,7 +104,9 @@ export default function Login() {
   // return log in component if user is not logged in
   if (user.length === 0) {
     return (
+
       <ThemeProvider theme={theme}>
+
         <Grid container component="main" sx={{ height: '100vh' }}>
           <CssBaseline />
           <Grid
