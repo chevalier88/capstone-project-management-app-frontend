@@ -7,24 +7,24 @@ import MuiAlert from '@mui/material/Alert';
 const Alert = forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />);
 
 export default function CustomizedSnackbars() {
-  const [open, setOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   // const handleClick = () => {
   //   setOpen(true);
   // };
 
-  const handleClose = (event, reason) => {
+  const handleSnackBarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    setOpen(false);
+    setSnackbarOpen(false);
   };
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+      <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={handleSnackBarClose}>
+        <Alert onClose={handleSnackBarClose} severity="success" sx={{ width: '100%' }}>
           This is a success message!
         </Alert>
       </Snackbar>

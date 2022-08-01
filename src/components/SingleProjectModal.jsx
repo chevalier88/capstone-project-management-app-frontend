@@ -97,12 +97,6 @@ export default function SingleProjectModal({ rowContent, setJustSubmitted }) {
       console.log('this user cannot join this project.');
       setShowJoinButton(false);
     }
-    // if (open) {
-    //   const { current: descriptionElement } = descriptionElementRef;
-    //   if (descriptionElement !== null) {
-    //     descriptionElement.focus();
-    //   }
-    // }
   }, []);
 
   async function getUsersAndSkillsForThisProject() {
