@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -18,9 +18,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { UserContext } from '../components/UserContext.jsx';
 import BACKEND_URL from '../supportFunctions.js';
-// import CircularIndeterminate from './CircularIndeterminate.jsx';
 
 const cookies = new Cookies();
 
@@ -31,10 +32,19 @@ export default function Login() {
   const { user } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const [showLoading, setShowLoading] = useState(true);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   //          HELPER FUNCTIONS
   // ================================
+  const Alert = forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
 
   const navigate = useNavigate();
 
@@ -50,12 +60,13 @@ export default function Login() {
           // update access token in cookies
           const { token } = response.data;
           cookies.set('token', `${token}`, { path: '/' });
-
           // redirect to dashboard
           navigate('../profile', { replace: true });
         }
       })
-      .catch((error) => { console.log(error); });
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   function Copyright(props) {
@@ -104,7 +115,13 @@ export default function Login() {
   // return log in component if user is not logged in
   if (user.length === 0) {
     return (
+
       <ThemeProvider theme={theme}>
+        <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleSnackbarClose}>
+          <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+            This is a success message!
+          </Alert>
+        </Snackbar>
         <Grid container component="main" sx={{ height: '100vh' }}>
           <CssBaseline />
           <Grid
