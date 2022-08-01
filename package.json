@@ -23,6 +23,7 @@
     "fs-extra": "^9.0.0",
     "gestalt": "^62.0.5",
     "mathjs": "^10.6.4",
+    "notistack": "^2.0.5",
     "react": "^17.0.1",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.4.0",

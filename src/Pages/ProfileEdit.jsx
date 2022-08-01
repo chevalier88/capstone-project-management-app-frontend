@@ -17,6 +17,8 @@ import {
   Slider,
   Autocomplete,
   Container,
+  InputLabel,
+  FormControl,
 } from '@mui/material';
 import BACKEND_URL from '../supportFunctions.js';
 import { UserContext } from '../components/UserContext.jsx';
@@ -89,228 +91,225 @@ export default function ProfileEdit() {
     console.log('userSkills', userSkills);
 
     return (
-      <Box
-        sx={{
-          bgcolor: 'background.paper',
-          pt: 4,
-          pb: 1,
-        }}
-      >
-        <Container maxWidth="lg">
-        <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography variant="h4">
-                Edit your profile
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Controller
-                control={control}
-                name="name"
-                defaultValue={user.name}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      fullWidth
-                      label="My Name"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
+      <Container maxWidth="md">
 
-            <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="aboutMe"
-                defaultValue={user.aboutMe}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      fullWidth
-                      multiline
-                      label="About Me"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="experience"
-                defaultValue={user.experience}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      fullWidth
-                      multiline
-                      label="My Experience"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Controller
-                control={control}
-                name="email"
-                defaultValue={user.email}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      fullWidth
-                      label="My Email"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Controller
-                control={control}
-                name="location"
-                defaultValue={user.location}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      fullWidth
-                      label="My Location"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Controller
-                control={control}
-                name="industryId"
-                defaultValue={user.industryId}
-                render={({ field }) => (
-                  <>
-                    <Typography>
-                      My Industry:
-                    </Typography>
-                    <Select
-                      {...field}
-                      fullWidth
-                    >
-                      <MenuItem value="1">Airline</MenuItem>
-                      <MenuItem value="2">Finance</MenuItem>
-                      <MenuItem value="3">Market Research</MenuItem>
-                      <MenuItem value="4">Human Resources</MenuItem>
-                      <MenuItem value="5">Technology</MenuItem>
-                    </Select>
-                  </>
+        <Box sx={{ margin: 2 }}>
+          <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography variant="h4">
+                  Edit your profile
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  control={control}
+                  name="name"
+                  defaultValue={user.name}
+                  render={({ field }) => (
+                    <>
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        label="My Name"
+                      />
+                    </>
+                  )}
+                />
+              </Grid>
 
-                )}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Controller
-                control={control}
-                name="portfolioUrl"
-                defaultValue={user.portfolioUrl}
-                render={({ field }) => (
-                  <>
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      fullWidth
-                      multiline
-                      label="My Portfolio"
-                    />
-                  </>
-                )}
-              />
-            </Grid>
-            {' '}
-            <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="minimumSalary"
-                defaultValue={Number(user.minimumSalary)}
-                render={({ field: { value, ...field } }) => (
-                  <>
-                    <Typography id="input-slider" gutterBottom>
-                      My Minimum Salary
-                    </Typography>
-                    <Grid container spacing={2} alignItems="center">
-                      <Grid item>
-                        <Typography
-                          variant="h5"
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="aboutMe"
+                  defaultValue={user.aboutMe}
+                  render={({ field }) => (
+                    <>
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        multiline
+                        label="About Me"
+                      />
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="experience"
+                  defaultValue={user.experience}
+                  render={({ field }) => (
+                    <>
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        multiline
+                        label="My Experience"
+                      />
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item xs={8}>
+                <Controller
+                  control={control}
+                  name="email"
+                  defaultValue={user.email}
+                  render={({ field }) => (
+                    <>
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        label="My Email"
+                      />
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  control={control}
+                  name="location"
+                  defaultValue={user.location}
+                  render={({ field }) => (
+                    <>
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        label="My Location"
+                      />
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  control={control}
+                  name="industryId"
+                  defaultValue={user.industryId}
+                  render={({ field }) => (
+                    <>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Industry</InputLabel>
+                        <Select
                           {...field}
-                        >
-                          {' '}
-                          $
-                          {' '}
-                          {value}
-                        </Typography>
-                      </Grid>
-                      <br />
-                      <Grid item xs>
-                        <Slider
-                          {...field}
-                          min={0}
-                          max={200}
-                          step={1}
-                          value={value}
-                          aria-labelledby="input-slider"
-                        />
-                      </Grid>
-                    </Grid>
-                  </>
-                )}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="skills"
-                render={({ field: { onChange, ...field } }) => (
-                  <>
-                    <Typography>
-                      My Skills
-                    </Typography>
-                    <Autocomplete
-                      multiple
-                      options={skills}
-                      defaultValue={user.skills}
-                      isOptionEqualToValue={(option, value) => option.id === value.id}
-                      getOptionLabel={(option) => option.name}
-                      onChange={(_, data) => onChange(data)}
-                      renderInput={(params) => (
-                        <TextField
-                          {...field}
-                          {...params}
+                          label="Industry"
                           fullWidth
-                          variant="outlined"
-                        />
-                      )}
-                    />
-                  </>
-                )}
-              />
+                        >
+                          <MenuItem value="1">Airline</MenuItem>
+                          <MenuItem value="2">Finance</MenuItem>
+                          <MenuItem value="3">Market Research</MenuItem>
+                          <MenuItem value="4">Human Resources</MenuItem>
+                          <MenuItem value="5">Technology</MenuItem>
+                        </Select>
+                      </FormControl>
+
+                    </>
+
+                  )}
+                />
+              </Grid>
+              <Grid item xs={8}>
+                <Controller
+                  control={control}
+                  name="portfolioUrl"
+                  defaultValue={user.portfolioUrl}
+                  render={({ field }) => (
+                    <>
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        multiline
+                        label="My Portfolio"
+                      />
+                    </>
+                  )}
+                />
+              </Grid>
+              {' '}
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="minimumSalary"
+                  defaultValue={Number(user.minimumSalary)}
+                  render={({ field: { value, ...field } }) => (
+                    <>
+                      <Typography id="input-slider" gutterBottom>
+                        My Minimum Salary
+                      </Typography>
+                      <Grid container spacing={2} alignItems="center">
+                        <Grid item>
+                          <Typography
+                            variant="h5"
+                            {...field}
+                          >
+                            {' '}
+                            $
+                            {' '}
+                            {value}
+                          </Typography>
+                        </Grid>
+                        <br />
+                        <Grid item xs>
+                          <Slider
+                            {...field}
+                            min={0}
+                            max={200}
+                            step={1}
+                            value={value}
+                            aria-labelledby="input-slider"
+                          />
+                        </Grid>
+                      </Grid>
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="skills"
+                  render={({ field: { onChange, ...field } }) => (
+                    <>
+                      <Typography>
+                        My Skills
+                      </Typography>
+                      <Autocomplete
+                        multiple
+                        options={skills}
+                        defaultValue={user.skills}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        getOptionLabel={(option) => option.name}
+                        onChange={(_, data) => onChange(data)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...field}
+                            {...params}
+                            fullWidth
+                            variant="outlined"
+                          />
+                        )}
+                      />
+                    </>
+                  )}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-          <br />
-          <Button sx={{ margin: 2 }} variant="contained" disableElevation color="success" type="submit">
-            Save Changes
-          </Button>
+            <br />
+            <Button sx={{ margin: 2 }} variant="contained" disableElevation color="success" type="submit">
+              Save Changes
+            </Button>
+          </Box>
         </Box>
-        </Container>
-      </Box>
+      </Container>
     );
   }
 }

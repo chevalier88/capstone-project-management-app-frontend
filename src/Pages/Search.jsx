@@ -60,7 +60,6 @@ export default function Search() {
           currentArray.push(user);
         }
       });
-      console.log(currentArray);
       setUsers(currentArray);
     } catch (error) {
       console.log(error);
@@ -116,7 +115,7 @@ export default function Search() {
             <TableContainer sx={{ maxHeight: 520 }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
-                  <TableRow>
+                  <TableRow key="header-row">
                     <TableCell />
                     {TABLE_HEAD.map((column) => (
                       <TableCell
@@ -133,7 +132,7 @@ export default function Search() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                      <TableRow hover role="checkbox" tabIndex={-1} key={users.indexOf(row)}>
                         <TableCell align="center">
                           <ProfileModalForSearch key={row.id} user={row} />
                         </TableCell>

@@ -1,6 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable max-len */
 // import * as React from 'react';
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState, useEffect, useContext, forwardRef,
+} from 'react';
 
 import {
   Grid,
@@ -8,7 +11,10 @@ import {
   Typography,
   Container,
   Divider,
+  Snackbar,
 } from '@mui/material';
+
+import MuiAlert from '@mui/material/Alert';
 
 import axios from 'axios';
 // import Page from '../components/Page.jsx';
@@ -70,7 +76,17 @@ export default function Dashboard() {
   const [skillsData, setSkillsData] = useState([]);
   const [projectsChartData, setProjectsChartData] = useState([]);
 
-  // .......... HELPER FUNCTIONS .................
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const Alert = forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />);
+
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbarOpen(false);
+  };
   async function getCurrentProjects() {
     try {
       const results = await axios.get(`${BACKEND_URL}/projects/current/${user.id}`);
@@ -164,12 +180,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     setShowLoading(true);
-
     if (user.accountType === 'manager') {
       console.log(user);
       setTimeout(getAllProjects,
         1500);
       setJustSubmitted(false);
+      setSnackbarOpen(true);
     } else {
       setTimeout(getCurrentProjects,
         1500);
@@ -178,6 +194,7 @@ export default function Dashboard() {
       setTimeout(getUserCompletedProjects,
         1500);
       setJustSubmitted(false);
+      setSnackbarOpen(true);
     }
   }, [justSubmitted]);
 
@@ -286,7 +303,11 @@ export default function Dashboard() {
             </Grid>
           )}
         </Container>
-
+        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackBarClose}>
+          <Alert onClose={handleSnackBarClose} severity="success" sx={{ width: '100%' }}>
+            Dashboard refreshing!
+          </Alert>
+        </Snackbar>
       </main>
 
     </>
