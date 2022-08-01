@@ -63,7 +63,7 @@ export default function ProjectSubmitFormButton({ setJustSubmitted }) {
           <ReactHookForm setOpen={setOpen} setJustSubmitted={setJustSubmitted} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close & Cancel</Button>
+          <Button color="error" onClick={handleClose}>Close & Cancel</Button>
         </DialogActions>
       </Dialog>
     </div>

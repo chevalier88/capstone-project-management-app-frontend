@@ -145,7 +145,10 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid
+          item
+          xs={6}
+        >
           <Controller
             control={control}
             name="projectSkills"
@@ -164,6 +167,7 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
                       {...field}
                       {...params}
                       fullWidth
+                      color="warning"
                       inputRef={ref}
                       variant="standard"
                     />
@@ -257,7 +261,7 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
                   <Grid item>
-                    <CodeIcon />
+                    <CodeIcon color="secondary" />
                   </Grid>
                   <Grid item xs>
                     <Slider
@@ -268,6 +272,7 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
                       step={1}
                       value={value}
                       valueLabelDisplay="auto"
+                      color="secondary"
                     />
                   </Grid>
                 </Grid>
@@ -282,11 +287,14 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
             defaultValue={30}
             render={({ field: { value, ...field } }) => (
               <>
-                <Typography id="input-slider" gutterBottom>
+                <Typography id="input-slider" color="success" gutterBottom>
                   Minimum Salary Paid per Hour:
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
-                  <Grid item>
+                  <Grid
+                    item
+                    color="success"
+                  >
                     <Typography
                       {...field}
                       variant="h4"
@@ -299,6 +307,7 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
                   <Grid item xs>
                     <Slider
                       {...field}
+                      color="success"
                       min={0}
                       max={200}
                       step={1}
@@ -385,6 +394,7 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
                       fullWidth
                       inputRef={ref}
                       variant="standard"
+                      color="secondary"
                     />
                   )}
                 />
@@ -395,7 +405,7 @@ export default function ReactHookForm({ setOpen, setJustSubmitted }) {
         </Grid>
       </Grid>
       <br />
-      <Button variant="outlined" type="submit">Submit</Button>
+      <Button color="success" variant="outlined" type="submit">Submit</Button>
     </Box>
   );
 }
