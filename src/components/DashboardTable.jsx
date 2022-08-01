@@ -114,7 +114,6 @@ export default function DashboardTable({
                 <TableRow hover tabIndex={-1} key={row.id}>
                   <TableCell align="left">
                     <Typography
-                      noWrap
                       sx={{ fontWeight: 'bold' }}
                     >
                       {row.name}
