@@ -14,35 +14,31 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { UserContext } from '../components/UserContext.jsx';
 import BACKEND_URL from '../supportFunctions.js';
+import Iconify from '../components/Iconify.jsx';
 
 const cookies = new Cookies();
 
 export default function Login() {
-  //             STATES
-  // ================================
+  // .......... STATES .................
   const { setUser } = useContext(UserContext);
   const { user } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  //          HELPER FUNCTIONS
-  // ================================
+  // .......... HELPER FUNCTIONS .................
   const Alert = forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnackbar(false);
   };
 
@@ -62,6 +58,8 @@ export default function Login() {
           cookies.set('token', `${token}`, { path: '/' });
           // redirect to dashboard
           navigate('../profile', { replace: true });
+        } else {
+          setOpenSnackbar(true);
         }
       })
       .catch((error) => {
@@ -82,8 +80,6 @@ export default function Login() {
       </Typography>
     );
   }
-
-  const theme = createTheme();
 
   //       RENDERING OF COMPONENT
   // ================================
@@ -115,13 +111,22 @@ export default function Login() {
   // return log in component if user is not logged in
   if (user.length === 0) {
     return (
+      <Box>
 
-      <ThemeProvider theme={theme}>
-        <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleSnackbarClose}>
-          <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
-            This is a success message!
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={2000}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+        >
+          <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
+            Invalid Username / Password
           </Alert>
         </Snackbar>
+
         <Grid container component="main" sx={{ height: '100vh' }}>
           <CssBaseline />
           <Grid
@@ -148,7 +153,7 @@ export default function Login() {
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
+                <Iconify icon="line-md:account" width={30} height={30} />
               </Avatar>
               <Typography component="h1" variant="h5">
                 Sign in
@@ -189,13 +194,12 @@ export default function Login() {
                 >
                   Sign In
                 </Button>
-
                 <Copyright sx={{ mt: 5 }} />
               </Box>
             </Box>
           </Grid>
         </Grid>
-      </ThemeProvider>
+      </Box>
     );
   }
 }

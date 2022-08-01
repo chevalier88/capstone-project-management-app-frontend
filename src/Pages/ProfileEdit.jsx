@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable max-len */
@@ -91,7 +92,6 @@ export default function ProfileEdit() {
 
     return (
       <Container maxWidth="md">
-
         <Box sx={{ margin: 2 }}>
           <Box component="form" onSubmit={handleSubmit(handleOnSubmit)}>
             <Grid container spacing={3}>
@@ -309,7 +309,6 @@ export default function ProfileEdit() {
           </Box>
         </Box>
       </Container>
-
     );
   }
 }

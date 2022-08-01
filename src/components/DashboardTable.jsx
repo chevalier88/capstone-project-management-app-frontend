@@ -54,9 +54,6 @@ export default function DashboardTable({
 
   let newData = [...data];
 
-  console.log(type);
-  console.log('user.accountType', user.accountType);
-
   if (type === 'completed' || type === 'current') {
     if (user.accountType === 'manager') {
       newData = [...data];
@@ -65,7 +62,6 @@ export default function DashboardTable({
       data.forEach((obj) => newData.push(obj.project));
     }
   }
-  console.log('newData', newData);
 
   const getIconSrc = (stage) => {
     const allIcons = [{
@@ -118,7 +114,6 @@ export default function DashboardTable({
                   </TableCell>
                   <TableCell align="left">
                     <Typography
-                      noWrap
                       sx={{ fontWeight: 'bold' }}
                     >
                       {row.name}
