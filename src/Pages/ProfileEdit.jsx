@@ -248,6 +248,7 @@ export default function ProfileEdit() {
                         <Grid item>
                           <Typography
                             variant="h5"
+                            color="success"
                             {...field}
                           >
                             {' '}
@@ -260,6 +261,7 @@ export default function ProfileEdit() {
                         <Grid item xs>
                           <Slider
                             {...field}
+                            color="success"
                             min={0}
                             max={200}
                             step={1}
@@ -292,6 +294,7 @@ export default function ProfileEdit() {
                           <TextField
                             {...field}
                             {...params}
+                            color="warning"
                             fullWidth
                             variant="outlined"
                           />
