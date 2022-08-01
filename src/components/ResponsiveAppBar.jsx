@@ -14,11 +14,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-// import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-// import { grey } from '@mui/material/colors';
 import { UserContext } from './UserContext.jsx';
 
 const cookies = new Cookies();
@@ -151,7 +149,7 @@ export default function ResponsiveAppBar() {
               && (
               <MenuItem key="login" onClick={handleCloseUserMenu}>
                 <Nav.Link as={Link} to="/login" style={{ textDecoration: 'none' }}>
-                  <Typography component="span" style={{ textDecoration: 'none' }} sx={headerNav} as={Link} to="/login">
+                  <Typography component="span">
                     Login
                   </Typography>
                 </Nav.Link>
@@ -174,9 +172,6 @@ export default function ResponsiveAppBar() {
                     <Typography component="span" sx={headerNav}>
                       Profile
                     </Typography>
-                    {/* <Typography component="span" sx={headerNav} as={Link} style={{ textDecoration: 'none' }} to="/profile">
-                      Profile
-                    </Typography> */}
                   </Nav.Link>
                 </MenuItem>
                 <MenuItem key="logout" onClick={handleLogoutClick}>
